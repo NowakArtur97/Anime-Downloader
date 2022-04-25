@@ -1,4 +1,4 @@
-package com.nowakartur.animedownloader
+package com.nowakartur.animedownloader.subsciption
 
 import org.springframework.stereotype.Service
 

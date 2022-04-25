@@ -1,6 +1,6 @@
 package com.nowakartur.animedownloader.gogoanime
 
-import com.nowakartur.animedownloader.HtmlConstants
+import com.nowakartur.animedownloader.constant.HtmlConstants
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element

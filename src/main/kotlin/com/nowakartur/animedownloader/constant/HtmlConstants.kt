@@ -1,4 +1,4 @@
-package com.nowakartur.animedownloader
+package com.nowakartur.animedownloader.constant
 
 object HtmlConstants {
 
