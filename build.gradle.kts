@@ -16,10 +16,19 @@ repositories {
 }
 
 dependencies {
+	// Spring dependencies
 	implementation("org.springframework.boot:spring-boot-starter-web")
+
+	// Kotlin dependencies
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+	// Web Srcaping dependencies
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation("org.jsoup:jsoup:1.14.3")
+
+	// Testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
