@@ -4,6 +4,7 @@ import com.nowakartur.animedownloader.goland.GolandDownloadPage
 import com.nowakartur.animedownloader.subsciption.SubscribedAnimeService
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.openqa.selenium.chrome.ChromeDriver
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -34,8 +35,6 @@ class GogoanimeScraperService(
         val allLinksToAnimePages: List<String> =
             gogoanimeMainPage.findAllLinksToEpisodes(allSubscribedAnime, mainPage)
 
-        logger.info("Anime links found: $allLinksToAnimePages.")
-
         val allLinksForDownload = allLinksToAnimePages.map {
 
             logger.info("Connecting to episode page: $it.")
@@ -45,17 +44,17 @@ class GogoanimeScraperService(
             gogoanimeEpisodePage.findLinkForDownload(episodePage)
         }
 
-        logger.info("Anime download links found: $allLinksForDownload.")
-
         allLinksForDownload.forEach() {
 
             logger.info("Connecting to download page: $it.")
 
-            val downloadPage = golandDownloadPage.connectToGolandPage(it)
+            val webDriver: ChromeDriver = golandDownloadPage.connectToGolandPage(it)
 
-            val m4UploadDownloadLink = golandDownloadPage.findM4UploadDownloadLink(downloadPage)
+            val m4UploadDownloadLink = golandDownloadPage.findM4UploadDownloadLink(webDriver)
 
             logger.info("Link for M4Upload: $m4UploadDownloadLink.")
+
+            webDriver.quit()
         }
     }
 }
