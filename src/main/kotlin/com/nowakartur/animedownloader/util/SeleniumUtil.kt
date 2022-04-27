@@ -10,8 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
 
-
-private const val WAIT_TIMEOUT = 15L
+private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
+private const val WAIT_FOR_DOWNLOAD_CHECK = 5_000L
 
 object SeleniumUtil {
 
@@ -23,7 +23,7 @@ object SeleniumUtil {
     }
 
     fun waitFor(webDriver: ChromeDriver, by: By) {
-        val wait = WebDriverWait(webDriver, WAIT_TIMEOUT)
+        val wait = WebDriverWait(webDriver, WAIT_TIMEOUT_FOR_ELEMENT)
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
     }
 
@@ -33,6 +33,9 @@ object SeleniumUtil {
     }
 
     fun waitForFileDownload(driver: WebDriver) {
+        for (winHandle in driver.windowHandles) {
+            driver.switchTo().window(winHandle)
+        }
         driver["chrome://downloads"]
         val jsExecutor = driver as JavascriptExecutor
         var percentage = 0L
@@ -41,8 +44,10 @@ object SeleniumUtil {
                 logger.info("Download progress: $percentage/100.")
                 percentage = getDownloadProgress(jsExecutor)
             } catch (e: Exception) {
+                logger.info(e.message)
+                // Nothing to do just wait
             }
-            Thread.sleep(1000)
+            Thread.sleep(WAIT_FOR_DOWNLOAD_CHECK)
         }
     }
 
