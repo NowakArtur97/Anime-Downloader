@@ -18,7 +18,7 @@ class GogoanimeScraperService(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun scrapDownloadLinks(subscribedAnime: List<String>) {
+    fun downloadAnime(subscribedAnime: List<String>) {
 
         logger.info("Connecting to gogoanime page.")
 
@@ -59,6 +59,8 @@ class GogoanimeScraperService(
             m4UploadPage.downloadEpisode(webDriver)
 
             SeleniumUtil.waitForFileDownload(webDriver)
+
+            logger.info("Download completed.")
 
             webDriver.quit()
         }

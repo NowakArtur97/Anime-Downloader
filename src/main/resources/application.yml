@@ -1,3 +1,5 @@
 app:
   gogoanime:
     url: https://gogoanime.sk
+  scheduler:
+    cron: 0 0/1 * * * *

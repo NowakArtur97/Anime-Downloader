@@ -17,11 +17,11 @@ class AnimeDownloaderApplication(
 
     override fun run(vararg args: String) {
 
-        logger.info("Searching for all subscribed anime.")
-
-        val subscribedAnime = subscribedAnimeService.findAllSubscribedAnime()
-
-        gogoanimeScraperService.scrapDownloadLinks(subscribedAnime)
+//        logger.info("Searching for all subscribed anime.")
+//
+//        val subscribedAnime = subscribedAnimeService.findAllSubscribedAnime()
+//
+//        gogoanimeScraperService.downloadAnime(subscribedAnime)
     }
 }
 
