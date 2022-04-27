@@ -3,10 +3,7 @@ package com.nowakartur.animedownloader.util
 import com.nowakartur.animedownloader.util.JsScripts.CLICK_SCRIPT
 import com.nowakartur.animedownloader.util.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
-import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
@@ -18,12 +15,15 @@ private const val WAIT_FOR_DOWNLOAD_CHECK = 5_000L
 object SeleniumUtil {
 
     private const val CHROME_DOWNLOADS = "chrome://downloads"
+    private val HIDDEN_POSITION = Point(-1800, 0)
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun startWebDriver(): ChromeDriver {
         WebDriverManager.chromedriver().setup()
-        return ChromeDriver()
+        return ChromeDriver().also {
+            it.manage().window().position = HIDDEN_POSITION
+        }
     }
 
     fun waitFor(webDriver: ChromeDriver, by: By) {

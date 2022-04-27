@@ -7,8 +7,12 @@ class SubscribedAnimeService {
 
     fun findAllSubscribedAnime(): List<String> =
         listOf(
-            "Kaginado Season 2",
-//            "Araiguma Rascal",
+            "Shijou Saikyou no Daimaou, Murabito A ni Tensei",
+            "RPG Fudousan",
+            "Paripi Koumei",
+            "Summertime Render",
+//            "Kaginado Season 2",
+            "Araiguma Rascal",
 //            "Kono Healer, Mendokusai",
 //            "Otome Game Sekai wa Mob ni Kibishii Sekai desu",
 //            "Kakkou no Iinazuke",
