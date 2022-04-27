@@ -2,10 +2,9 @@ package com.nowakartur.animedownloader.gogoanime
 
 import com.nowakartur.animedownloader.goland.GolandDownloadPage
 import com.nowakartur.animedownloader.m4upload.M4UploadPage
-import io.github.bonigarcia.wdm.WebDriverManager
+import com.nowakartur.animedownloader.util.SeleniumUtil
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
-import org.openqa.selenium.chrome.ChromeDriver
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -33,8 +32,7 @@ class GogoanimeScraperService(
         val allLinksToAnimePages: List<String> =
             gogoanimeMainPage.findAllLinksToEpisodes(allSubscribedAnime, mainPage)
 
-        WebDriverManager.chromedriver().setup()
-        val webDriver = ChromeDriver()
+        val webDriver = SeleniumUtil.startWebDriver()
 
         allLinksToAnimePages.map {
 
@@ -59,6 +57,8 @@ class GogoanimeScraperService(
             logger.info("Download file from M4Upload.")
 
             m4UploadPage.downloadEpisode(webDriver)
+
+            SeleniumUtil.waitForFileDownload(webDriver)
 
             webDriver.quit()
         }
