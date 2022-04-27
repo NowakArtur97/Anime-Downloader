@@ -1,5 +1,7 @@
 package com.nowakartur.animedownloader.util
 
+import com.nowakartur.animedownloader.util.JsScripts.CLICK_SCRIPT
+import com.nowakartur.animedownloader.util.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
@@ -15,6 +17,8 @@ private const val WAIT_FOR_DOWNLOAD_CHECK = 5_000L
 
 object SeleniumUtil {
 
+    private const val CHROME_DOWNLOADS = "chrome://downloads"
+
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun startWebDriver(): ChromeDriver {
@@ -29,14 +33,14 @@ object SeleniumUtil {
 
     fun clickUsingJavaScript(webDriver: ChromeDriver, element: WebElement) {
         val jsExecutor = webDriver as JavascriptExecutor
-        jsExecutor.executeScript("arguments[0].click();", element)
+        jsExecutor.executeScript(CLICK_SCRIPT, element)
     }
 
     fun waitForFileDownload(driver: WebDriver) {
         for (winHandle in driver.windowHandles) {
             driver.switchTo().window(winHandle)
         }
-        driver["chrome://downloads"]
+        driver[CHROME_DOWNLOADS]
         val jsExecutor = driver as JavascriptExecutor
         var percentage = 0L
         while (percentage != 100L) {
@@ -51,6 +55,6 @@ object SeleniumUtil {
         }
     }
 
-    private fun getDownloadProgress(jsExecutor: JavascriptExecutor) =
-        jsExecutor.executeScript("return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#progress').value") as Long
+    private fun getDownloadProgress(jsExecutor: JavascriptExecutor): Long =
+        jsExecutor.executeScript(DOWNLOAD_PROGRESS_VALUE_SCRIPT) as Long
 }

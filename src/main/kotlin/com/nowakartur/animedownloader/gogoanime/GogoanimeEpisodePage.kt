@@ -1,6 +1,7 @@
 package com.nowakartur.animedownloader.gogoanime
 
-import com.nowakartur.animedownloader.constant.HtmlConstants
+import com.nowakartur.animedownloader.constant.HtmlConstants.HREF_ATTRIBUTE
+import com.nowakartur.animedownloader.gogoanime.GogoanimePageStyles.EPISODE_PAGE_ANIME_DOWNLOAD_CLASS
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.beans.factory.annotation.Value
@@ -14,9 +15,9 @@ class GogoanimeEpisodePage(@Value("\${app.gogoanime.url}") private val gogoanime
         .get()
 
     fun findLinkForDownload(episodePage: Document): String =
-        episodePage.getElementsByClass(GogoanimePageStyles.EPISODE_PAGE_ANIME_DOWNLOAD_CLASS).asSequence()
+        episodePage.getElementsByClass(EPISODE_PAGE_ANIME_DOWNLOAD_CLASS).asSequence()
             .mapNotNull { downloadButton ->
-                downloadButton.children().asSequence().mapNotNull { link -> link.attr(HtmlConstants.HREF_ATTRIBUTE) }
+                downloadButton.children().asSequence().mapNotNull { link -> link.attr(HREF_ATTRIBUTE) }
                     .first()
             }.first()
 }
