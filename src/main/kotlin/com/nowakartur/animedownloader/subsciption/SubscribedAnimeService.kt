@@ -8,7 +8,7 @@ class SubscribedAnimeService {
     fun findAllSubscribedAnime(): List<String> =
         listOf(
             "Kono Healer, Mendokusai",
-            "Otome Game Sekai wa Mob ni Kibishii Sekai desu",
-            "Kakkou no Iinazuke",
+//            "Otome Game Sekai wa Mob ni Kibishii Sekai desu",
+//            "Kakkou no Iinazuke",
         )
 }

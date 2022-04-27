@@ -1,7 +1,8 @@
 package com.nowakartur.animedownloader.gogoanime
 
 import com.nowakartur.animedownloader.goland.GolandDownloadPage
-import com.nowakartur.animedownloader.subsciption.SubscribedAnimeService
+import com.nowakartur.animedownloader.m4upload.M4UploadPage
+import io.github.bonigarcia.wdm.WebDriverManager
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.openqa.selenium.chrome.ChromeDriver
@@ -13,20 +14,17 @@ class GogoanimeScraperService(
     private val gogoanimeMainPage: GogoanimeMainPage,
     private val gogoanimeEpisodePage: GogoanimeEpisodePage,
     private val golandDownloadPage: GolandDownloadPage,
-    private val subscribedAnimeService: SubscribedAnimeService,
+    private val m4UploadPage: M4UploadPage,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun scrapDownloadLinks() {
+    fun scrapDownloadLinks(subscribedAnime: List<String>) {
 
         logger.info("Connecting to gogoanime page.")
 
         val mainPage: Document = gogoanimeMainPage.connectToMainPage()
 
-        logger.info("Searching for all subscribed anime.")
-
-        val subscribedAnime = subscribedAnimeService.findAllSubscribedAnime()
         val allSubscribedAnime: List<Element> =
             gogoanimeMainPage.findAllSubscribedAnime(subscribedAnime, mainPage)
 
@@ -35,24 +33,32 @@ class GogoanimeScraperService(
         val allLinksToAnimePages: List<String> =
             gogoanimeMainPage.findAllLinksToEpisodes(allSubscribedAnime, mainPage)
 
-        val allLinksForDownload = allLinksToAnimePages.map {
+        WebDriverManager.chromedriver().setup()
+        val webDriver = ChromeDriver()
+
+        allLinksToAnimePages.map {
 
             logger.info("Connecting to episode page: $it.")
 
             val episodePage = gogoanimeEpisodePage.connectToEpisodePage(it)
 
             gogoanimeEpisodePage.findLinkForDownload(episodePage)
-        }
 
-        allLinksForDownload.forEach() {
+        }.forEach() { downloadLink ->
 
-            logger.info("Connecting to download page: $it.")
+            logger.info("Connecting to download page: $downloadLink.")
 
-            val webDriver: ChromeDriver = golandDownloadPage.connectToGolandPage(it)
+            golandDownloadPage.connectToGolandPage(webDriver, downloadLink)
 
-            val m4UploadDownloadLink = golandDownloadPage.findM4UploadDownloadLink(webDriver)
+            val m4UploadDownloadLink = golandDownloadPage.findM4UploadDownloadLink(webDriver)!!
 
             logger.info("Link for M4Upload: $m4UploadDownloadLink.")
+
+            m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
+
+            logger.info("Download file from M4Upload.")
+
+            m4UploadPage.downloadEpisode(webDriver)
 
             webDriver.quit()
         }
