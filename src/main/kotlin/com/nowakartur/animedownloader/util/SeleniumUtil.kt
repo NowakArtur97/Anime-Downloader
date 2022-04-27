@@ -37,13 +37,10 @@ object SeleniumUtil {
     }
 
     fun waitForFileDownload(driver: WebDriver) {
-        for (winHandle in driver.windowHandles) {
-            driver.switchTo().window(winHandle)
-        }
-        driver[CHROME_DOWNLOADS]
+        switchToDownloadTab(driver)
         val jsExecutor = driver as JavascriptExecutor
         var percentage = 0L
-        while (percentage != 100L) {
+        while (percentage < 100L) {
             try {
                 logger.info("Download progress: $percentage/100.")
                 percentage = getDownloadProgress(jsExecutor)
@@ -53,6 +50,15 @@ object SeleniumUtil {
             }
             Thread.sleep(WAIT_FOR_DOWNLOAD_CHECK)
         }
+    }
+
+    fun isDownloading(webDriver: ChromeDriver): Boolean = getDownloadProgress(webDriver) > 0
+
+    fun switchToDownloadTab(webDriver: WebDriver) {
+        for (winHandle in webDriver.windowHandles) {
+            webDriver.switchTo().window(winHandle)
+        }
+        webDriver[CHROME_DOWNLOADS]
     }
 
     private fun getDownloadProgress(jsExecutor: JavascriptExecutor): Long =
