@@ -48,21 +48,27 @@ class GogoanimeScraperService(
 
             golandDownloadPage.connectToGolandPage(webDriver, downloadLink)
 
-            val m4UploadDownloadLink = golandDownloadPage.findM4UploadDownloadLink(webDriver)!!
+            try {
+                val m4UploadDownloadLink = golandDownloadPage.findM4UploadDownloadLink(webDriver)!!
 
-            logger.info("Link for M4Upload: $m4UploadDownloadLink.")
+                logger.info("Link for M4Upload: $m4UploadDownloadLink.")
 
-            m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
+                m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
 
-            logger.info("Download file from M4Upload.")
+                logger.info("Download file from M4Upload.")
 
-            m4UploadPage.downloadEpisode(webDriver)
+                m4UploadPage.downloadEpisode(webDriver)
 
-            SeleniumUtil.waitForFileDownload(webDriver)
+                SeleniumUtil.waitForFileDownload(webDriver)
 
-            logger.info("Download completed.")
+                logger.info("Download completed.")
 
-            webDriver.quit()
+            } catch (e: Exception) {
+                logger.info("Unexpected exception occurred.")
+                logger.info(e.message)
+            } finally {
+                webDriver.quit()
+            }
         }
     }
 }
