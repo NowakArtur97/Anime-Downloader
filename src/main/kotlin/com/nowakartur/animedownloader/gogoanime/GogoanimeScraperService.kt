@@ -1,6 +1,6 @@
 package com.nowakartur.animedownloader.gogoanime
 
-import com.nowakartur.animedownloader.goland.GolandDownloadPage
+import com.nowakartur.animedownloader.goload.GoloadDownloadPage
 import com.nowakartur.animedownloader.m4upload.M4UploadPage
 import com.nowakartur.animedownloader.util.SeleniumUtil
 import org.jsoup.nodes.Document
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 class GogoanimeScraperService(
     private val gogoanimeMainPage: GogoanimeMainPage,
     private val gogoanimeEpisodePage: GogoanimeEpisodePage,
-    private val golandDownloadPage: GolandDownloadPage,
+    private val goloadDownloadPage: GoloadDownloadPage,
     private val m4UploadPage: M4UploadPage,
 ) {
 
@@ -29,45 +29,48 @@ class GogoanimeScraperService(
 
         logger.info("Anime found: ${allSubscribedAnime.map { it.text() }}.")
 
-        val allLinksToAnimePages: List<String> =
-            gogoanimeMainPage.findAllLinksToEpisodes(allSubscribedAnime, mainPage)
+        if (allSubscribedAnime.isNotEmpty()) {
 
-        val webDriver = SeleniumUtil.startWebDriver()
+            val allLinksToAnimePages: List<String> =
+                gogoanimeMainPage.findAllLinksToEpisodes(allSubscribedAnime, mainPage)
 
-        allLinksToAnimePages.map {
+            val webDriver = SeleniumUtil.startWebDriver()
 
-            logger.info("Connecting to episode page: $it.")
+            allLinksToAnimePages.map {
 
-            val episodePage = gogoanimeEpisodePage.connectToEpisodePage(it)
+                logger.info("Connecting to episode page: $it.")
 
-            gogoanimeEpisodePage.findLinkForDownload(episodePage)
+                val episodePage = gogoanimeEpisodePage.connectToEpisodePage(it)
 
-        }.forEach() { downloadLink ->
+                gogoanimeEpisodePage.findLinkForDownload(episodePage)
 
-            logger.info("Connecting to download page: $downloadLink.")
+            }.forEach() { downloadLink ->
 
-            golandDownloadPage.connectToGolandPage(webDriver, downloadLink)
+                logger.info("Connecting to download page: $downloadLink.")
 
-            try {
-                val m4UploadDownloadLink = golandDownloadPage.findM4UploadDownloadLink(webDriver)!!
+                goloadDownloadPage.connectToGolandPage(webDriver, downloadLink)
 
-                logger.info("Link for M4Upload: $m4UploadDownloadLink.")
+                try {
+                    val m4UploadDownloadLink = goloadDownloadPage.findM4UploadDownloadLink(webDriver)!!
 
-                m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
+                    logger.info("Link for M4Upload: $m4UploadDownloadLink.")
 
-                logger.info("Download file from M4Upload.")
+                    m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
 
-                m4UploadPage.downloadEpisode(webDriver)
+                    logger.info("Download file from M4Upload.")
 
-                SeleniumUtil.waitForFileDownload(webDriver)
+                    m4UploadPage.downloadEpisode(webDriver)
 
-                logger.info("Download completed.")
+                    SeleniumUtil.waitForFileDownload(webDriver)
 
-            } catch (e: Exception) {
-                logger.info("Unexpected exception occurred.")
-                logger.info(e.message)
-            } finally {
-                webDriver.quit()
+                    logger.info("Download completed.")
+
+                } catch (e: Exception) {
+                    logger.info("Unexpected exception occurred.")
+                    logger.info(e.message)
+                } finally {
+                    webDriver.quit()
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
-package com.nowakartur.animedownloader.goland
+package com.nowakartur.animedownloader.goload
 
-object GolandPageStyles {
+object GoloadPageStyles {
 
     const val DOWNLOAD_CLASS = "dowload"
 

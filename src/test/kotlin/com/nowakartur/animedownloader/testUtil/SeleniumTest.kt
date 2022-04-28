@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
 
+const val TIME_TO_WAIT_FOR_ASSERTION = 30L
+
 @SpringBootTest
 @TestPropertySource(properties = ["app.scheduler.enabled=false"])
 class SeleniumTest {
