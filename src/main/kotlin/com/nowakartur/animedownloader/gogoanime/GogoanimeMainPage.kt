@@ -17,7 +17,7 @@ class GogoanimeMainPage(@Value("\${app.gogoanime.url}") private val gogoanimeMai
 
     fun findAllSubscribedAnime(subscribedAnime: List<String>, page: Document): List<Element> = page
         .getElementsByClass(MAIN_PAGE_ANIME_NAME_CLASS)
-        .filter { node -> subscribedAnime.contains(node.text()) }
+        .filter { node -> subscribedAnime.any { node.text().contains(it) } }
 
     fun findAllLinksToEpisodes(allSubscribedAnimeNodes: List<Element>, page: Document): List<String> =
         allSubscribedAnimeNodes
