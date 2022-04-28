@@ -5,5 +5,16 @@ import org.springframework.stereotype.Service
 @Service
 class SubscribedAnimeService(private val subscribedAnimeRepository: SubscribedAnimeRepository) {
 
-    fun findAllSubscribedAnime(): List<SubscribedAnimeEntity> = subscribedAnimeRepository.findAll()
+    fun findAllAnimeForDownload(): List<SubscribedAnimeEntity> =
+        subscribedAnimeRepository.findByStatusIsOrderByPriorityDesc(SubscribedAnimeStatus.TO_DOWNLOAD)
+
+    fun startDownloadingAnime(subscribedAnimeEntity: SubscribedAnimeEntity) {
+        subscribedAnimeEntity.startDownloading()
+        subscribedAnimeRepository.save(subscribedAnimeEntity)
+    }
+
+    fun finishDownloadingAnime(subscribedAnimeEntity: SubscribedAnimeEntity) {
+        subscribedAnimeEntity.finishDownloading()
+        subscribedAnimeRepository.save(subscribedAnimeEntity)
+    }
 }

@@ -2,6 +2,7 @@ package com.nowakartur.animedownloader.gogoanime
 
 import com.nowakartur.animedownloader.constant.HtmlConstants.HREF_ATTRIBUTE
 import com.nowakartur.animedownloader.gogoanime.GogoanimePageStyles.MAIN_PAGE_ANIME_NAME_CLASS
+import com.nowakartur.animedownloader.subsciption.SubscribedAnimeEntity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -15,12 +16,17 @@ class GogoanimeMainPage(@Value("\${app.gogoanime.url}") private val gogoanimeMai
         .connect(gogoanimeMainPageUrl)
         .get()
 
-    fun findAllSubscribedAnime(subscribedAnime: List<String>, page: Document): List<Element> = page
-        .getElementsByClass(MAIN_PAGE_ANIME_NAME_CLASS)
-        .filter { node -> subscribedAnime.any { node.text().contains(it) } }
+    fun findAllSubscribedAnime(subscribedAnime: List<SubscribedAnimeEntity>, page: Document): List<Element> {
+        val titles = subscribedAnime.map { it.title }
+        return page
+            .getElementsByClass(MAIN_PAGE_ANIME_NAME_CLASS)
+            .filter { node -> titles.any { node.text().contains(it) } }
+    }
 
-    fun findAllLinksToEpisodes(allSubscribedAnimeNodes: List<Element>, page: Document): List<String> =
+    fun findLinkToEpisodes(allSubscribedAnimeNodes: List<Element>, title: String): String =
         allSubscribedAnimeNodes
-            .mapNotNull { it.children().first() }
-            .map { it.attr(HREF_ATTRIBUTE) }
+            .find { it.text().contains(title) }
+            ?.children()
+            ?.first()
+            ?.attr(HREF_ATTRIBUTE)!!
 }

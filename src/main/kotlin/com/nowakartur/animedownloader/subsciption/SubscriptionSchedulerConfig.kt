@@ -15,7 +15,6 @@ class SubscriptionSchedulerConfig {
 
     @Bean
     fun subscriptionScheduler(
-        gogoanimeScraperService: GogoanimeScraperService,
-        subscribedAnimeService: SubscribedAnimeService,
-    ): SubscriptionScheduler = SubscriptionScheduler(gogoanimeScraperService, subscribedAnimeService)
+        gogoanimeScraperService: GogoanimeScraperService
+    ): SubscribedAnimeDownloadScheduler = SubscribedAnimeDownloadScheduler(gogoanimeScraperService)
 }

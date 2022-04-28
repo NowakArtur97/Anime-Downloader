@@ -1,6 +1,6 @@
 package com.nowakartur.animedownloader.testUtil
 
-import com.nowakartur.animedownloader.util.SeleniumUtil
+import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.openqa.selenium.chrome.ChromeDriver

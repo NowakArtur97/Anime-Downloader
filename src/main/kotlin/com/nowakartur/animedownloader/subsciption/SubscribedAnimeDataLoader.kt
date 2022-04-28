@@ -11,14 +11,18 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 
     @EventListener(ApplicationReadyEvent::class)
     fun loadDataOnStartup() {
+        if (subscribedAnimeRepository.count() > 0) {
+            return
+        }
+
         val anime = listOf(
-            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei"),
             SubscribedAnimeEntity("RPG Fudousan"),
+            SubscribedAnimeEntity("Araiguma Rascal", LOW),
+            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei", HIGH),
             SubscribedAnimeEntity("Summertime Render", HIGH),
             SubscribedAnimeEntity("Otome Game Sekai wa Mob ni Kibishii Sekai desu", HIGH),
-            SubscribedAnimeEntity("Paripi Koumei", HIGH),
-            SubscribedAnimeEntity("Kaginado Season 2", LOW),
-            SubscribedAnimeEntity("Araiguma Rascal", LOW),
+//            SubscribedAnimeEntity("Paripi Koumei", HIGH),
+//            SubscribedAnimeEntity("Kaginado Season 2", LOW),
         )
         subscribedAnimeRepository.saveAll(anime)
     }

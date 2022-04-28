@@ -2,7 +2,7 @@ package com.nowakartur.animedownloader.m4upload
 
 import com.nowakartur.animedownloader.m4upload.M4UploadStyles.DOWNLOAD_BUTTON_CLASS
 import com.nowakartur.animedownloader.m4upload.M4UploadStyles.DOWNLOAD_PAGE_SUBMIT_BUTTON_ID
-import com.nowakartur.animedownloader.util.SeleniumUtil
+import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.stereotype.Service

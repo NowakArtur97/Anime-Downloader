@@ -15,9 +15,9 @@ class GogoanimeEpisodePage(@Value("\${app.gogoanime.url}") private val gogoanime
         .get()
 
     fun findLinkForDownload(episodePage: Document): String =
-        episodePage.getElementsByClass(EPISODE_PAGE_ANIME_DOWNLOAD_CLASS).asSequence()
-            .mapNotNull { downloadButton ->
-                downloadButton.children().asSequence().mapNotNull { link -> link.attr(HREF_ATTRIBUTE) }
-                    .first()
-            }.first()
+        episodePage.getElementsByClass(EPISODE_PAGE_ANIME_DOWNLOAD_CLASS)
+            .first()
+            ?.children()
+            ?.first()
+            ?.attr(HREF_ATTRIBUTE)!!
 }

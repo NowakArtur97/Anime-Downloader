@@ -1,7 +1,7 @@
-package com.nowakartur.animedownloader.util
+package com.nowakartur.animedownloader.selenium
 
-import com.nowakartur.animedownloader.util.JsScripts.CLICK_SCRIPT
-import com.nowakartur.animedownloader.util.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
+import com.nowakartur.animedownloader.selenium.JsScripts.CLICK_SCRIPT
+import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
@@ -42,7 +42,7 @@ object SeleniumUtil {
         var percentage = 0L
         while (percentage < 100L) {
             try {
-                logger.info("Download progress: $percentage/100.")
+                logger.info("Download progress: $percentage%.")
                 percentage = getDownloadProgress(jsExecutor)
             } catch (e: Exception) {
                 logger.info(e.message)

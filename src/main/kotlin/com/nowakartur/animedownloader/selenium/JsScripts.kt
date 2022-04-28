@@ -1,4 +1,4 @@
-package com.nowakartur.animedownloader.util
+package com.nowakartur.animedownloader.selenium
 
 object JsScripts {
 

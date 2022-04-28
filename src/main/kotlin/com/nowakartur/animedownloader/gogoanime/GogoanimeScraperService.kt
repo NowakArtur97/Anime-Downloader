@@ -2,8 +2,9 @@ package com.nowakartur.animedownloader.gogoanime
 
 import com.nowakartur.animedownloader.goload.GoloadDownloadPage
 import com.nowakartur.animedownloader.m4upload.M4UploadPage
+import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.SubscribedAnimeEntity
-import com.nowakartur.animedownloader.util.SeleniumUtil
+import com.nowakartur.animedownloader.subsciption.SubscribedAnimeService
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.slf4j.LoggerFactory
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class GogoanimeScraperService(
+    private val subscribedAnimeService: SubscribedAnimeService,
     private val gogoanimeMainPage: GogoanimeMainPage,
     private val gogoanimeEpisodePage: GogoanimeEpisodePage,
     private val goloadDownloadPage: GoloadDownloadPage,
@@ -19,59 +21,76 @@ class GogoanimeScraperService(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun downloadAnime(subscribedAnime: List<SubscribedAnimeEntity>) {
+    fun downloadAnime() {
+
+        logger.info("Searching for all subscribed anime for download.")
+
+        val subscribedAnime = subscribedAnimeService.findAllAnimeForDownload()
+
+        if (subscribedAnime.isEmpty()) {
+            logger.info("No anime is subscribed.")
+            return
+        }
 
         logger.info("Connecting to gogoanime page.")
 
         val mainPage: Document = gogoanimeMainPage.connectToMainPage()
 
-        val allSubscribedAnime: List<Element> =
-            gogoanimeMainPage.findAllSubscribedAnime(subscribedAnime.map { it.title }, mainPage)
+        val allNewAnimeToDownloadElements: List<Element> =
+            gogoanimeMainPage.findAllSubscribedAnime(subscribedAnime, mainPage)
 
-        logger.info("Anime found: ${allSubscribedAnime.map { it.text() }}.")
+        if (allNewAnimeToDownloadElements.isEmpty()) {
+            logger.info("Nothing new to download.")
+            return
+        }
 
-        if (allSubscribedAnime.isNotEmpty()) {
+        val allNewAnimeToDownload: List<SubscribedAnimeEntity> = subscribedAnime
+            .filter { anime -> allNewAnimeToDownloadElements.any { it.text().contains(anime.title) } }
 
-            val allLinksToAnimePages: List<String> =
-                gogoanimeMainPage.findAllLinksToEpisodes(allSubscribedAnime, mainPage)
+        logger.info("Anime found: ${allNewAnimeToDownload.map { it.title }}.")
+
+        allNewAnimeToDownload.forEach {
+            val linkToAnimePage: String = gogoanimeMainPage.findLinkToEpisodes(allNewAnimeToDownloadElements, it.title)
+
+            logger.info("Connecting to episode page of: ${it.title}.")
+
+            val episodePage = gogoanimeEpisodePage.connectToEpisodePage(linkToAnimePage)
+
+            val goloadLink = gogoanimeEpisodePage.findLinkForDownload(episodePage)
+
+            logger.info("Connecting to download page: $goloadLink.")
+
+            subscribedAnimeService.startDownloadingAnime(it)
 
             val webDriver = SeleniumUtil.startWebDriver()
 
-            allLinksToAnimePages.map {
+            goloadDownloadPage.connectToGolandPage(webDriver, goloadLink)
 
-                logger.info("Connecting to episode page: $it.")
+            try {
+                val m4UploadDownloadLink = goloadDownloadPage.findM4UploadDownloadLink(webDriver)!!
 
-                val episodePage = gogoanimeEpisodePage.connectToEpisodePage(it)
+                logger.info("Link for ${it.title} on m4Upload: $m4UploadDownloadLink.")
 
-                gogoanimeEpisodePage.findLinkForDownload(episodePage)
+                m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
 
-            }.forEach() { downloadLink ->
+                logger.info("Download ${it.title} from m4Upload.")
 
-                logger.info("Connecting to download page: $downloadLink.")
+                m4UploadPage.downloadEpisode(webDriver)
 
-                goloadDownloadPage.connectToGolandPage(webDriver, downloadLink)
+                SeleniumUtil.waitForFileDownload(webDriver)
 
-                try {
-                    val m4UploadDownloadLink = goloadDownloadPage.findM4UploadDownloadLink(webDriver)!!
+                subscribedAnimeService.finishDownloadingAnime(it)
 
-                    logger.info("Link for M4Upload: $m4UploadDownloadLink.")
+                logger.info("Anime ${it.title} successfully downloaded.")
 
-                    m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
+            } catch (e: Exception) {
+                logger.info("Unexpected exception occurred when downloading ${it.title}.")
 
-                    logger.info("Download file from M4Upload.")
+                subscribedAnimeService.startDownloadingAnime(it)
 
-                    m4UploadPage.downloadEpisode(webDriver)
-
-                    SeleniumUtil.waitForFileDownload(webDriver)
-
-                    logger.info("Download completed.")
-
-                } catch (e: Exception) {
-                    logger.info("Unexpected exception occurred.")
-                    logger.info(e.message)
-                } finally {
-                    webDriver.quit()
-                }
+                logger.info(e.message)
+            } finally {
+                webDriver.quit()
             }
         }
     }
