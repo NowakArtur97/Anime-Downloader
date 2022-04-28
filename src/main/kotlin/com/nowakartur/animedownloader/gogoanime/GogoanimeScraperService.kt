@@ -2,6 +2,7 @@ package com.nowakartur.animedownloader.gogoanime
 
 import com.nowakartur.animedownloader.goload.GoloadDownloadPage
 import com.nowakartur.animedownloader.m4upload.M4UploadPage
+import com.nowakartur.animedownloader.subsciption.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.util.SeleniumUtil
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -18,14 +19,14 @@ class GogoanimeScraperService(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun downloadAnime(subscribedAnime: List<String>) {
+    fun downloadAnime(subscribedAnime: List<SubscribedAnimeEntity>) {
 
         logger.info("Connecting to gogoanime page.")
 
         val mainPage: Document = gogoanimeMainPage.connectToMainPage()
 
         val allSubscribedAnime: List<Element> =
-            gogoanimeMainPage.findAllSubscribedAnime(subscribedAnime, mainPage)
+            gogoanimeMainPage.findAllSubscribedAnime(subscribedAnime.map { it.title }, mainPage)
 
         logger.info("Anime found: ${allSubscribedAnime.map { it.text() }}.")
 
