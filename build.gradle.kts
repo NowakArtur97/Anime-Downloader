@@ -18,6 +18,7 @@ repositories {
 dependencies {
     // Spring dependencies
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // Kotlin dependencies
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -31,6 +32,10 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.1.3")
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
     implementation("io.github.bonigarcia:webdrivermanager:5.1.1")
+
+    // Database dependencies
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    runtimeOnly("com.h2database:h2:2.1.212")
 
     // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
