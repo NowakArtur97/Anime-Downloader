@@ -1,19 +1,10 @@
-package com.nowakartur.animedownloader.subsciption
+package com.nowakartur.animedownloader.subsciption.entity
 
 import org.hibernate.Hibernate
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.*
-
-
-enum class SubscribedAnimeStatus {
-    TO_DOWNLOAD, IN_PROGRESS, DOWNLOADED
-}
-
-enum class SubscribedAnimePriority(val value: Int) {
-    LOW(1), MEDIUM(2), HIGH(3)
-}
 
 @Entity
 @Table(name = "subscribed_anime")

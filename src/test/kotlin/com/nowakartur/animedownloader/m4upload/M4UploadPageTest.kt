@@ -1,8 +1,9 @@
 package com.nowakartur.animedownloader.m4upload
 
+import com.nowakartur.animedownloader.download.m4upload.M4UploadPage
+import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.testUtil.SeleniumTest
 import com.nowakartur.animedownloader.testUtil.TIME_TO_WAIT_FOR_ASSERTION
-import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.awaitility.kotlin.await
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

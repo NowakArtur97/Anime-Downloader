@@ -1,4 +1,4 @@
-package com.nowakartur.animedownloader.subsciption
+package com.nowakartur.animedownloader.subsciption.entity
 
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*

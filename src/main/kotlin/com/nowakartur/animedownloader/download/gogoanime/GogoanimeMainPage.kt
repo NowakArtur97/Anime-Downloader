@@ -1,8 +1,8 @@
-package com.nowakartur.animedownloader.gogoanime
+package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.constant.HtmlConstants.HREF_ATTRIBUTE
-import com.nowakartur.animedownloader.gogoanime.GogoanimePageStyles.MAIN_PAGE_ANIME_NAME_CLASS
-import com.nowakartur.animedownloader.subsciption.SubscribedAnimeEntity
+import com.nowakartur.animedownloader.download.gogoanime.GogoanimePageStyles.MAIN_PAGE_ANIME_NAME_CLASS
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element

@@ -1,5 +1,6 @@
 package com.nowakartur.animedownloader.goload
 
+import com.nowakartur.animedownloader.download.goload.GoloadDownloadPage
 import com.nowakartur.animedownloader.testUtil.SeleniumTest
 import com.nowakartur.animedownloader.testUtil.TIME_TO_WAIT_FOR_ASSERTION
 import org.awaitility.kotlin.await

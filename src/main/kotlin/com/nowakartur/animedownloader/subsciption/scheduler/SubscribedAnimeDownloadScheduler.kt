@@ -1,6 +1,6 @@
-package com.nowakartur.animedownloader.subsciption
+package com.nowakartur.animedownloader.subsciption.scheduler
 
-import com.nowakartur.animedownloader.gogoanime.GogoanimeScraperService
+import com.nowakartur.animedownloader.download.gogoanime.GogoanimeScraperService
 import org.springframework.scheduling.annotation.Scheduled
 
 

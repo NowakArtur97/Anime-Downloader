@@ -1,7 +1,7 @@
-package com.nowakartur.animedownloader.gogoanime
+package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.constant.HtmlConstants.HREF_ATTRIBUTE
-import com.nowakartur.animedownloader.gogoanime.GogoanimePageStyles.EPISODE_PAGE_ANIME_DOWNLOAD_CLASS
+import com.nowakartur.animedownloader.download.gogoanime.GogoanimePageStyles.EPISODE_PAGE_ANIME_DOWNLOAD_CLASS
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.beans.factory.annotation.Value

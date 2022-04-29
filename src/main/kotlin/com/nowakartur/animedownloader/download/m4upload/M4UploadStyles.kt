@@ -1,4 +1,4 @@
-package com.nowakartur.animedownloader.m4upload
+package com.nowakartur.animedownloader.download.m4upload
 
 object M4UploadStyles {
 

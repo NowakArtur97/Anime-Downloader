@@ -1,4 +1,4 @@
-package com.nowakartur.animedownloader.gogoanime
+package com.nowakartur.animedownloader.download.gogoanime
 
 object GogoanimePageStyles {
 

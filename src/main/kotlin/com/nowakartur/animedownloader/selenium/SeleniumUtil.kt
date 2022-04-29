@@ -31,6 +31,11 @@ object SeleniumUtil {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
     }
 
+    fun waitFor(webDriver: ChromeDriver, element: WebElement) {
+        val wait = WebDriverWait(webDriver, WAIT_TIMEOUT_FOR_ELEMENT)
+        wait.until(ExpectedConditions.visibilityOf(element))
+    }
+
     fun clickUsingJavaScript(webDriver: ChromeDriver, element: WebElement) {
         val jsExecutor = webDriver as JavascriptExecutor
         jsExecutor.executeScript(CLICK_SCRIPT, element)

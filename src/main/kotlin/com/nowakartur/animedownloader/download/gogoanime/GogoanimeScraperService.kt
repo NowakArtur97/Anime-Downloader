@@ -1,10 +1,13 @@
-package com.nowakartur.animedownloader.gogoanime
+package com.nowakartur.animedownloader.download.gogoanime
 
-import com.nowakartur.animedownloader.goload.GoloadDownloadPage
-import com.nowakartur.animedownloader.m4upload.M4UploadPage
+import com.nowakartur.animedownloader.download.goload.GoloadDownloadPage
+import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.M4_UPLOAD_TEXT
+import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.STREAM_SB_UPLOAD_TEXT
+import com.nowakartur.animedownloader.download.m4upload.M4UploadPage
+import com.nowakartur.animedownloader.download.streamsb.StreamSbPage
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
-import com.nowakartur.animedownloader.subsciption.SubscribedAnimeEntity
-import com.nowakartur.animedownloader.subsciption.SubscribedAnimeService
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.openqa.selenium.chrome.ChromeDriver
@@ -18,6 +21,7 @@ class GogoanimeScraperService(
     private val gogoanimeEpisodePage: GogoanimeEpisodePage,
     private val goloadDownloadPage: GoloadDownloadPage,
     private val m4UploadPage: M4UploadPage,
+    private val streamSbPage: StreamSbPage,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -71,15 +75,20 @@ class GogoanimeScraperService(
 
                 goloadDownloadPage.connectToGolandPage(webDriver, goloadLink)
 
-                val m4UploadDownloadLink = goloadDownloadPage.findM4UploadDownloadLink(webDriver)!!
+                val allDownloadLinks = goloadDownloadPage.findAllDownloadLinks(webDriver)
+                val link = allDownloadLinks.first()
 
-                logger.info("Link to the episode of [${it.title}] on m4Upload: [$m4UploadDownloadLink].")
-
-                m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
-
-                logger.info("Downloading an episode of [${it.title}] from m4Upload.")
-
-                m4UploadPage.downloadEpisode(webDriver)
+                if (link.contains(M4_UPLOAD_TEXT)) {
+                    logger.info("Link to the episode of [${it.title}] on M4Upload: [$link].")
+                    m4UploadPage.connectToDownloadPage(webDriver, link)
+                    logger.info("Downloading an episode of [${it.title}] from M4Upload.")
+                    m4UploadPage.downloadEpisode(webDriver)
+                } else if (link.contains(STREAM_SB_UPLOAD_TEXT)) {
+                    logger.info("Link to the episode of [${it.title}] on StreamSB: [$link].")
+                    streamSbPage.connectToDownloadPage(webDriver, link)
+                    logger.info("Downloading an episode of [${it.title}] from StreamSB.")
+                    streamSbPage.downloadEpisode(webDriver)
+                }
 
                 SeleniumUtil.waitForFileDownload(webDriver)
 
