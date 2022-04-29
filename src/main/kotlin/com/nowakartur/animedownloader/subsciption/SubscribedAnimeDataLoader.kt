@@ -1,7 +1,5 @@
 package com.nowakartur.animedownloader.subsciption
 
-import com.nowakartur.animedownloader.subsciption.SubscribedAnimePriority.HIGH
-import com.nowakartur.animedownloader.subsciption.SubscribedAnimePriority.LOW
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -16,11 +14,20 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
         }
 
         val anime = listOf(
-            SubscribedAnimeEntity("RPG Fudousan"),
-            SubscribedAnimeEntity("Araiguma Rascal", LOW),
-            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei", HIGH),
-            SubscribedAnimeEntity("Summertime Render", HIGH),
-            SubscribedAnimeEntity("Otome Game Sekai wa Mob ni Kibishii Sekai desu", HIGH),
+//            SubscribedAnimeEntity("Cyborg Kuro"),
+//            SubscribedAnimeEntity("Chobits: Chibits", HIGH),
+//            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai", LOW),
+//            SubscribedAnimeEntity("Gaikotsu Kishi"),
+//            SubscribedAnimeEntity("Heroine Tarumono"),
+//            SubscribedAnimeEntity("Mahoutsukai Reimeiki"),
+            SubscribedAnimeEntity("Summertime Render", SubscribedAnimePriority.HIGH),
+//            SubscribedAnimeEntity("Komi-san wa, Comyushou"),
+//            SubscribedAnimeEntity("Dance Dance Danseur"),
+//            SubscribedAnimeEntity("Aharen-san wa Hakarenai"),
+//            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
+//            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de", LOW),
+//            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road", LOW),
+//            SubscribedAnimeEntity("Otome Game Sekai wa Mob ni Kibishii Sekai desu", HIGH),
 //            SubscribedAnimeEntity("Paripi Koumei", HIGH),
 //            SubscribedAnimeEntity("Kaginado Season 2", LOW),
         )

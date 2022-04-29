@@ -7,6 +7,7 @@ import com.nowakartur.animedownloader.subsciption.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.SubscribedAnimeService
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.openqa.selenium.chrome.ChromeDriver
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -52,28 +53,31 @@ class GogoanimeScraperService(
         allNewAnimeToDownload.forEach {
             val linkToAnimePage: String = gogoanimeMainPage.findLinkToEpisodes(allNewAnimeToDownloadElements, it.title)
 
-            logger.info("Connecting to episode page of: ${it.title}.")
+            logger.info("Connecting to the episode page of: [${it.title}].")
 
             val episodePage = gogoanimeEpisodePage.connectToEpisodePage(linkToAnimePage)
 
             val goloadLink = gogoanimeEpisodePage.findLinkForDownload(episodePage)
 
-            logger.info("Connecting to download page: $goloadLink.")
+            logger.info("Connecting to the download page: [$goloadLink].")
 
             subscribedAnimeService.startDownloadingAnime(it)
 
-            val webDriver = SeleniumUtil.startWebDriver()
-
-            goloadDownloadPage.connectToGolandPage(webDriver, goloadLink)
+            var webDriver: ChromeDriver? = null
 
             try {
+
+                webDriver = SeleniumUtil.startWebDriver()
+
+                goloadDownloadPage.connectToGolandPage(webDriver, goloadLink)
+
                 val m4UploadDownloadLink = goloadDownloadPage.findM4UploadDownloadLink(webDriver)!!
 
-                logger.info("Link for ${it.title} on m4Upload: $m4UploadDownloadLink.")
+                logger.info("Link to the episode of [${it.title}] on m4Upload: [$m4UploadDownloadLink].")
 
                 m4UploadPage.connectToDownloadPage(webDriver, m4UploadDownloadLink)
 
-                logger.info("Download ${it.title} from m4Upload.")
+                logger.info("Downloading an episode of [${it.title}] from m4Upload.")
 
                 m4UploadPage.downloadEpisode(webDriver)
 
@@ -81,16 +85,16 @@ class GogoanimeScraperService(
 
                 subscribedAnimeService.finishDownloadingAnime(it)
 
-                logger.info("Anime ${it.title} successfully downloaded.")
+                logger.info("The [${it.title}] episode has been successfully downloaded.")
 
             } catch (e: Exception) {
-                logger.info("Unexpected exception occurred when downloading ${it.title}.")
-
-                subscribedAnimeService.startDownloadingAnime(it)
+                logger.info("Unexpected exception occurred when downloading episode of [${it.title}].")
 
                 logger.info(e.message)
+
+                subscribedAnimeService.waitForDownload(it)
             } finally {
-                webDriver.quit()
+                webDriver?.quit()
             }
         }
     }

@@ -45,6 +45,7 @@ object SeleniumUtil {
                 logger.info("Download progress: $percentage%.")
                 percentage = getDownloadProgress(jsExecutor)
             } catch (e: Exception) {
+                logger.info("Unexpected exception occurred when checking download progress.")
                 logger.info(e.message)
                 // Nothing to do just wait
             }

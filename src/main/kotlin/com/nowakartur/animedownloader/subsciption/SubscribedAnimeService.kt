@@ -8,6 +8,11 @@ class SubscribedAnimeService(private val subscribedAnimeRepository: SubscribedAn
     fun findAllAnimeForDownload(): List<SubscribedAnimeEntity> =
         subscribedAnimeRepository.findByStatusIsOrderByPriorityDesc(SubscribedAnimeStatus.TO_DOWNLOAD)
 
+    fun waitForDownload(subscribedAnimeEntity: SubscribedAnimeEntity) {
+        subscribedAnimeEntity.waitForDownload()
+        subscribedAnimeRepository.save(subscribedAnimeEntity)
+    }
+
     fun startDownloadingAnime(subscribedAnimeEntity: SubscribedAnimeEntity) {
         subscribedAnimeEntity.startDownloading()
         subscribedAnimeRepository.save(subscribedAnimeEntity)

@@ -65,6 +65,10 @@ data class SubscribedAnimeEntity(
         return this::class.simpleName + "(id = $id , title = $title , priority = $priority , status = $status , priorityValue = $priorityValue , createdAt = $createdDate , updatedAt = $lastModifiedDate )"
     }
 
+    fun waitForDownload() {
+        status = SubscribedAnimeStatus.TO_DOWNLOAD
+    }
+
     fun startDownloading() {
         status = SubscribedAnimeStatus.IN_PROGRESS
     }
