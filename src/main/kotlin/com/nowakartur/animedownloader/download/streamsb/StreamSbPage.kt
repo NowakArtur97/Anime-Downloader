@@ -30,7 +30,11 @@ class StreamSbPage : DownloadPage {
     private fun chooseBestQuality(webDriver: ChromeDriver) {
         SeleniumUtil.waitFor(webDriver, By.tagName(TABLE_ROW_TAG))
         val tableRows = webDriver.findElementsByTagName(TABLE_ROW_TAG)
-        val bestQualityLinkRow = tableRows[tableRows.size - 2]
+        val bestQualityLinkRow = if (tableRows.size > 2) {
+            tableRows[tableRows.size - 2] // there are at least two options for the low and original quality
+        } else {
+            tableRows.last() // there is only one link for the original quality
+        }
         val bestQualityLinkTableData = bestQualityLinkRow
             .findElements(By.tagName(TABLE_DATA_TAG))
             .first()
