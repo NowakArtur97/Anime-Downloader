@@ -5,9 +5,11 @@ import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_PROGRESS_VALUE
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
+
 
 private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
 private const val WAIT_FOR_DOWNLOAD_CHECK = 5_000L
@@ -21,7 +23,10 @@ object SeleniumUtil {
 
     fun startWebDriver(): ChromeDriver {
         WebDriverManager.chromedriver().setup()
+        val options = ChromeOptions()
+        options.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
         return ChromeDriver().also {
+//        return ChromeDriver(options).also {
             it.manage().window().position = HIDDEN_POSITION
         }
     }
