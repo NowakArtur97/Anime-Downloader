@@ -2,6 +2,7 @@ package com.nowakartur.animedownloader.subsciption.entity
 
 import org.hibernate.Hibernate
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -32,7 +33,7 @@ data class SubscribedAnimeEntity(
     @Column(name = "created_date")
     var createdDate: LocalDateTime? = null
 
-    @CreatedDate
+    @LastModifiedDate
     @Column(name = "last_modified_date")
     var lastModifiedDate: LocalDateTime? = null
 
