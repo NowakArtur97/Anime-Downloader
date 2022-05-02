@@ -18,5 +18,5 @@ app:
   scheduler:
     enabled: true
     initialDelay: 0
-    fixedDelay: 10000
-#    fixedDelay: 60000
+    #    fixedDelay: 10000
+    fixedDelay: 60000

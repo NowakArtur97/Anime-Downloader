@@ -16,7 +16,7 @@ class StreamSbPageTest {
     }
 
     @Test
-    fun `when check file size with two quality from options StreamSb should return correct value`() {
+    fun `when check file size with two quality options from StreamSb should return correct value`() {
         val streamSbUrl = "https://sbplay2.xyz/d/n9oomq4pecsi"
         val expectedFileSize = 113.5f
 

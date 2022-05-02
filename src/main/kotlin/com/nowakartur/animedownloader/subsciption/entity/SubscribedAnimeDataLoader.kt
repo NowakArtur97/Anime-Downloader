@@ -19,7 +19,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Kaginado Season 2", LOW),
 //            SubscribedAnimeEntity("Cyborg Kuro"),
 //            SubscribedAnimeEntity("Chobits: Chibits", HIGH),
-            SubscribedAnimeEntity("Cap Kakumei Bottleman DX", HIGH),
+//            SubscribedAnimeEntity("Cap Kakumei Bottleman DX", HIGH),
 
 //            MONDAY
             SubscribedAnimeEntity("Kyoukai Senki Part 2", LOW),

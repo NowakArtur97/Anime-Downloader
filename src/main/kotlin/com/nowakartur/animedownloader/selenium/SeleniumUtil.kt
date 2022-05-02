@@ -23,11 +23,10 @@ object SeleniumUtil {
 
     fun startWebDriver(): ChromeDriver {
         WebDriverManager.chromedriver().setup()
-        // TODO
         val options = ChromeOptions().also {
             it.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
         }
-        return ChromeDriver().also {
+        return ChromeDriver(options).also {
             it.manage().window().position = HIDDEN_POSITION
         }
     }
