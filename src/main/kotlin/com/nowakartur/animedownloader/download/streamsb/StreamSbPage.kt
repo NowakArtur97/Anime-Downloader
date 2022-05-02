@@ -8,15 +8,32 @@ import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.CONTENT_CLASS
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.DOWNLOAD_BUTTON_CLASS
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
+import org.jsoup.Jsoup
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 
-@Component
-class StreamSbPage : DownloadPage {
+object StreamSbPage : DownloadPage {
 
     private val logger = LoggerFactory.getLogger(javaClass)
+
+    override fun findFileSize(url: String): Float {
+        val tableRows = Jsoup
+            .connect(url)
+            .get()
+            .getElementsByClass(TABLE_ROW_TAG)
+        val bestQualityRow = if (tableRows.size > 2) {
+            tableRows[tableRows.size - 2] // there are at least two options for the low and original quality
+        } else {
+            tableRows.last() // there is only one link for the original quality
+        }!!
+        return bestQualityRow
+            .getElementsByTag(TABLE_DATA_TAG)
+            .first()!!
+            .text()
+            .substringAfter(", ").substringBefore(" MB)")
+            .toFloat()
+    }
 
     override fun downloadEpisode(webDriver: ChromeDriver) {
 

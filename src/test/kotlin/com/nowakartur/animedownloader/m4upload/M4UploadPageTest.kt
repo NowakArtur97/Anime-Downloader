@@ -1,27 +1,18 @@
 package com.nowakartur.animedownloader.m4upload
 
 import com.nowakartur.animedownloader.download.m4upload.M4UploadPage
-import com.nowakartur.animedownloader.selenium.SeleniumUtil
-import com.nowakartur.animedownloader.testUtil.SeleniumTest
-import com.nowakartur.animedownloader.testUtil.TIME_TO_WAIT_FOR_ASSERTION
-import org.awaitility.kotlin.await
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import java.util.concurrent.TimeUnit
 
-class M4UploadPageTest(@Autowired private val m4UploadPage: M4UploadPage) : SeleniumTest() {
+class M4UploadPageTest {
 
     @Test
-    fun whenDownloadFileFromM4UploadShouldStartDownloadingFile() {
+    fun `when check file size from M4Upload should return correct value`() {
         val m4UploadUrl = "https://www.mp4upload.com/6gy7hh1itnhe"
-        m4UploadPage.connectToDownloadPage(webDriver, m4UploadUrl)
+        val expectedFileSize = 250.9f
 
-        m4UploadPage.downloadEpisode(webDriver)
+        val actualFileSize = M4UploadPage.findFileSize(m4UploadUrl)
 
-        SeleniumUtil.switchToDownloadTab(webDriver)
-        await.atMost(TIME_TO_WAIT_FOR_ASSERTION, TimeUnit.SECONDS).untilAsserted {
-            assertTrue(SeleniumUtil.isDownloading(webDriver))
-        }
+        assertEquals(expectedFileSize, actualFileSize)
     }
 }

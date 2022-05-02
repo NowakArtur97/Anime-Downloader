@@ -9,4 +9,6 @@ interface DownloadPage {
     }
 
     fun downloadEpisode(webDriver: ChromeDriver)
+
+    fun findFileSize(url: String): Float
 }

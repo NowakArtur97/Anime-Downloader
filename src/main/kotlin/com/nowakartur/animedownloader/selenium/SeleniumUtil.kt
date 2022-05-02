@@ -26,7 +26,6 @@ object SeleniumUtil {
         val options = ChromeOptions()
         options.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
         return ChromeDriver().also {
-//        return ChromeDriver(options).also {
             it.manage().window().position = HIDDEN_POSITION
         }
     }
