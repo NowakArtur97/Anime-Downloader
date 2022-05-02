@@ -6,7 +6,7 @@ object GoloadPageStyles {
 
     const val DOWNLOAD_CLASS = "dowload"
 
-    const val M4_UPLOAD_TEXT = "mp4upload"
+    const val MP4_UPLOAD_TEXT = "mp4upload"
 
     const val STREAM_SB_UPLOAD_TEXT = "sbplay2"
 }

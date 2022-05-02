@@ -1,17 +1,17 @@
-package com.nowakartur.animedownloader.download.m4upload
+package com.nowakartur.animedownloader.download.mp4upload
 
 import com.nowakartur.animedownloader.download.common.DownloadPage
-import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.AFTER_SIZE_TEXT
-import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.BEFORE_SIZE_TEXT
-import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.DOWNLOAD_BUTTON_CLASS
-import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.DOWNLOAD_PAGE_SUBMIT_BUTTON_ID
-import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.FILE_SIZE_TEXT
+import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.AFTER_SIZE_TEXT
+import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.BEFORE_SIZE_TEXT
+import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.DOWNLOAD_BUTTON_CLASS
+import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.DOWNLOAD_PAGE_SUBMIT_BUTTON_ID
+import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.FILE_SIZE_TEXT
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 
-object M4UploadPage : DownloadPage {
+object Mp4UploadPage : DownloadPage {
 
     override fun downloadEpisode(webDriver: ChromeDriver) {
         clickGoToDownloadPageButton(webDriver)

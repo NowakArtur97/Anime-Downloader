@@ -5,10 +5,8 @@ import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.DOWNLOAD_
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
-import org.springframework.stereotype.Service
 
-@Service
-class GoloadDownloadPage {
+object GoloadDownloadPage {
 
     fun connectToGolandPage(webDriver: ChromeDriver, downloadUrl: String): ChromeDriver {
         webDriver.get(downloadUrl)

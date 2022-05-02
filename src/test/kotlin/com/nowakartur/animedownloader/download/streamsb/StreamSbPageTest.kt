@@ -1,6 +1,5 @@
-package com.nowakartur.animedownloader.streamsb
+package com.nowakartur.animedownloader.download.streamsb
 
-import com.nowakartur.animedownloader.download.streamsb.StreamSbPage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

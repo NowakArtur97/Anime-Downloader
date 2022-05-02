@@ -1,6 +1,5 @@
-package com.nowakartur.animedownloader.streamsb
+package com.nowakartur.animedownloader.download.mp4upload
 
-import com.nowakartur.animedownloader.download.streamsb.StreamSbPage
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.testUtil.SeleniumTest
 import com.nowakartur.animedownloader.testUtil.TIME_TO_WAIT_FOR_ASSERTION
@@ -9,14 +8,15 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.util.concurrent.TimeUnit
 
-class StreamSbPageSeleniumTest : SeleniumTest() {
+class Mp4UploadPageSeleniumTest : SeleniumTest() {
+
 
     @Test
-    fun `when download file from StreamSb should start downloading file`() {
-        val streamSbUrl = "https://sbplay2.xyz/d/j094za1pv1wg"
-        StreamSbPage.connectToDownloadPage(webDriver, streamSbUrl)
+    fun `when download file from Mp4Upload should start downloading file`() {
+        val mp4UploadUrl = "https://www.mp4upload.com/6gy7hh1itnhe"
+        Mp4UploadPage.connectToDownloadPage(webDriver, mp4UploadUrl)
 
-        StreamSbPage.downloadEpisode(webDriver)
+        Mp4UploadPage.downloadEpisode(webDriver)
 
         SeleniumUtil.switchToDownloadTab(webDriver)
         await.atMost(TIME_TO_WAIT_FOR_ASSERTION, TimeUnit.SECONDS).untilAsserted {

@@ -1,6 +1,6 @@
-package com.nowakartur.animedownloader.download.m4upload
+package com.nowakartur.animedownloader.download.mp4upload
 
-object M4UploadStyles {
+object Mp4UploadStyles {
 
     const val BEFORE_SIZE_TEXT = "("
     const val AFTER_SIZE_TEXT = " MB)"
