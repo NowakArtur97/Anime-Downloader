@@ -5,23 +5,22 @@ import com.nowakartur.animedownloader.constant.HtmlConstants.SPAN_TAG
 import com.nowakartur.animedownloader.constant.HtmlConstants.TABLE_DATA_TAG
 import com.nowakartur.animedownloader.constant.HtmlConstants.TABLE_ROW_TAG
 import com.nowakartur.animedownloader.download.common.DownloadPage
-import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.CONTENT_CLASS
+import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.AFTER_SIZE_TEXT
+import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.BEFORE_SIZE_TEXT
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.DOWNLOAD_BUTTON_CLASS
+import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.TABLE_CLASS
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
-import org.slf4j.LoggerFactory
 
 object StreamSbPage : DownloadPage {
 
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     override fun findFileSize(url: String): Float {
-        val tableRows = Jsoup
+        val page = Jsoup
             .connect(url)
             .get()
-            .getElementsByClass(TABLE_ROW_TAG)
+        val tableRows = page.getElementsByTag(TABLE_ROW_TAG)
         val bestQualityRow = if (tableRows.size > 2) {
             tableRows[tableRows.size - 2] // there are at least two options for the low and original quality
         } else {
@@ -29,9 +28,10 @@ object StreamSbPage : DownloadPage {
         }!!
         return bestQualityRow
             .getElementsByTag(TABLE_DATA_TAG)
-            .first()!!
+            .last()!!
             .text()
-            .substringAfter(", ").substringBefore(" MB)")
+            .substringAfter(BEFORE_SIZE_TEXT)
+            .replace(AFTER_SIZE_TEXT, "")
             .toFloat()
     }
 
@@ -66,11 +66,10 @@ object StreamSbPage : DownloadPage {
     }
 
     private fun clickSecondDownloadButton(webDriver: ChromeDriver) {
-        SeleniumUtil.waitFor(webDriver, By.className(CONTENT_CLASS))
+        SeleniumUtil.waitFor(webDriver, By.className(TABLE_CLASS))
         val spanElementWithLink = webDriver.findElementsByTagName(SPAN_TAG).first()
         SeleniumUtil.waitFor(webDriver, spanElementWithLink)
         val downloadLink = spanElementWithLink.findElement(By.tagName(ANCHOR_TAG))
         SeleniumUtil.clickUsingJavaScript(webDriver, downloadLink)
-        logger.info(downloadLink.text)
     }
 }

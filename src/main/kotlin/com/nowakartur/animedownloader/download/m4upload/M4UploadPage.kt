@@ -1,6 +1,8 @@
 package com.nowakartur.animedownloader.download.m4upload
 
 import com.nowakartur.animedownloader.download.common.DownloadPage
+import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.AFTER_SIZE_TEXT
+import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.BEFORE_SIZE_TEXT
 import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.DOWNLOAD_BUTTON_CLASS
 import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.DOWNLOAD_PAGE_SUBMIT_BUTTON_ID
 import com.nowakartur.animedownloader.download.m4upload.M4UploadStyles.FILE_SIZE_TEXT
@@ -22,7 +24,8 @@ object M4UploadPage : DownloadPage {
         .getElementsContainingText(FILE_SIZE_TEXT)
         .first()!!
         .text()
-        .substringAfter("(").substringBefore(" MB)")
+        .substringAfter(BEFORE_SIZE_TEXT)
+        .substringBefore(AFTER_SIZE_TEXT)
         .toFloat()
 
 
