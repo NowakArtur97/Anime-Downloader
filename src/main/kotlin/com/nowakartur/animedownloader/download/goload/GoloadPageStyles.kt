@@ -9,4 +9,6 @@ object GoloadPageStyles {
     const val MP4_UPLOAD_TEXT = "mp4upload"
 
     const val STREAM_SB_UPLOAD_TEXT = "sbplay2"
+
+    const val DOOD_STREAM_UPLOAD_TEXT = "dood"
 }

@@ -1,5 +1,7 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.LOW
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.*
 import org.hibernate.Hibernate
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -15,11 +17,11 @@ data class SubscribedAnimeEntity(
     val title: String,
 
     @Column(name = "priority", nullable = false)
-    private val priority: SubscribedAnimePriority = SubscribedAnimePriority.MEDIUM,
+    private val priority: SubscribedAnimePriority = LOW,
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private var status: SubscribedAnimeStatus = SubscribedAnimeStatus.TO_DOWNLOAD,
+    private var status: SubscribedAnimeStatus = TO_DOWNLOAD,
 
     @Transient
     var priorityValue: Int = priority.value,
@@ -58,14 +60,14 @@ data class SubscribedAnimeEntity(
     }
 
     fun waitForDownload() {
-        status = SubscribedAnimeStatus.TO_DOWNLOAD
+        status = TO_DOWNLOAD
     }
 
     fun startDownloading() {
-        status = SubscribedAnimeStatus.IN_PROGRESS
+        status = IN_PROGRESS
     }
 
     fun finishDownloading() {
-        status = SubscribedAnimeStatus.DOWNLOADED
+        status = DOWNLOADED
     }
 }

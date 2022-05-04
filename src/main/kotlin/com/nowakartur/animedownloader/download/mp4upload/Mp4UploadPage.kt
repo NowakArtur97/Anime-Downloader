@@ -13,11 +13,6 @@ import org.openqa.selenium.chrome.ChromeDriver
 
 object Mp4UploadPage : DownloadPage {
 
-    override fun downloadEpisode(webDriver: ChromeDriver) {
-        clickGoToDownloadPageButton(webDriver)
-        clickDownloadButton(webDriver)
-    }
-
     override fun findFileSize(url: String): Float = Jsoup
         .connect(url)
         .get()
@@ -28,6 +23,10 @@ object Mp4UploadPage : DownloadPage {
         .substringBefore(AFTER_SIZE_TEXT)
         .toFloat()
 
+    override fun downloadEpisode(webDriver: ChromeDriver) {
+        clickGoToDownloadPageButton(webDriver)
+        clickDownloadButton(webDriver)
+    }
 
     private fun clickGoToDownloadPageButton(webDriver: ChromeDriver) {
         SeleniumUtil.waitFor(webDriver, By.id(DOWNLOAD_PAGE_SUBMIT_BUTTON_ID))

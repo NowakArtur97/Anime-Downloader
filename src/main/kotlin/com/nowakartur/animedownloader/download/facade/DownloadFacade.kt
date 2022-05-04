@@ -1,6 +1,8 @@
 package com.nowakartur.animedownloader.download.facade
 
+import com.nowakartur.animedownloader.download.doodstream.DoodStreamPage
 import com.nowakartur.animedownloader.download.goload.GoloadDownloadPage
+import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.DOOD_STREAM_UPLOAD_TEXT
 import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.MP4_UPLOAD_TEXT
 import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.STREAM_SB_UPLOAD_TEXT
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadPage
@@ -19,7 +21,8 @@ object DownloadFacade {
 
         val allDownloadLinks = GoloadDownloadPage.findAllDownloadLinks(webDriver)
 
-        val supportedDownloadLinksTexts = listOf(MP4_UPLOAD_TEXT, STREAM_SB_UPLOAD_TEXT)
+        val supportedDownloadLinksTexts = listOf(DOOD_STREAM_UPLOAD_TEXT)
+//        val supportedDownloadLinksTexts = listOf(MP4_UPLOAD_TEXT, STREAM_SB_UPLOAD_TEXT, DOOD_STREAM_UPLOAD_TEXT)
         val downloadInfo: List<DownloadInfo> = allDownloadLinks
             .filter { supportedDownloadLinksTexts.any { text -> it.contains(text) } }
             .map {
@@ -27,6 +30,8 @@ object DownloadFacade {
                     DownloadInfo(Mp4UploadPage, Mp4UploadPage.findFileSize(it), it)
                 } else if (it.contains(STREAM_SB_UPLOAD_TEXT)) {
                     DownloadInfo(StreamSbPage, StreamSbPage.findFileSize(it), it)
+                } else if (it.contains(DOOD_STREAM_UPLOAD_TEXT)) {
+                    DownloadInfo(DoodStreamPage, DoodStreamPage.findFileSize(it), it)
                 } else {
                     throw InvalidArgumentException("Download website is not supported for link: [$it].")
                 }
