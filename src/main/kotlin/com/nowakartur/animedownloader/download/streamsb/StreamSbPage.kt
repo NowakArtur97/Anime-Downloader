@@ -12,7 +12,7 @@ import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.TABLE_CLA
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
 import org.openqa.selenium.By
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.remote.RemoteWebDriver
 
 object StreamSbPage : DownloadPage {
 
@@ -35,7 +35,7 @@ object StreamSbPage : DownloadPage {
             .toFloat()
     }
 
-    override fun downloadEpisode(webDriver: ChromeDriver) {
+    override fun downloadEpisode(webDriver: RemoteWebDriver) {
 
         chooseBestQuality(webDriver)
 
@@ -44,7 +44,7 @@ object StreamSbPage : DownloadPage {
         clickSecondDownloadButton(webDriver)
     }
 
-    private fun chooseBestQuality(webDriver: ChromeDriver) {
+    private fun chooseBestQuality(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.tagName(TABLE_ROW_TAG))
         val tableRows = webDriver.findElementsByTagName(TABLE_ROW_TAG)
         val bestQualityLinkRow = if (tableRows.size > 2) {
@@ -59,13 +59,13 @@ object StreamSbPage : DownloadPage {
         SeleniumUtil.clickUsingJavaScript(webDriver, bestQualityLink)
     }
 
-    private fun clickFirstDownloadButton(webDriver: ChromeDriver) {
+    private fun clickFirstDownloadButton(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.className(DOWNLOAD_BUTTON_CLASS))
         val downloadButton = webDriver.findElementByClassName(DOWNLOAD_BUTTON_CLASS)
         SeleniumUtil.clickUsingJavaScript(webDriver, downloadButton)
     }
 
-    private fun clickSecondDownloadButton(webDriver: ChromeDriver) {
+    private fun clickSecondDownloadButton(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.className(TABLE_CLASS))
         val spanElementWithLink = webDriver.findElementsByTagName(SPAN_TAG).first()
         SeleniumUtil.waitFor(webDriver, spanElementWithLink)

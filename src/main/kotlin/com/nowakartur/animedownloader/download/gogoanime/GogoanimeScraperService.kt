@@ -7,7 +7,7 @@ import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -61,7 +61,7 @@ class GogoanimeScraperService(
 
             subscribedAnimeService.startDownloadingAnime(it)
 
-            var webDriver: ChromeDriver? = null
+            var webDriver: RemoteWebDriver? = null
 
             try {
 

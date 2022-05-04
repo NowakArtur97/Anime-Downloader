@@ -6,10 +6,10 @@ import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
-
 
 private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
 private const val WAIT_FOR_DOWNLOAD_CHECK = 5_000L
@@ -21,27 +21,41 @@ object SeleniumUtil {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun startWebDriver(): ChromeDriver {
+    fun startWebDriver(): RemoteWebDriver {
         WebDriverManager.chromedriver().setup()
         val options = ChromeOptions().also {
-            it.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
+            it.setExperimentalOption(
+                "excludeSwitches", listOf(
+                    "disable-popup-blocking",
+                    "enable-automation"
+                )
+            ) // disable all popups
+            it.setCapability("useAutomationExtension", false)
+            it.addArguments(
+                "user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.94 Chrome/37.0.2062.94 Safari/537.36",
+                "--disable-blink-features=AutomationControlled",
+                "--disable-dev-shm-usage",
+                "disable-infobars",
+//                "--single-process",
+//                "--no-sandbox",
+            )
         }
         return ChromeDriver(options).also {
-//            it.manage().window().position = HIDDEN_POSITION
+            it.manage().window().position = HIDDEN_POSITION
         }
     }
 
-    fun waitFor(webDriver: ChromeDriver, by: By) {
+    fun waitFor(webDriver: RemoteWebDriver, by: By) {
         val wait = WebDriverWait(webDriver, WAIT_TIMEOUT_FOR_ELEMENT)
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
     }
 
-    fun waitFor(webDriver: ChromeDriver, element: WebElement) {
+    fun waitFor(webDriver: RemoteWebDriver, element: WebElement) {
         val wait = WebDriverWait(webDriver, WAIT_TIMEOUT_FOR_ELEMENT)
         wait.until(ExpectedConditions.visibilityOf(element))
     }
 
-    fun clickUsingJavaScript(webDriver: ChromeDriver, element: WebElement) {
+    fun clickUsingJavaScript(webDriver: RemoteWebDriver, element: WebElement) {
         val jsExecutor = webDriver as JavascriptExecutor
         jsExecutor.executeScript(CLICK_SCRIPT, element)
     }
@@ -63,7 +77,7 @@ object SeleniumUtil {
         }
     }
 
-    fun isDownloading(webDriver: ChromeDriver): Boolean = getDownloadProgress(webDriver) > 0
+    fun isDownloading(webDriver: RemoteWebDriver): Boolean = getDownloadProgress(webDriver) > 0
 
     fun switchToDownloadTab(webDriver: WebDriver) {
         for (winHandle in webDriver.windowHandles) {

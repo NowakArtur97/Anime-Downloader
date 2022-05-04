@@ -9,7 +9,7 @@ import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.FILE_SI
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
 import org.openqa.selenium.By
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.remote.RemoteWebDriver
 
 object Mp4UploadPage : DownloadPage {
 
@@ -23,18 +23,18 @@ object Mp4UploadPage : DownloadPage {
         .substringBefore(AFTER_SIZE_TEXT)
         .toFloat()
 
-    override fun downloadEpisode(webDriver: ChromeDriver) {
+    override fun downloadEpisode(webDriver: RemoteWebDriver) {
         clickGoToDownloadPageButton(webDriver)
         clickDownloadButton(webDriver)
     }
 
-    private fun clickGoToDownloadPageButton(webDriver: ChromeDriver) {
+    private fun clickGoToDownloadPageButton(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.id(DOWNLOAD_PAGE_SUBMIT_BUTTON_ID))
         val downloadPageRedirectButton = webDriver.findElementById(DOWNLOAD_PAGE_SUBMIT_BUTTON_ID)
         SeleniumUtil.clickUsingJavaScript(webDriver, downloadPageRedirectButton)
     }
 
-    private fun clickDownloadButton(webDriver: ChromeDriver) {
+    private fun clickDownloadButton(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.className(DOWNLOAD_BUTTON_CLASS))
         val downloadButton = webDriver.findElementByClassName(DOWNLOAD_BUTTON_CLASS)
         downloadButton.click()

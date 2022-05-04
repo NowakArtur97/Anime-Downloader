@@ -6,7 +6,7 @@ import org.awaitility.kotlin.await
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
 import java.util.concurrent.TimeUnit
@@ -17,7 +17,7 @@ const val TIME_TO_WAIT_FOR_ASSERTION = 30L
 @TestPropertySource(properties = ["app.scheduler.enabled=false"])
 class SeleniumTest {
 
-    lateinit var webDriver: ChromeDriver
+    lateinit var webDriver: RemoteWebDriver
 
     @BeforeEach
     fun initializeWebDriver() {
@@ -28,7 +28,6 @@ class SeleniumTest {
     fun closeWebDriver() {
         webDriver.quit()
     }
-
 
     fun processTest(downloadPage: DownloadPage, url: String) {
         downloadPage.connectToDownloadPage(webDriver, url)

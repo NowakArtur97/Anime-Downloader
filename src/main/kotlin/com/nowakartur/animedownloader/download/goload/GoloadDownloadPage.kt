@@ -4,16 +4,15 @@ import com.nowakartur.animedownloader.constant.HtmlConstants
 import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.DOWNLOAD_CLASS
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.openqa.selenium.By
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.remote.RemoteWebDriver
 
 object GoloadDownloadPage {
 
-    fun connectToGolandPage(webDriver: ChromeDriver, downloadUrl: String): ChromeDriver {
+    fun connectToGolandPage(webDriver: RemoteWebDriver, downloadUrl: String) {
         webDriver.get(downloadUrl)
-        return webDriver
     }
 
-    fun findAllDownloadLinks(webDriver: ChromeDriver): List<String> {
+    fun findAllDownloadLinks(webDriver: RemoteWebDriver): List<String> {
         SeleniumUtil.waitFor(webDriver, By.className(DOWNLOAD_CLASS))
         return webDriver.findElementsByClassName(GoloadPageStyles.DOWNLOADS_WRAPPER_CLASS)
             .last()

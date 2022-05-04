@@ -1,6 +1,5 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
-import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.HIGH
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -29,14 +28,14 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Tomodachi Game", HIGH),
 
 //            WEDNESDAY
-            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
+//            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
             SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
             SubscribedAnimeEntity("RPG Fudousan"),
 //            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
 
 //            THURSDAY
-            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),
-            SubscribedAnimeEntity("Paripi Koumei", HIGH),
+//            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),
+//            SubscribedAnimeEntity("Paripi Koumei", HIGH),
 //            SubscribedAnimeEntity("Gaikotsu Kishi, MEDIUM),
 //            SubscribedAnimeEntity("Heroine Tarumono, MEDIUM),
 //            SubscribedAnimeEntity("Summertime Render", HIGH),
