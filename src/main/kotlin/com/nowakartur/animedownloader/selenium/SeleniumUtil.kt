@@ -27,7 +27,7 @@ object SeleniumUtil {
             it.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
         }
         return ChromeDriver(options).also {
-            it.manage().window().position = HIDDEN_POSITION
+//            it.manage().window().position = HIDDEN_POSITION
         }
     }
 

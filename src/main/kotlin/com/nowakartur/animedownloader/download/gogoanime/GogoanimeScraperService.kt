@@ -4,6 +4,7 @@ import com.nowakartur.animedownloader.download.facade.DownloadFacade
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
+import org.apache.commons.lang3.exception.ExceptionUtils
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.openqa.selenium.chrome.ChromeDriver
@@ -75,9 +76,10 @@ class GogoanimeScraperService(
                 logger.info("The [${it.title}] episode has been successfully downloaded.")
 
             } catch (e: Exception) {
-                logger.info("Unexpected exception occurred when downloading episode of [${it.title}].")
-
+                logger.error("Unexpected exception occurred when downloading episode of [${it.title}].")
                 logger.info(e.message)
+                val stackTrace: String = ExceptionUtils.getStackTrace(e)
+                logger.error(stackTrace)
 
                 subscribedAnimeService.waitForDownload(it)
             } finally {
