@@ -10,7 +10,5 @@ object GoloadPageStyles {
 
     const val STREAM_SB_TEXT = "sbplay2"
 
-    const val DOOD_STREAM_TEXT = "dood"
-
     const val X_STREAM_CDN_TEXT = "fembed-hd"
 }

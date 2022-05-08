@@ -1,8 +1,6 @@
 package com.nowakartur.animedownloader.download.facade
 
-import com.nowakartur.animedownloader.download.doodstream.DoodStreamPage
 import com.nowakartur.animedownloader.download.goload.GoloadDownloadPage
-import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.DOOD_STREAM_TEXT
 import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.MP4_UPLOAD_TEXT
 import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.STREAM_SB_TEXT
 import com.nowakartur.animedownloader.download.goload.GoloadPageStyles.X_STREAM_CDN_TEXT
@@ -23,8 +21,7 @@ object DownloadFacade {
 
         val allDownloadLinks = GoloadDownloadPage.findAllDownloadLinks(webDriver)
 
-        val supportedDownloadLinksTexts = listOf(X_STREAM_CDN_TEXT)
-//        val supportedDownloadLinksTexts = listOf(MP4_UPLOAD_TEXT, STREAM_SB_TEXT)
+        val supportedDownloadLinksTexts = listOf(MP4_UPLOAD_TEXT, STREAM_SB_TEXT, X_STREAM_CDN_TEXT)
         val downloadInfo: List<DownloadInfo> = allDownloadLinks
             .filter { supportedDownloadLinksTexts.any { text -> it.contains(text) } }
             .map {
@@ -32,8 +29,6 @@ object DownloadFacade {
                     DownloadInfo(Mp4UploadPage, Mp4UploadPage.findFileSize(it), it)
                 } else if (it.contains(STREAM_SB_TEXT)) {
                     DownloadInfo(StreamSbPage, StreamSbPage.findFileSize(it), it)
-                } else if (it.contains(DOOD_STREAM_TEXT)) {
-                    DownloadInfo(DoodStreamPage, DoodStreamPage.findFileSize(it), it)
                 } else if (it.contains(X_STREAM_CDN_TEXT)) {
                     DownloadInfo(XStreamCdnPage, XStreamCdnPage.findFileSize(it), it)
                 } else {
