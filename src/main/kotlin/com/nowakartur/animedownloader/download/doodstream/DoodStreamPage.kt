@@ -1,7 +1,7 @@
 package com.nowakartur.animedownloader.download.doodstream
 
 import com.nowakartur.animedownloader.constant.HtmlConstants.ANCHOR_TAG
-import com.nowakartur.animedownloader.constant.HtmlConstants.HREF_ATTRIBUTE
+import com.nowakartur.animedownloader.constant.HtmlConstants.SPAN_TAG
 import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.download.doodstream.DoodStreamStyles.AFTER_SIZE_TEXT
 import com.nowakartur.animedownloader.download.doodstream.DoodStreamStyles.DOWNLOAD_CONTENT_CLASS
@@ -38,8 +38,8 @@ object DoodStreamPage : DownloadPage {
         SeleniumUtil.waitFor(webDriver, By.className(REDIRECT_CONTENT_CLASS))
         val downloadLink = webDriver.findElementByClassName(REDIRECT_CONTENT_CLASS)
             .findElement(By.tagName(ANCHOR_TAG))
-            .getAttribute(HREF_ATTRIBUTE)
-        webDriver.get(downloadLink)
+            .findElement(By.tagName(SPAN_TAG))
+        SeleniumUtil.clickUsingJavaScript(webDriver, downloadLink)
     }
 
     private fun clickDownloadButton(webDriver: RemoteWebDriver) {

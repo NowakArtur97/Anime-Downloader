@@ -13,9 +13,9 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
             return
         }
 
-        val anime = listOf(
+        val anime = listOf<SubscribedAnimeEntity>(
 //            SubscribedAnimeEntity("Kaginado Season 2"),
-//            SubscribedAnimeEntity("Cyborg Kuro, MEDIUM),
+//            SubscribedAnimeEntity("Cyborg Kuro", MEDIUM),
 //            SubscribedAnimeEntity("Chobits: Chibits", HIGH),
 //            SubscribedAnimeEntity("Cap Kakumei Bottleman DX", HIGH),
 
@@ -24,33 +24,33 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Healer Girl", HIGH),
 
 //            TUESDAY
-//            SubscribedAnimeEntity("Yuusha, Yamemasu, MEDIUM),
+//            SubscribedAnimeEntity("Yuusha, Yamemasu", MEDIUM),
 //            SubscribedAnimeEntity("Tomodachi Game", HIGH),
 
 //            WEDNESDAY
 //            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
-            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
-            SubscribedAnimeEntity("RPG Fudousan"),
+//            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
+//            SubscribedAnimeEntity("RPG Fudousan"),
 //            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
 
 //            THURSDAY
 //            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),
 //            SubscribedAnimeEntity("Paripi Koumei", HIGH),
-//            SubscribedAnimeEntity("Gaikotsu Kishi, MEDIUM),
-//            SubscribedAnimeEntity("Heroine Tarumono, MEDIUM),
+//            SubscribedAnimeEntity("Gaikotsu Kishi"),
+//            SubscribedAnimeEntity("Heroine Tarumono", MEDIUM),
 //            SubscribedAnimeEntity("Summertime Render", HIGH),
-//            SubscribedAnimeEntity("Mahoutsukai Reimeiki, MEDIUM),
+//            SubscribedAnimeEntity("Mahoutsukai Reimeiki"),
 
 //            FRIDAY
 //            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
 //            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
 //            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
-//            SubscribedAnimeEntity("Aharen-san wa Hakarenai, MEDIUM),
-//            SubscribedAnimeEntity("Dance Dance Danseur, MEDIUM),
+//            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
+//            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
 
 //            SATURDAY
 //            SubscribedAnimeEntity("Love All Play"),
-//            SubscribedAnimeEntity("Ao Ashi, MEDIUM),
+//            SubscribedAnimeEntity("Ao Ashi", MEDIUM),
 //            SubscribedAnimeEntity("Spy x Family", HIGH),
 //            SubscribedAnimeEntity("Gunjou no Fanfare"),
 //            SubscribedAnimeEntity("Kunoichi Tsubaki no Mune no Uchi"),

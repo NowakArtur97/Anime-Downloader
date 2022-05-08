@@ -80,6 +80,7 @@ class GogoanimeScraperService(
                 logger.info(e.message)
                 val stackTrace: String = ExceptionUtils.getStackTrace(e)
                 logger.error(stackTrace)
+                logger.error(webDriver?.pageSource)
 
                 subscribedAnimeService.waitForDownload(it)
             } finally {

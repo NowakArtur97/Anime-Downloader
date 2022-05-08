@@ -24,21 +24,25 @@ object SeleniumUtil {
     fun startWebDriver(): RemoteWebDriver {
         WebDriverManager.chromedriver().setup()
         val options = ChromeOptions().also {
-            it.setExperimentalOption(
-                "excludeSwitches", listOf(
-                    "disable-popup-blocking",
-                    "enable-automation"
-                )
-            ) // disable all popups
-            it.setCapability("useAutomationExtension", false)
-            it.addArguments(
-                "user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.94 Chrome/37.0.2062.94 Safari/537.36",
-                "--disable-blink-features=AutomationControlled",
-                "--disable-dev-shm-usage",
-                "disable-infobars",
-//                "--single-process",
+            it.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
+
+//            it.setExperimentalOption(
+//                "excludeSwitches", listOf("enable-automation")
+//            ) // disable all popups
+//            it.setExperimentalOption("useAutomationExtension", false)
+//            it.addArguments(
 //                "--no-sandbox",
-            )
+//                "start-maximized",
+//                "enable-automation",
+//                "--disable-infobars",
+//                "--disable-dev-shm-usage",
+//                "--disable-browser-side-navigation",
+//                "--remote-debugging-port=9222",
+//                "--disable-gpu",
+//                "--log-level=3",
+//                "user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+//                "--disable-blink-features=AutomationControlled",
+//            )
         }
         return ChromeDriver(options).also {
             it.manage().window().position = HIDDEN_POSITION
