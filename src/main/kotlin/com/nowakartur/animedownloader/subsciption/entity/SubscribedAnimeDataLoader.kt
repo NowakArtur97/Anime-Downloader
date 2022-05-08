@@ -1,5 +1,6 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.HIGH
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -13,7 +14,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
             return
         }
 
-        val anime = listOf<SubscribedAnimeEntity>(
+        val anime = listOf(
 //            SubscribedAnimeEntity("Kaginado Season 2"),
 //            SubscribedAnimeEntity("Cyborg Kuro", MEDIUM),
 //            SubscribedAnimeEntity("Chobits: Chibits", HIGH),
@@ -31,7 +32,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
 //            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
 //            SubscribedAnimeEntity("RPG Fudousan"),
-//            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
+            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
 
 //            THURSDAY
 //            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),

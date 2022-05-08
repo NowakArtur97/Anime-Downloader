@@ -2,6 +2,7 @@ package com.nowakartur.animedownloader.selenium
 
 import com.nowakartur.animedownloader.selenium.JsScripts.CLICK_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
+import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_VIDEO_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
@@ -62,6 +63,11 @@ object SeleniumUtil {
     fun clickUsingJavaScript(webDriver: RemoteWebDriver, element: WebElement) {
         val jsExecutor = webDriver as JavascriptExecutor
         jsExecutor.executeScript(CLICK_SCRIPT, element)
+    }
+
+    fun downloadVideoUsingJavaScript(webDriver: RemoteWebDriver) {
+        val jsExecutor = webDriver as JavascriptExecutor
+        jsExecutor.executeScript(DOWNLOAD_VIDEO_SCRIPT.trimMargin())
     }
 
     fun waitForFileDownload(driver: WebDriver) {
