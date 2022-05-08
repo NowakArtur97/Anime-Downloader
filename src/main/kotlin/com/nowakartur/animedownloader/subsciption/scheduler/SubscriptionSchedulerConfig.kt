@@ -1,6 +1,8 @@
 package com.nowakartur.animedownloader.subsciption.scheduler
 
 import com.nowakartur.animedownloader.download.gogoanime.GogoanimeScraperService
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,4 +19,11 @@ class SubscriptionSchedulerConfig {
     fun subscriptionScheduler(
         gogoanimeScraperService: GogoanimeScraperService
     ): SubscribedAnimeDownloadScheduler = SubscribedAnimeDownloadScheduler(gogoanimeScraperService)
+
+    @Bean
+    fun statusCleanerScheduler(
+        subscribedAnimeService: SubscribedAnimeService,
+        @Value("\${app.scheduler.clean.numberOfDaysAfterToClean}") numberOfDaysAfterToClean: Long
+    ): SubscribedAnimeStatusCleanerScheduler =
+        SubscribedAnimeStatusCleanerScheduler(subscribedAnimeService, numberOfDaysAfterToClean)
 }

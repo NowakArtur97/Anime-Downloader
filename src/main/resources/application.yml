@@ -17,6 +17,11 @@ app:
     url: https://gogoanime.sk
   scheduler:
     enabled: true
-    initialDelay: 0
-    fixedDelay: 10000
-#    fixedDelay: 60000
+    download:
+      initialDelayMs: 0
+      fixedDelayMs: 10000
+    #    fixedDelay: 60000
+    clean:
+      numberOfDaysAfterToClean: 3
+      initialDelayDays: 0
+      fixedDelayDays: 1
