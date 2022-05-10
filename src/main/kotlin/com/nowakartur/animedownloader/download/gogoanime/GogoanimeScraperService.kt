@@ -1,6 +1,7 @@
 package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.download.facade.DownloadFacade
+import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service
 class GogoanimeScraperService(
     private val subscribedAnimeService: SubscribedAnimeService,
     private val gogoanimeMainPage: GogoanimeMainPage,
-    private val gogoanimeEpisodePage: GogoanimeEpisodePage
+    private val gogoanimeEpisodePage: GogoanimeEpisodePage,
+    private val screenshotUtil: ScreenshotUtil
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -82,6 +84,9 @@ class GogoanimeScraperService(
                 logger.error(stackTrace)
 
                 subscribedAnimeService.waitForDownload(it)
+
+                screenshotUtil.takeScreenshot(webDriver, it.title)
+
             } finally {
                 webDriver?.quit()
             }

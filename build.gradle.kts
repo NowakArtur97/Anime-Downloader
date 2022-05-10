@@ -42,6 +42,11 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     // https://mvnrepository.com/artifact/org.awaitility/awaitility-kotlin
     testImplementation("org.awaitility:awaitility-kotlin:4.2.0")
+
+    // Screenshot
+    // https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot
+    implementation("ru.yandex.qatools.ashot:ashot:1.5.4")
+
 }
 
 tasks.withType<KotlinCompile> {

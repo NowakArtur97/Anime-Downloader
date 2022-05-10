@@ -21,8 +21,8 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Cap Kakumei Bottleman DX", HIGH),
 
 //            MONDAY
-//            SubscribedAnimeEntity("Kyoukai Senki Part 2"),
-//            SubscribedAnimeEntity("Healer Girl", HIGH),
+            SubscribedAnimeEntity("Kyoukai Senki Part 2"),
+            SubscribedAnimeEntity("Healer Girl", HIGH),
 
 //            TUESDAY
 //            SubscribedAnimeEntity("Yuusha, Yamemasu", MEDIUM),
@@ -32,7 +32,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
 //            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
 //            SubscribedAnimeEntity("RPG Fudousan"),
-            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
+//            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
 
 //            THURSDAY
 //            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),
