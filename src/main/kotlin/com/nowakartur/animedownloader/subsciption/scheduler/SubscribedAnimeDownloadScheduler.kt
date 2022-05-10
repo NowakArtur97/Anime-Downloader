@@ -9,8 +9,8 @@ class SubscribedAnimeDownloadScheduler(
 ) {
 
     @Scheduled(
-        initialDelayString = "\${app.scheduler.download.initialDelayMs}",
-        fixedDelayString = "\${app.scheduler.download.fixedDelayMs}",
+        initialDelayString = "\${app.scheduler.download.initial-delay-ms}",
+        fixedDelayString = "\${app.scheduler.download.fixed-delay-ms}",
     )
     fun downloadAnime() {
 

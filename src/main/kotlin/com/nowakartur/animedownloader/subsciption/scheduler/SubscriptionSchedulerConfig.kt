@@ -23,7 +23,7 @@ class SubscriptionSchedulerConfig {
     @Bean
     fun statusCleanerScheduler(
         subscribedAnimeService: SubscribedAnimeService,
-        @Value("\${app.scheduler.clean.numberOfDaysAfterToClean}") numberOfDaysAfterToClean: Long
+        @Value("\${app.scheduler.clean.number-of-days-after-to-clean}") numberOfDaysAfterToClean: Long
     ): SubscribedAnimeStatusCleanerScheduler =
         SubscribedAnimeStatusCleanerScheduler(subscribedAnimeService, numberOfDaysAfterToClean)
 }

@@ -10,8 +10,8 @@ class SubscribedAnimeStatusCleanerScheduler(
 ) {
 
     @Scheduled(
-        initialDelayString = "\${app.scheduler.clean.initialDelayDays}",
-        fixedDelayString = "\${app.scheduler.clean.fixedDelayDays}",
+        initialDelayString = "\${app.scheduler.clean.initial-delay-days}",
+        fixedDelayString = "\${app.scheduler.clean.fixed-delay-days}",
         timeUnit = TimeUnit.DAYS
     )
     fun changeStatus() {

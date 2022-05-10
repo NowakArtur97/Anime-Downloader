@@ -18,13 +18,13 @@ app:
   scheduler:
     enabled: true
     download:
-      initialDelayMs: 0
+      initial-delay-ms: 0
       #      fixedDelayMs: 10000
-      fixedDelayMs: 60000
+      fixed-delay-ms: 60000
     clean:
-      numberOfDaysAfterToClean: 3
-      initialDelayDays: 0
-      fixedDelayDays: 1
+      number-of-days-after-to-clean: 3
+      initial-delay-days: 0
+      fixed-delay-days: 1
   screenshot:
     path: \src\main\resources\screenshots\
     file-extension: jpg
