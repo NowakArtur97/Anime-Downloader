@@ -1,6 +1,8 @@
 package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.download.facade.DownloadFacade
+import com.nowakartur.animedownloader.download.facade.DownloadInfo
+import com.nowakartur.animedownloader.download.goload.GoloadDownloadPage
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
@@ -50,10 +52,11 @@ class GogoanimeScraperService(
 
         logger.info("Anime found: ${allNewAnimeToDownload.map { it.title }}.")
 
-        allNewAnimeToDownload.forEach {
-            val linkToAnimePage: String = gogoanimeMainPage.findLinkToEpisodes(allNewAnimeToDownloadElements, it.title)
+        allNewAnimeToDownload.forEach { subscribedAnimeEntity ->
+            val linkToAnimePage: String =
+                gogoanimeMainPage.findLinkToEpisodes(allNewAnimeToDownloadElements, subscribedAnimeEntity.title)
 
-            logger.info("Connecting to the episode page of: [${it.title}].")
+            logger.info("Connecting to the episode page of: [${subscribedAnimeEntity.title}].")
 
             val episodePage = gogoanimeEpisodePage.connectToEpisodePage(linkToAnimePage)
 
@@ -61,34 +64,58 @@ class GogoanimeScraperService(
 
             logger.info("Connecting to the download page: [$goloadLink].")
 
-            subscribedAnimeService.startDownloadingAnime(it)
+            subscribedAnimeService.startDownloadingAnime(subscribedAnimeEntity)
 
             var webDriver: RemoteWebDriver? = null
 
-            try {
+            var currentIndex = 0
+            var downloadInfo: List<DownloadInfo> = emptyList()
 
-                webDriver = SeleniumUtil.startWebDriver()
+            while (true) {
 
-                DownloadFacade.downloadInBestQuality(webDriver, goloadLink)
+                try {
 
-                SeleniumUtil.waitForFileDownload(webDriver)
+                    webDriver = SeleniumUtil.startWebDriver()
 
-                subscribedAnimeService.finishDownloadingAnime(it)
+                    GoloadDownloadPage.connectToGolandPage(webDriver, goloadLink)
 
-                logger.info("The [${it.title}] episode has been successfully downloaded.")
+                    val allSupportedDownloadLinks = GoloadDownloadPage.findAllSupportedDownloadLinks(webDriver)
 
-            } catch (e: Exception) {
-                logger.error("Unexpected exception occurred when downloading episode of [${it.title}].")
-                logger.info(e.message)
-                val stackTrace: String = ExceptionUtils.getStackTrace(e)
-                logger.error(stackTrace)
+                    downloadInfo = GoloadDownloadPage.mapToDownloadInfo(allSupportedDownloadLinks)
+                        .sortedByDescending { it.fileSize }
 
-                subscribedAnimeService.waitForDownload(it)
+                    val bestQualityDownloadPage = downloadInfo[currentIndex]
 
-                screenshotUtil.takeScreenshot(webDriver, it.title)
+                    DownloadFacade.downloadInBestQuality(webDriver, bestQualityDownloadPage)
 
-            } finally {
-                webDriver?.quit()
+                    SeleniumUtil.waitForFileDownload(webDriver)
+
+                    subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
+
+                    logger.info("The [${subscribedAnimeEntity.title}] episode has been successfully downloaded.")
+
+                } catch (e: Exception) {
+                    logger.error("Unexpected exception occurred when downloading episode of [${subscribedAnimeEntity.title}].")
+                    logger.info(e.message)
+                    val stackTrace: String = ExceptionUtils.getStackTrace(e)
+                    logger.error(stackTrace)
+
+                    subscribedAnimeService.waitForDownload(subscribedAnimeEntity)
+
+                    screenshotUtil.takeScreenshot(webDriver, subscribedAnimeEntity.title)
+
+                    if (webDriver == null) {
+                        webDriver = SeleniumUtil.startWebDriver()
+                    }
+
+                    currentIndex++
+                    if (currentIndex >= downloadInfo.size) {
+                        break
+                    }
+
+                } finally {
+                    webDriver?.quit()
+                }
             }
         }
     }

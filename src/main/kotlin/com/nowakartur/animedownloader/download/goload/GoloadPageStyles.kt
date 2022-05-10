@@ -2,7 +2,7 @@ package com.nowakartur.animedownloader.download.goload
 
 object GoloadPageStyles {
 
-    const val DOWNLOADS_WRAPPER_CLASS = "msirror_link"
+    const val DOWNLOADS_WRAPPER_CLASS = "mirror_link"
 
     const val DOWNLOAD_CLASS = "dowload"
 
