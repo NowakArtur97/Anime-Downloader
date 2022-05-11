@@ -2,7 +2,6 @@ package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.download.facade.DownloadFacade
 import com.nowakartur.animedownloader.download.facade.DownloadInfo
-import com.nowakartur.animedownloader.download.goload.GoloadDownloadPage
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
@@ -47,8 +46,8 @@ class GogoanimeScraperService(
             return
         }
 
-        val allNewAnimeToDownload: List<SubscribedAnimeEntity> = subscribedAnime
-            .filter { anime -> allNewAnimeToDownloadElements.any { it.text().contains(anime.title) } }
+        val allNewAnimeToDownload: List<SubscribedAnimeEntity> =
+            subscribedAnime.filter { anime -> allNewAnimeToDownloadElements.any { it.text().contains(anime.title) } }
 
         logger.info("Anime found: ${allNewAnimeToDownload.map { it.title }}.")
 
@@ -64,59 +63,78 @@ class GogoanimeScraperService(
 
             logger.info("Connecting to the download page: [$goloadLink].")
 
-            subscribedAnimeService.startDownloadingAnime(subscribedAnimeEntity)
-
             var webDriver: RemoteWebDriver? = null
-
-            var currentIndex = 0
             var downloadInfo: List<DownloadInfo> = emptyList()
 
-            while (true) {
+            try {
+                webDriver = SeleniumUtil.startWebDriver()
 
-                try {
+                downloadInfo = DownloadFacade.getDownloadInfo(webDriver, goloadLink)
 
-                    webDriver = SeleniumUtil.startWebDriver()
+            } catch (e: Exception) {
+                cleanUpAfterException(e, subscribedAnimeEntity, webDriver)
+            } finally {
+                webDriver?.quit()
+            }
 
-                    GoloadDownloadPage.connectToGolandPage(webDriver, goloadLink)
-
-                    val allSupportedDownloadLinks = GoloadDownloadPage.findAllSupportedDownloadLinks(webDriver)
-
-                    downloadInfo = GoloadDownloadPage.mapToDownloadInfo(allSupportedDownloadLinks)
-                        .sortedByDescending { it.fileSize }
-
-                    val bestQualityDownloadPage = downloadInfo[currentIndex]
-
-                    DownloadFacade.downloadInBestQuality(webDriver, bestQualityDownloadPage)
-
-                    SeleniumUtil.waitForFileDownload(webDriver)
-
-                    subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
-
-                    logger.info("The [${subscribedAnimeEntity.title}] episode has been successfully downloaded.")
-
-                } catch (e: Exception) {
-                    logger.error("Unexpected exception occurred when downloading episode of [${subscribedAnimeEntity.title}].")
-                    logger.info(e.message)
-                    val stackTrace: String = ExceptionUtils.getStackTrace(e)
-                    logger.error(stackTrace)
-
-                    subscribedAnimeService.waitForDownload(subscribedAnimeEntity)
-
-                    screenshotUtil.takeScreenshot(webDriver, subscribedAnimeEntity.title)
-
-                    if (webDriver == null) {
-                        webDriver = SeleniumUtil.startWebDriver()
-                    }
-
-                    currentIndex++
-                    if (currentIndex >= downloadInfo.size) {
-                        break
-                    }
-
-                } finally {
-                    webDriver?.quit()
-                }
+            if (downloadInfo.isEmpty()) {
+                logger.info("No supported services were found.")
+            } else {
+                downloadEpisode(downloadInfo, subscribedAnimeEntity)
             }
         }
+    }
+
+    private fun downloadEpisode(
+        downloadInfo: List<DownloadInfo>,
+        subscribedAnimeEntity: SubscribedAnimeEntity
+    ) {
+        var isDownloading = true
+        var currentIndex = 0
+        var webDriver: RemoteWebDriver? = null
+
+        while (isDownloading) {
+
+            try {
+                val bestQualityDownloadPage = downloadInfo[currentIndex]
+
+                subscribedAnimeService.startDownloadingAnime(subscribedAnimeEntity)
+
+                webDriver = SeleniumUtil.startWebDriver()
+
+                DownloadFacade.downloadInBestQuality(webDriver, bestQualityDownloadPage)
+
+                SeleniumUtil.waitForFileDownload(webDriver)
+
+                subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
+
+                logger.info("The [${subscribedAnimeEntity.title}] episode has been successfully downloaded.")
+
+                isDownloading = false
+
+            } catch (e: Exception) {
+                cleanUpAfterException(e, subscribedAnimeEntity, webDriver)
+
+                isDownloading = ++currentIndex < downloadInfo.size
+
+            } finally {
+                webDriver?.quit()
+            }
+        }
+    }
+
+    private fun cleanUpAfterException(
+        e: Exception,
+        subscribedAnimeEntity: SubscribedAnimeEntity,
+        webDriver: RemoteWebDriver?
+    ) {
+        logger.error("Unexpected exception occurred when downloading episode of [${subscribedAnimeEntity.title}].")
+        logger.info(e.message)
+        val stackTrace: String = ExceptionUtils.getStackTrace(e)
+        logger.error(stackTrace)
+
+        subscribedAnimeService.waitForDownload(subscribedAnimeEntity)
+
+        screenshotUtil.takeScreenshot(webDriver, subscribedAnimeEntity.title)
     }
 }

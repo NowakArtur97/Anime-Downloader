@@ -76,6 +76,7 @@ object SeleniumUtil {
         var percentage = 0L
         while (percentage < 100L) {
             try {
+                // TODO: If download stopped try to resume
                 logger.info("Download progress: $percentage%.")
                 percentage = getDownloadProgress(jsExecutor)
             } catch (e: Exception) {
