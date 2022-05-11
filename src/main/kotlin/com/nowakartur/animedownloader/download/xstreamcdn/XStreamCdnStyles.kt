@@ -7,6 +7,4 @@ object XStreamCdnStyles {
     const val AFTER_SIZE_TEXT = "MB"
 
     const val QUALITY_DOWNLOAD_BUTTON_CLASS = "control"
-
-    const val QUALITY_DOWNLOAD_LINK_CLASS = "clickdownload"
 }

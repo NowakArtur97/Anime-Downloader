@@ -3,6 +3,8 @@ package com.nowakartur.animedownloader.selenium
 import com.nowakartur.animedownloader.selenium.JsScripts.CLICK_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_VIDEO_SCRIPT
+import com.nowakartur.animedownloader.selenium.JsScripts.HAS_DOWNLOAD_STOPPED_DOWNLOAD_SCRIPT
+import com.nowakartur.animedownloader.selenium.JsScripts.RESUME_DOWNLOAD_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
@@ -26,24 +28,7 @@ object SeleniumUtil {
         WebDriverManager.chromedriver().setup()
         val options = ChromeOptions().also {
             it.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
-
-//            it.setExperimentalOption(
-//                "excludeSwitches", listOf("enable-automation")
-//            ) // disable all popups
-//            it.setExperimentalOption("useAutomationExtension", false)
-//            it.addArguments(
-//                "--no-sandbox",
-//                "start-maximized",
-//                "enable-automation",
-//                "--disable-infobars",
-//                "--disable-dev-shm-usage",
-//                "--disable-browser-side-navigation",
-//                "--remote-debugging-port=9222",
-//                "--disable-gpu",
-//                "--log-level=3",
-//                "user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
-//                "--disable-blink-features=AutomationControlled",
-//            )
+            it.addArguments("lang=en-GB") // change language to English
         }
         return ChromeDriver(options).also {
             it.manage().window().position = HIDDEN_POSITION
@@ -76,9 +61,13 @@ object SeleniumUtil {
         var percentage = 0L
         while (percentage < 100L) {
             try {
-                // TODO: If download stopped try to resume
-                logger.info("Download progress: $percentage%.")
-                percentage = getDownloadProgress(jsExecutor)
+                if (hasDownloadStopped(jsExecutor)) {
+                    logger.info("Download stopped. Trying to resume.")
+                    resumeDownload(jsExecutor)
+                } else {
+                    percentage = getDownloadProgress(jsExecutor)
+                    logger.info("Download progress: $percentage%.")
+                }
             } catch (e: Exception) {
                 logger.info("Unexpected exception occurred when checking download progress.")
                 logger.info(e.message)
@@ -99,4 +88,11 @@ object SeleniumUtil {
 
     private fun getDownloadProgress(jsExecutor: JavascriptExecutor): Long =
         jsExecutor.executeScript(DOWNLOAD_PROGRESS_VALUE_SCRIPT) as Long
+
+    private fun hasDownloadStopped(jsExecutor: JavascriptExecutor): Boolean =
+        jsExecutor.executeScript(HAS_DOWNLOAD_STOPPED_DOWNLOAD_SCRIPT) as Boolean
+
+    private fun resumeDownload(jsExecutor: JavascriptExecutor) {
+        jsExecutor.executeScript(RESUME_DOWNLOAD_SCRIPT)
+    }
 }

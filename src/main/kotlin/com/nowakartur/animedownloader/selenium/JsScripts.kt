@@ -12,5 +12,11 @@ object JsScripts {
             |a.click();"""
 
     const val DOWNLOAD_PROGRESS_VALUE_SCRIPT =
-        "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#progress').value"
+        "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#progress').value;"
+
+    const val HAS_DOWNLOAD_STOPPED_DOWNLOAD_SCRIPT =
+        "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#tag').innerText.includes('Failed')"
+
+    const val RESUME_DOWNLOAD_SCRIPT =
+        "document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#pauseOrResume').click();"
 }

@@ -26,13 +26,13 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 
 //            TUESDAY
 //            SubscribedAnimeEntity("Yuusha, Yamemasu", MEDIUM),
-            SubscribedAnimeEntity("Tomodachi Game", HIGH),
+//            SubscribedAnimeEntity("Tomodachi Game", HIGH),
 
 //            WEDNESDAY
 //            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
 //            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
-//            SubscribedAnimeEntity("RPG Fudousan"),
-//            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
+            SubscribedAnimeEntity("RPG Fudousan"),
+            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
 
 //            THURSDAY
 //            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),
