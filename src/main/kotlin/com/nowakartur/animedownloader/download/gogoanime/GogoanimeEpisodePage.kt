@@ -5,12 +5,10 @@ import com.nowakartur.animedownloader.download.gogoanime.GogoanimePageStyles.EPI
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-//@Service
 object GogoanimeEpisodePage {
-//class GogoanimeEpisodePage(@Value("\${app.gogoanime.url}") private val gogoanimeMainPageUrl: String) {
 
-    fun connectToEpisodePage(episodeUrl: String): Document = Jsoup
-        .connect("https://gogoanime.sk$episodeUrl")
+    fun connectToEpisodePage(gogoanimeMainPageUrl: String, episodeUrl: String): Document = Jsoup
+        .connect("$gogoanimeMainPageUrl$episodeUrl")
         .get()
 
     fun findLinkForDownload(episodePage: Document): String =

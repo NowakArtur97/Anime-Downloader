@@ -44,9 +44,9 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Mahoutsukai Reimeiki"),
 
 //            FRIDAY
-            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
+//            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
 //            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
-            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
+//            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
 //            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
 //            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
 

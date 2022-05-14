@@ -2,21 +2,20 @@ package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.download.facade.DownloadFacade
 import com.nowakartur.animedownloader.download.facade.DownloadInfo
+import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
-import org.apache.commons.lang3.exception.ExceptionUtils
 import org.openqa.selenium.remote.RemoteWebDriver
-import org.slf4j.LoggerFactory
 import java.util.concurrent.BlockingQueue
 
 class GogoanimeDownloadInfoConsumer(
-    private val subscribedAnimeService: SubscribedAnimeService,
+    subscribedAnimeService: SubscribedAnimeService,
+    screenshotUtil: ScreenshotUtil,
+
     private val downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
-) : Thread() {
-
-    private val logger = LoggerFactory.getLogger(javaClass)
+) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
     override fun run() {
 
@@ -27,16 +26,15 @@ class GogoanimeDownloadInfoConsumer(
             var isDownloading = true
             var currentIndex = 0
             var webDriver: RemoteWebDriver? = null
-            var subscribedAnimeEntity: SubscribedAnimeEntity? = null
-            var downloadInfo: List<DownloadInfo> = emptyList()
+
+            val downloadInfo = downloadInfoQueue.take()
+            val bestQualityDownloadPage = downloadInfo[currentIndex]
+            val subscribedAnimeEntity =
+                allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
 
             while (isDownloading) {
 
                 try {
-                    downloadInfo = downloadInfoQueue.take()
-                    val bestQualityDownloadPage = downloadInfo[currentIndex]
-                    subscribedAnimeEntity =
-                        allNewAnimeToDownload.find { it.title == downloadInfo.first().title }!! // TODO: Change
 
                     subscribedAnimeService.startDownloadingAnime(subscribedAnimeEntity)
 
@@ -44,7 +42,7 @@ class GogoanimeDownloadInfoConsumer(
 
                     DownloadFacade.downloadInBestQuality(webDriver, bestQualityDownloadPage)
 
-                    SeleniumUtil.waitForFileDownload(webDriver)
+                    SeleniumUtil.waitForFileDownload(webDriver, subscribedAnimeEntity.title)
 
                     subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
 
@@ -64,22 +62,5 @@ class GogoanimeDownloadInfoConsumer(
                 }
             }
         }
-    }
-
-    private fun cleanUpAfterException(
-        e: Exception,
-        subscribedAnimeEntity: SubscribedAnimeEntity?,
-        webDriver: RemoteWebDriver?
-    ) {
-        logger.error("Unexpected exception occurred when downloading episode of [${subscribedAnimeEntity?.title}].")
-        logger.info(e.message)
-        val stackTrace: String = ExceptionUtils.getStackTrace(e)
-        logger.error(stackTrace)
-
-        if (subscribedAnimeEntity != null) {
-            subscribedAnimeService.waitForDownload(subscribedAnimeEntity)
-        }
-
-//        screenshotUtil.takeScreenshot(webDriver, subscribedAnimeEntity.title)
     }
 }

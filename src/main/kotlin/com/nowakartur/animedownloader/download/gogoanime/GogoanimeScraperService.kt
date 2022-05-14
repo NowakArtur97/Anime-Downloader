@@ -7,16 +7,15 @@ import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.BlockingQueue
 
-
 @Service
 class GogoanimeScraperService(
+    @Value("\${app.gogoanime.url}") private val gogoanimeMainPageUrl: String,
     private val subscribedAnimeService: SubscribedAnimeService,
-//    private val gogoanimeMainPage: GogoanimeMainPage,
-//    private val gogoanimeEpisodePage: GogoanimeEpisodePage,
     private val screenshotUtil: ScreenshotUtil,
 ) {
 
@@ -35,7 +34,7 @@ class GogoanimeScraperService(
 
         logger.info("Connecting to gogoanime page.")
 
-        val mainPage: Document = GogoanimeMainPage.connectToMainPage()
+        val mainPage: Document = GogoanimeMainPage.connectToMainPage(gogoanimeMainPageUrl)
 
         val allNewAnimeToDownloadElements: List<Element> =
             GogoanimeMainPage.findAllSubscribedAnime(subscribedAnime, mainPage)
@@ -54,14 +53,17 @@ class GogoanimeScraperService(
 
         val gogoanimeDownloadInfoProducer = GogoanimeDownloadInfoProducer(
             subscribedAnimeService,
+            screenshotUtil,
             downloadInfoQueue,
             allNewAnimeToDownloadElements,
-            allNewAnimeToDownload
+            allNewAnimeToDownload,
+            gogoanimeMainPageUrl,
         )
         val gogoanimeDownloadInfoConsumer = GogoanimeDownloadInfoConsumer(
             subscribedAnimeService,
+            screenshotUtil,
             downloadInfoQueue,
-            allNewAnimeToDownload
+            allNewAnimeToDownload,
         )
         gogoanimeDownloadInfoProducer.name = "producer thread"
         gogoanimeDownloadInfoConsumer.name = "consumer thread"
@@ -72,19 +74,4 @@ class GogoanimeScraperService(
         gogoanimeDownloadInfoProducer.join()
         gogoanimeDownloadInfoConsumer.join()
     }
-
-//    private fun cleanUpAfterException(
-//        e: Exception,
-//        subscribedAnimeEntity: SubscribedAnimeEntity,
-//        webDriver: RemoteWebDriver?
-//    ) {
-//        logger.error("Unexpected exception occurred when downloading episode of [${subscribedAnimeEntity.title}].")
-//        logger.info(e.message)
-//        val stackTrace: String = ExceptionUtils.getStackTrace(e)
-//        logger.error(stackTrace)
-//
-//        subscribedAnimeService.waitForDownload(subscribedAnimeEntity)
-//
-//        screenshotUtil.takeScreenshot(webDriver, subscribedAnimeEntity.title)
-//    }
 }

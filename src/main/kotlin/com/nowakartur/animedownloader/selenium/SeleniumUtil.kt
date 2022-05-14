@@ -55,21 +55,21 @@ object SeleniumUtil {
         jsExecutor.executeScript(DOWNLOAD_VIDEO_SCRIPT.trimMargin())
     }
 
-    fun waitForFileDownload(driver: WebDriver) {
+    fun waitForFileDownload(driver: WebDriver, title: String) {
         switchToDownloadTab(driver)
         val jsExecutor = driver as JavascriptExecutor
         var percentage = 0L
         while (percentage < 100L) {
             try {
                 if (hasDownloadStopped(jsExecutor)) {
-                    logger.info("Download stopped. Trying to resume.")
+                    logger.info("Download of [$title] stopped. Trying to resume.")
                     resumeDownload(jsExecutor)
                 } else {
                     percentage = getDownloadProgress(jsExecutor)
-                    logger.info("Download progress: $percentage%.")
+                    logger.info("Download progress of: [$title] - $percentage%.")
                 }
             } catch (e: Exception) {
-                logger.info("Unexpected exception occurred when checking download progress.")
+                logger.info("Unexpected exception occurred when checking download progress of: [$title].")
                 logger.info(e.message)
             }
             Thread.sleep(WAIT_FOR_DOWNLOAD_CHECK)

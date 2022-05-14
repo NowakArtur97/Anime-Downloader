@@ -7,12 +7,10 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
-//@Service
 object GogoanimeMainPage {
-//class GogoanimeMainPage(@Value("\${app.gogoanime.url}") private val gogoanimeMainPageUrl: String) {
 
-    fun connectToMainPage(): Document = Jsoup
-        .connect("https://gogoanime.sk")
+    fun connectToMainPage(gogoanimeMainPageUrl: String): Document = Jsoup
+        .connect(gogoanimeMainPageUrl)
         .get()
 
     fun findAllSubscribedAnime(subscribedAnime: List<SubscribedAnimeEntity>, page: Document): List<Element> {
