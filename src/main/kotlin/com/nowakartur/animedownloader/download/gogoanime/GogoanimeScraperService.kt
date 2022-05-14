@@ -18,8 +18,6 @@ class GogoanimeScraperService(
 //    private val gogoanimeMainPage: GogoanimeMainPage,
 //    private val gogoanimeEpisodePage: GogoanimeEpisodePage,
     private val screenshotUtil: ScreenshotUtil,
-    private val gogoanimeDownloadInfoProducer: GogoanimeDownloadInfoProducer,
-    private val gogoanimeDownloadInfoConsumer: GogoanimeDownloadInfoConsumer,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -54,12 +52,25 @@ class GogoanimeScraperService(
 
         val downloadInfoQueue: BlockingQueue<List<DownloadInfo>> = ArrayBlockingQueue(allNewAnimeToDownload.size)
 
-        gogoanimeDownloadInfoProducer.downloadInfos(
+        val gogoanimeDownloadInfoProducer = GogoanimeDownloadInfoProducer(
+            subscribedAnimeService,
             downloadInfoQueue,
             allNewAnimeToDownloadElements,
             allNewAnimeToDownload
         )
-        gogoanimeDownloadInfoConsumer.downloadEpisode(downloadInfoQueue, allNewAnimeToDownload)
+        val gogoanimeDownloadInfoConsumer = GogoanimeDownloadInfoConsumer(
+            subscribedAnimeService,
+            downloadInfoQueue,
+            allNewAnimeToDownload
+        )
+        gogoanimeDownloadInfoProducer.name = "producer thread"
+        gogoanimeDownloadInfoConsumer.name = "consumer thread"
+
+        gogoanimeDownloadInfoProducer.start()
+        gogoanimeDownloadInfoConsumer.start()
+
+        gogoanimeDownloadInfoProducer.join()
+        gogoanimeDownloadInfoConsumer.join()
     }
 
 //    private fun cleanUpAfterException(

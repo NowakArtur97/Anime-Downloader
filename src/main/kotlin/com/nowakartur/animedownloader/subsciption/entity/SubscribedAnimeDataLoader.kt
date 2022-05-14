@@ -1,7 +1,5 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
-import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.HIGH
-import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.MEDIUM
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -16,6 +14,8 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
         }
 
         val anime = listOf(
+            SubscribedAnimeEntity("Chiikawa"),
+            SubscribedAnimeEntity("Jantama Pong"),
 //            SubscribedAnimeEntity("Kaginado Season 2"),
 //            SubscribedAnimeEntity("Cyborg Kuro", MEDIUM),
 //            SubscribedAnimeEntity("Chobits: Chibits", HIGH),
@@ -45,10 +45,10 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 
 //            FRIDAY
             SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
-            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
+//            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
             SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
-            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
-            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
+//            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
+//            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
 
 //            SATURDAY
 //            SubscribedAnimeEntity("Love All Play"),

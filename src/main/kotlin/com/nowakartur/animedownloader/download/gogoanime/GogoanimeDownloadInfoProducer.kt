@@ -9,19 +9,18 @@ import org.apache.commons.lang3.exception.ExceptionUtils
 import org.jsoup.nodes.Element
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import java.util.concurrent.BlockingQueue
 
-@Service
-class GogoanimeDownloadInfoProducer(private val subscribedAnimeService: SubscribedAnimeService) : Thread() {
+class GogoanimeDownloadInfoProducer(
+    private val subscribedAnimeService: SubscribedAnimeService,
+    private val downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
+    private val allNewAnimeToDownloadElements: List<Element>,
+    private val allNewAnimeToDownload: List<SubscribedAnimeEntity>
+) : Thread() {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun downloadInfos(
-        downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
-        allNewAnimeToDownloadElements: List<Element>,
-        allNewAnimeToDownload: List<SubscribedAnimeEntity>
-    ) {
+    override fun run() {
 
         allNewAnimeToDownload.forEach { subscribedAnimeEntity ->
             val linkToAnimePage: String =
@@ -36,12 +35,11 @@ class GogoanimeDownloadInfoProducer(private val subscribedAnimeService: Subscrib
             logger.info("Connecting to the download page: [$goloadLink].")
 
             var webDriver: RemoteWebDriver? = null
-            var downloadInfo: List<DownloadInfo> = emptyList()
 
             try {
                 webDriver = SeleniumUtil.startWebDriver()
 
-                downloadInfo = DownloadFacade.getDownloadInfo(subscribedAnimeEntity.title, webDriver, goloadLink)
+                val downloadInfo = DownloadFacade.getDownloadInfo(subscribedAnimeEntity.title, webDriver, goloadLink)
 
                 downloadInfoQueue.offer(downloadInfo)
 

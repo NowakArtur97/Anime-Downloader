@@ -8,20 +8,17 @@ import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import java.util.concurrent.BlockingQueue
 
-@Service
 class GogoanimeDownloadInfoConsumer(
-    private val subscribedAnimeService: SubscribedAnimeService
-) {
+    private val subscribedAnimeService: SubscribedAnimeService,
+    private val downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
+    private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
+) : Thread() {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun downloadEpisode(
-        downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
-        allNewAnimeToDownload: List<SubscribedAnimeEntity>,
-    ) {
+    override fun run() {
 
         var downloadCounter = 0
 
