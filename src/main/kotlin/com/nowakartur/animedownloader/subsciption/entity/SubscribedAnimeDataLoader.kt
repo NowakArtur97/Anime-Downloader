@@ -1,6 +1,7 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.HIGH
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.MEDIUM
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -43,11 +44,11 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Mahoutsukai Reimeiki"),
 
 //            FRIDAY
-//            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
+            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
             SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
-//            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
-//            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
-//            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
+            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
+            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
+            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
 
 //            SATURDAY
 //            SubscribedAnimeEntity("Love All Play"),

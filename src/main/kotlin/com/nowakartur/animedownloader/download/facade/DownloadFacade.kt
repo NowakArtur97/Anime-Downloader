@@ -8,13 +8,13 @@ object DownloadFacade {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun getDownloadInfo(webDriver: RemoteWebDriver, goloadLink: String): List<DownloadInfo> {
+    fun getDownloadInfo(title: String, webDriver: RemoteWebDriver, goloadLink: String): List<DownloadInfo> {
 
         GoloadDownloadPage.connectToGolandPage(webDriver, goloadLink)
 
         val allSupportedDownloadLinks = GoloadDownloadPage.findAllSupportedDownloadLinks(webDriver)
 
-        return GoloadDownloadPage.mapToDownloadInfo(allSupportedDownloadLinks)
+        return GoloadDownloadPage.mapToDownloadInfo(title, allSupportedDownloadLinks)
             .sortedByDescending { it.fileSize }
     }
 

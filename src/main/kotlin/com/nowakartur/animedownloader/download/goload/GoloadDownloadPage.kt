@@ -32,14 +32,14 @@ object GoloadDownloadPage {
             .filter { supportedDownloadLinksTexts.any { text -> it.contains(text) } }
     }
 
-    fun mapToDownloadInfo(allSupportedDownloadLinks: List<String>): List<DownloadInfo> =
+    fun mapToDownloadInfo(title: String, allSupportedDownloadLinks: List<String>): List<DownloadInfo> =
         allSupportedDownloadLinks.map {
             if (it.contains(MP4_UPLOAD_TEXT)) {
-                DownloadInfo(Mp4UploadPage, Mp4UploadPage.findFileSize(it), it)
+                DownloadInfo(title, Mp4UploadPage, Mp4UploadPage.findFileSize(it), it)
             } else if (it.contains(STREAM_SB_TEXT)) {
-                DownloadInfo(StreamSbPage, StreamSbPage.findFileSize(it), it)
+                DownloadInfo(title, StreamSbPage, StreamSbPage.findFileSize(it), it)
             } else if (it.contains(X_STREAM_CDN_TEXT)) {
-                DownloadInfo(XStreamCdnPage, XStreamCdnPage.findFileSize(it), it)
+                DownloadInfo(title, XStreamCdnPage, XStreamCdnPage.findFileSize(it), it)
             } else {
                 throw InvalidArgumentException("Download website is not supported for link: [$it].")
             }
