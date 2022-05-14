@@ -6,8 +6,9 @@ object JsScripts {
 
     const val DOWNLOAD_VIDEO_SCRIPT = """const link = document.querySelector("source").src;
             |const a = document.createElement("a"); 
-            |a.href = link; 
-            |a.download = "vid.mp4";
+            |a.href = link;
+            | let randomTitle = (Math.random() + 1).toString(36).substring(7);
+            |a.download = randomTitle + ".mp4";
             |document.body.appendChild(a);
             |a.click();"""
 

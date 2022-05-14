@@ -31,8 +31,8 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            WEDNESDAY
 //            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
 //            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
-            SubscribedAnimeEntity("RPG Fudousan"),
-            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
+//            SubscribedAnimeEntity("RPG Fudousan"),
+//            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
 
 //            THURSDAY
 //            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),
@@ -44,7 +44,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 
 //            FRIDAY
 //            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
-//            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
+            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
 //            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
 //            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
 //            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
