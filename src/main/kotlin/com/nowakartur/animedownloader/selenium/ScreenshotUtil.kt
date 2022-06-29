@@ -34,7 +34,11 @@ class ScreenshotUtil(
                 try {
                     val dateAsString = simpleDateFormat.format(Calendar.getInstance().time)
                     val filePathWithName =
-                        "$PROJECT_PATH$screenshotPath$dateAsString-${screenshotName.replace(" ", "-")}.$fileExtension"
+                        "$PROJECT_PATH$screenshotPath$dateAsString-${
+                            screenshotName
+                                .replace(" ", "-")
+                                .replace(Regex("[\"/:?*\"<>|]"), "")
+                        }.$fileExtension"
                     ImageIO.write(screenshot.image, fileExtension, File(filePathWithName))
                 } catch (e: IOException) {
                     logger.info("Can't take screenshot on path: [$PROJECT_PATH$screenshotPath].")

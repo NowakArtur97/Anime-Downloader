@@ -7,7 +7,7 @@ class Mp4UploadPageSeleniumTest : SeleniumTest() {
 
     @Test
     fun `when download file from Mp4Upload should start downloading file`() {
-        val episodeUrl = "https://www.mp4upload.com/6gy7hh1itnhe"
+        val episodeUrl = "https://www.mp4upload.com/i4apfegfcph8"
         processTest(Mp4UploadPage, episodeUrl)
     }
 }
