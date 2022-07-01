@@ -10,8 +10,6 @@ object HtmlConstants {
 
     const val TABLE_DATA_TAG = "td"
 
-    const val SPAN_TAG = "span"
-
     const val H2_TAG = "h2"
 
     const val BUTTON_TAG = "button"

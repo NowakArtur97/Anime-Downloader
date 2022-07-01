@@ -8,7 +8,7 @@ object GoloadPageStyles {
 
     const val MP4_UPLOAD_TEXT = "mp4upload"
 
-    const val STREAM_SB_TEXT = "sbplay2"
+    const val STREAM_SB_TEXT = "ssbstream"
 
     const val X_STREAM_CDN_TEXT = "fembed-hd"
 }

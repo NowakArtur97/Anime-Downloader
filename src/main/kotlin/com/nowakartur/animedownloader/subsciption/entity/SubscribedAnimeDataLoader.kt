@@ -14,8 +14,8 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
         }
 
         val anime = listOf(
-            SubscribedAnimeEntity("Chiikawa"),
-            SubscribedAnimeEntity("Jantama Pong"),
+//            SubscribedAnimeEntity("Chiikawa"),
+//            SubscribedAnimeEntity("Jantama Pong"),
 //            SubscribedAnimeEntity("Kaginado Season 2"),
 //            SubscribedAnimeEntity("Cyborg Kuro", MEDIUM),
 //            SubscribedAnimeEntity("Chobits: Chibits", HIGH),
@@ -30,7 +30,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Tomodachi Game", HIGH),
 
 //            WEDNESDAY
-//            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
+            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
 //            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
 //            SubscribedAnimeEntity("RPG Fudousan"),
 //            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
@@ -48,7 +48,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
 //            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
 //            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
-//            SubscribedAnimeEntity("Dance Dance Danseur", MEDIUM),
+//            SubscribedAnimeEntity("Dance Dance Danseur", HIGH),
 
 //            SATURDAY
 //            SubscribedAnimeEntity("Love All Play"),
@@ -61,7 +61,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Kawaii dake ja Nai Shikimori-san"),
 
 //            SUNDAY
-//            SubscribedAnimeEntity("Kono Healer, Mendokusai"),
+//            SubscribedAnimeEntity("Kono Healer, Mendokusai", MEDIUM),
 //            SubscribedAnimeEntity("Otome Game Sekai wa Mob ni Kibishii Sekai desu", HIGH),
 //            SubscribedAnimeEntity("Baraou no Souretsu"),
 //            SubscribedAnimeEntity("Black★★Rock Shooter: Dawn Fall"),

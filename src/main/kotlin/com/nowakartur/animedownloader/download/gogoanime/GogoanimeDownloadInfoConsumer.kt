@@ -28,6 +28,11 @@ class GogoanimeDownloadInfoConsumer(
             var webDriver: RemoteWebDriver? = null
 
             val downloadInfo = downloadInfoQueue.take()
+
+            if (downloadInfo.isEmpty()) {
+                return
+            }
+            
             val bestQualityDownloadPage = downloadInfo[currentIndex]
             val subscribedAnimeEntity =
                 allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
@@ -55,7 +60,8 @@ class GogoanimeDownloadInfoConsumer(
                 } catch (e: Exception) {
                     cleanUpAfterException(e, subscribedAnimeEntity, webDriver)
 
-                    isDownloading = ++currentIndex < downloadInfo.size
+                    currentIndex++
+                    isDownloading = currentIndex < downloadInfo.size
 
                 } finally {
                     webDriver?.quit()

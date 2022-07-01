@@ -23,7 +23,8 @@ object GoloadDownloadPage {
 
     fun findAllSupportedDownloadLinks(webDriver: RemoteWebDriver): List<String> {
         SeleniumUtil.waitFor(webDriver, By.className(DOWNLOAD_CLASS))
-        val supportedDownloadLinksTexts = listOf(MP4_UPLOAD_TEXT, STREAM_SB_TEXT, X_STREAM_CDN_TEXT)
+        val supportedDownloadLinksTexts = listOf(STREAM_SB_TEXT)
+//        val supportedDownloadLinksTexts = listOf(MP4_UPLOAD_TEXT, STREAM_SB_TEXT, X_STREAM_CDN_TEXT)
         return webDriver.findElementsByClassName(DOWNLOADS_WRAPPER_CLASS).last()
             .findElements(By.className(DOWNLOAD_CLASS)).map {
                 it.findElement(By.tagName(HtmlConstants.ANCHOR_TAG))
