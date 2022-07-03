@@ -4,6 +4,8 @@ import com.nowakartur.animedownloader.constant.HtmlConstants.ANCHOR_TAG
 
 object StreamSbStyles {
 
+    const val EPISODE_PAGE_LINK_CLASS = "streamsb"
+
     const val BEFORE_SIZE_TEXT = ", "
     const val AFTER_SIZE_TEXT = " MB"
 

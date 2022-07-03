@@ -26,24 +26,25 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // Web Srcaping dependencies
+    // Web Scraping dependencies
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
-    implementation("org.jsoup:jsoup:1.14.3")
+    implementation("org.jsoup:jsoup:1.15.1")
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    implementation("org.seleniumhq.selenium:selenium-java:4.1.3")
+    implementation("org.seleniumhq.selenium:selenium-java:4.3.0")
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
-    implementation("io.github.bonigarcia:webdrivermanager:5.1.1")
+    implementation("io.github.bonigarcia:webdrivermanager:5.2.1")
+
 
     // Database dependencies
     // https://mvnrepository.com/artifact/com.h2database/h2
     runtimeOnly("com.h2database:h2:2.1.212")
 
-    // Testing
+    // Testing dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     // https://mvnrepository.com/artifact/org.awaitility/awaitility-kotlin
     testImplementation("org.awaitility:awaitility-kotlin:4.2.0")
 
-    // Screenshot
+    // Screenshot dependency
     // https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot
     implementation("ru.yandex.qatools.ashot:ashot:1.5.4")
 

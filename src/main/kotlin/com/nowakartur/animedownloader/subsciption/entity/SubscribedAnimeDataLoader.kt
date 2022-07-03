@@ -30,7 +30,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Tomodachi Game", HIGH),
 
 //            WEDNESDAY
-            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
+//            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
 //            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
 //            SubscribedAnimeEntity("RPG Fudousan"),
 //            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
@@ -44,21 +44,18 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Mahoutsukai Reimeiki"),
 
 //            FRIDAY
-//            SubscribedAnimeEntity("Koi wa Sekai Seifuku no Ato de"),
-//            SubscribedAnimeEntity("Kaguya-sama wa Kokurasetai", HIGH),
-//            SubscribedAnimeEntity("Shokei Shoujo no Virgin Road"),
-//            SubscribedAnimeEntity("Aharen-san wa Hakarenai", MEDIUM),
-//            SubscribedAnimeEntity("Dance Dance Danseur", HIGH),
+//            SubscribedAnimeEntity("Kanojo, Okarishimasu"),
+//            SubscribedAnimeEntity("Kami Kuzu"),
 
 //            SATURDAY
 //            SubscribedAnimeEntity("Love All Play"),
 //            SubscribedAnimeEntity("Ao Ashi", MEDIUM),
-//            SubscribedAnimeEntity("Spy x Family", HIGH),
-//            SubscribedAnimeEntity("Gunjou no Fanfare"),
-//            SubscribedAnimeEntity("Kunoichi Tsubaki no Mune no Uchi"),
-//            SubscribedAnimeEntity("Build Divide: Code White"),
+//            SubscribedAnimeEntity("Teppen!"),
+//            SubscribedAnimeEntity("Shoot! Goal to the Future"),
+//            SubscribedAnimeEntity("Engage Kiss"),
+//            SubscribedAnimeEntity("Lycoris Recoil"),
 //            SubscribedAnimeEntity("Kakkou no Iinazuke"),
-//            SubscribedAnimeEntity("Kawaii dake ja Nai Shikimori-san"),
+            SubscribedAnimeEntity("Kawaii dake ja Nai Shikimori-san"),
 
 //            SUNDAY
 //            SubscribedAnimeEntity("Kono Healer, Mendokusai", MEDIUM),

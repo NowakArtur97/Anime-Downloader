@@ -12,17 +12,17 @@ class SubscribedAnimeService(
         subscribedAnimeRepository.findByStatusIsOrderByPriorityDesc(SubscribedAnimeStatus.TO_DOWNLOAD)
 
     fun waitForDownload(subscribedAnimeEntity: SubscribedAnimeEntity) {
-        subscribedAnimeEntity.waitForDownload()
+        subscribedAnimeEntity.changeStatusToToDownload()
         subscribedAnimeRepository.save(subscribedAnimeEntity)
     }
 
     fun startDownloadingAnime(subscribedAnimeEntity: SubscribedAnimeEntity) {
-        subscribedAnimeEntity.startDownloading()
+        subscribedAnimeEntity.changeStatusToInProgress()
         subscribedAnimeRepository.save(subscribedAnimeEntity)
     }
 
     fun finishDownloadingAnime(subscribedAnimeEntity: SubscribedAnimeEntity) {
-        subscribedAnimeEntity.finishDownloading()
+        subscribedAnimeEntity.changeStatusToDownloaded()
         subscribedAnimeRepository.save(subscribedAnimeEntity)
     }
 
@@ -32,7 +32,7 @@ class SubscribedAnimeService(
             LocalDateTime.now().minusDays(numberOfDaysAfterToClean),
         )
         updatedAnimeSubscriptions.forEach {
-            it.waitForDownload()
+            it.changeStatusToToDownload()
         }
         subscribedAnimeRepository.saveAll(updatedAnimeSubscriptions)
     }

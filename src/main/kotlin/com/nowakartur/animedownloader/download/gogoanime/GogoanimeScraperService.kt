@@ -1,6 +1,6 @@
 package com.nowakartur.animedownloader.download.gogoanime
 
-import com.nowakartur.animedownloader.download.facade.DownloadInfo
+import com.nowakartur.animedownloader.download.common.DownloadInfo
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
@@ -65,13 +65,16 @@ class GogoanimeScraperService(
             downloadInfoQueue,
             allNewAnimeToDownload,
         )
-        gogoanimeDownloadInfoProducer.name = "producer thread"
-        gogoanimeDownloadInfoConsumer.name = "consumer thread"
+//        gogoanimeDownloadInfoProducer.name = "producer thread"
+//        gogoanimeDownloadInfoConsumer.name = "consumer thread"
+//
+//        gogoanimeDownloadInfoProducer.start()
+//        gogoanimeDownloadInfoConsumer.start()
+//
+//        gogoanimeDownloadInfoProducer.join()
+//        gogoanimeDownloadInfoConsumer.join()
 
-        gogoanimeDownloadInfoProducer.start()
-        gogoanimeDownloadInfoConsumer.start()
-
-        gogoanimeDownloadInfoProducer.join()
-        gogoanimeDownloadInfoConsumer.join()
+        val downloadInfo = gogoanimeDownloadInfoProducer.run2()
+        gogoanimeDownloadInfoConsumer.run2(downloadInfo)
     }
 }

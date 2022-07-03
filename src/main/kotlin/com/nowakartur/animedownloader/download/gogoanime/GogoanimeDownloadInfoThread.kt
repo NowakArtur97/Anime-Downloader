@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory
 abstract class GogoanimeDownloadInfoThread(
     internal val subscribedAnimeService: SubscribedAnimeService,
     private val screenshotUtil: ScreenshotUtil,
-) : Thread() {
+) {
 
     internal val logger: Logger = LoggerFactory.getLogger(javaClass)
 

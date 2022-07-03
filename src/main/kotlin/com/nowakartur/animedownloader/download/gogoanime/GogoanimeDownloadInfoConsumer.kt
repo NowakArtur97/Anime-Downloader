@@ -1,7 +1,6 @@
 package com.nowakartur.animedownloader.download.gogoanime
 
-import com.nowakartur.animedownloader.download.facade.DownloadFacade
-import com.nowakartur.animedownloader.download.facade.DownloadInfo
+import com.nowakartur.animedownloader.download.common.DownloadInfo
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
@@ -17,7 +16,7 @@ class GogoanimeDownloadInfoConsumer(
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
 ) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
-    override fun run() {
+    fun run2(downloadInfo: List<DownloadInfo>) {
 
         var downloadCounter = 0
 
@@ -27,12 +26,10 @@ class GogoanimeDownloadInfoConsumer(
             var currentIndex = 0
             var webDriver: RemoteWebDriver? = null
 
-            val downloadInfo = downloadInfoQueue.take()
-
             if (downloadInfo.isEmpty()) {
                 return
             }
-            
+
             val bestQualityDownloadPage = downloadInfo[currentIndex]
             val subscribedAnimeEntity =
                 allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
@@ -45,7 +42,13 @@ class GogoanimeDownloadInfoConsumer(
 
                     webDriver = SeleniumUtil.startWebDriver()
 
-                    DownloadFacade.downloadInBestQuality(webDriver, bestQualityDownloadPage)
+                    logger.info("Link to the episode: [${bestQualityDownloadPage.url}].")
+
+                    bestQualityDownloadPage.downloadPage.connectToDownloadPage(webDriver, bestQualityDownloadPage.url)
+
+                    logger.info("Downloading the episode.")
+
+                    bestQualityDownloadPage.downloadPage.downloadEpisode(webDriver)
 
                     SeleniumUtil.waitForFileDownload(webDriver, subscribedAnimeEntity.title)
 
