@@ -8,7 +8,6 @@ import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.AFTER_SIZ
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.BEFORE_SIZE_TEXT
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.DOWNLOAD_BUTTON_CLASS
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.DOWNLOAD_LINK_CSS_SELECTOR
-import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.EPISODE_PAGE_LINK_CLASS
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -17,10 +16,11 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object StreamSbPage : DownloadPage {
 
-    override val downloadLinkText: String get() = "ssbstream"
+    override val episodePageDownloadLinkText: String get() = "ssbstream"
+    override val episodePageDownloadLinkClass: String get() = "streamsb"
 
     override fun prepareDownloadLink(page: Document): String =
-        getDownloadLink(page, EPISODE_PAGE_LINK_CLASS)
+        getDownloadLink(page, episodePageDownloadLinkClass)
             .replace("/e/", "/d/")
 
     override fun findFileSize(url: String): Float {

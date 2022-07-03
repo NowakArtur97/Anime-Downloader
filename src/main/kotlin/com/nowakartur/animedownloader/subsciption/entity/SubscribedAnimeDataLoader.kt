@@ -14,6 +14,8 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
         }
 
         val anime = listOf(
+//            SubscribedAnimeEntity("Musashino"),
+//            SubscribedAnimeEntity("Super Dragon Ball Heroes"),
 //            SubscribedAnimeEntity("Chiikawa"),
 //            SubscribedAnimeEntity("Jantama Pong"),
 //            SubscribedAnimeEntity("Kaginado Season 2"),
@@ -55,13 +57,16 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Engage Kiss"),
 //            SubscribedAnimeEntity("Lycoris Recoil"),
 //            SubscribedAnimeEntity("Kakkou no Iinazuke"),
-            SubscribedAnimeEntity("Kawaii dake ja Nai Shikimori-san"),
+//            SubscribedAnimeEntity("Kawaii dake ja Nai Shikimori-san"),
 
 //            SUNDAY
 //            SubscribedAnimeEntity("Kono Healer, Mendokusai", MEDIUM),
 //            SubscribedAnimeEntity("Otome Game Sekai wa Mob ni Kibishii Sekai desu", HIGH),
 //            SubscribedAnimeEntity("Baraou no Souretsu"),
 //            SubscribedAnimeEntity("Black★★Rock Shooter: Dawn Fall"),
+            SubscribedAnimeEntity("Renmei Kuugun"),
+            SubscribedAnimeEntity("Yurei Deco"),
+            SubscribedAnimeEntity("Prima Doll"),
         )
         subscribedAnimeRepository.saveAll(anime)
     }

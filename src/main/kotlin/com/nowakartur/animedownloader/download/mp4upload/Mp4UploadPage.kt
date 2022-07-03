@@ -5,7 +5,6 @@ import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.AFTER_S
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.BEFORE_SIZE_TEXT
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.DOWNLOAD_BUTTON_CLASS
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.DOWNLOAD_PAGE_SUBMIT_BUTTON_ID
-import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.EPISODE_PAGE_LINK_CLASS
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.FILE_SIZE_TEXT
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
@@ -15,10 +14,11 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object Mp4UploadPage : DownloadPage {
 
-    override val downloadLinkText: String get() = "mp4upload"
+    override val episodePageDownloadLinkText: String get() = "mp4upload"
+    override val episodePageDownloadLinkClass: String get() = "mp4upload"
 
     override fun prepareDownloadLink(page: Document): String =
-        getDownloadLink(page, EPISODE_PAGE_LINK_CLASS)
+        getDownloadLink(page, episodePageDownloadLinkClass)
             .replace("embed-", "")
 
     override fun findFileSize(url: String): Float = Jsoup

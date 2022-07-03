@@ -8,7 +8,6 @@ import com.nowakartur.animedownloader.constant.HtmlConstants.VIDEO_TAG
 import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.download.xstreamcdn.XStreamCdnStyles.AFTER_SIZE_TEXT
 import com.nowakartur.animedownloader.download.xstreamcdn.XStreamCdnStyles.BEFORE_SIZE_TEXT
-import com.nowakartur.animedownloader.download.xstreamcdn.XStreamCdnStyles.EPISODE_PAGE_LINK_CLASS
 import com.nowakartur.animedownloader.download.xstreamcdn.XStreamCdnStyles.QUALITY_DOWNLOAD_BUTTON_CLASS
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
@@ -18,10 +17,11 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object XStreamCdnPage : DownloadPage {
 
-    override val downloadLinkText: String get() = "fembed-hd"
+    override val episodePageDownloadLinkText: String get() = "fembed-hd"
+    override val episodePageDownloadLinkClass: String get() = "xstreamcdn"
 
     override fun prepareDownloadLink(page: Document): String =
-        getDownloadLink(page, EPISODE_PAGE_LINK_CLASS)
+        getDownloadLink(page, episodePageDownloadLinkClass)
             .replace("/v/", "/f/")
 
     override fun findFileSize(url: String): Float = Jsoup

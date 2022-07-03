@@ -7,7 +7,8 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 interface DownloadPage {
 
-    val downloadLinkText: String
+    val episodePageDownloadLinkText: String
+    val episodePageDownloadLinkClass: String
 
     fun connectToDownloadPage(webDriver: RemoteWebDriver, url: String) {
         webDriver.close()

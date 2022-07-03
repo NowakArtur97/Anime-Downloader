@@ -26,10 +26,6 @@ class GogoanimeDownloadInfoConsumer(
             var currentIndex = 0
             var webDriver: RemoteWebDriver? = null
 
-            if (downloadInfoQueue.isEmpty()) {
-                return
-            }
-
             val downloadInfo = downloadInfoQueue.take()
 
             if (downloadInfo.isEmpty()) {

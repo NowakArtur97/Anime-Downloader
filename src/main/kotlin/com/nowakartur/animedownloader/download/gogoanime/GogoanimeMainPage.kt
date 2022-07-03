@@ -20,7 +20,7 @@ object GogoanimeMainPage {
             .filter { node -> titles.any { node.text().contains(it, true) } }
     }
 
-    fun findLinkToEpisodes(allSubscribedAnimeNodes: List<Element>, title: String): String =
+    fun findLinkToEpisodeByTitle(allSubscribedAnimeNodes: List<Element>, title: String): String =
         allSubscribedAnimeNodes
             .find { it.text().contains(title) }
             ?.children()
