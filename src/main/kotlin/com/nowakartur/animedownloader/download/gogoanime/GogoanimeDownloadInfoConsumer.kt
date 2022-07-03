@@ -16,7 +16,7 @@ class GogoanimeDownloadInfoConsumer(
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
 ) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
-    fun run2(downloadInfo: List<DownloadInfo>) {
+    override fun run() {
 
         var downloadCounter = 0
 
@@ -25,6 +25,12 @@ class GogoanimeDownloadInfoConsumer(
             var isDownloading = true
             var currentIndex = 0
             var webDriver: RemoteWebDriver? = null
+
+            if (downloadInfoQueue.isEmpty()) {
+                return
+            }
+
+            val downloadInfo = downloadInfoQueue.take()
 
             if (downloadInfo.isEmpty()) {
                 return

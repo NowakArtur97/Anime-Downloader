@@ -15,7 +15,6 @@ object GogoanimeEpisodePage {
         .get()
 
     fun findAllSupportedDownloadLinks(page: Document): List<String> {
-
         val supportedDownloadServers = listOf(Mp4UploadPage, StreamSbPage, XStreamCdnPage)
         return supportedDownloadServers.map { it.prepareDownloadLink(page) }
     }

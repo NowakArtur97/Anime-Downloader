@@ -18,7 +18,7 @@ class GogoanimeDownloadInfoProducer(
     private val gogoanimeMainPageUrl: String,
 ) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
-    fun run2(): List<DownloadInfo> {
+    override fun run() {
 
         allNewAnimeToDownload.forEach { subscribedAnimeEntity ->
             val linkToEpisodePage: String =
@@ -33,8 +33,7 @@ class GogoanimeDownloadInfoProducer(
             val downloadInfo = mapToDownloadInfo(subscribedAnimeEntity.title, alSupportedDownloadLinks)
                 .sortedByDescending { it.fileSize }
 
-            return downloadInfo
+            downloadInfoQueue.add(downloadInfo)
         }
-        return emptyList()
     }
 }

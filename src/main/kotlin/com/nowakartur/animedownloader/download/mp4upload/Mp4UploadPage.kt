@@ -36,7 +36,6 @@ object Mp4UploadPage : DownloadPage {
         clickDownloadButton(webDriver)
     }
 
-
     private fun clickGoToDownloadPageButton(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.id(DOWNLOAD_PAGE_SUBMIT_BUTTON_ID))
         val downloadPageRedirectButton = webDriver.findElementById(DOWNLOAD_PAGE_SUBMIT_BUTTON_ID)

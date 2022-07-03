@@ -65,16 +65,14 @@ class GogoanimeScraperService(
             downloadInfoQueue,
             allNewAnimeToDownload,
         )
-//        gogoanimeDownloadInfoProducer.name = "producer thread"
-//        gogoanimeDownloadInfoConsumer.name = "consumer thread"
-//
-//        gogoanimeDownloadInfoProducer.start()
-//        gogoanimeDownloadInfoConsumer.start()
-//
-//        gogoanimeDownloadInfoProducer.join()
-//        gogoanimeDownloadInfoConsumer.join()
 
-        val downloadInfo = gogoanimeDownloadInfoProducer.run2()
-        gogoanimeDownloadInfoConsumer.run2(downloadInfo)
+        gogoanimeDownloadInfoProducer.name = "producer-thread"
+        gogoanimeDownloadInfoConsumer.name = "consumer-thread"
+
+        gogoanimeDownloadInfoProducer.start()
+        gogoanimeDownloadInfoConsumer.start()
+
+        gogoanimeDownloadInfoProducer.join()
+        gogoanimeDownloadInfoConsumer.join()
     }
 }
