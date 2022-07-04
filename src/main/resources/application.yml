@@ -14,7 +14,7 @@ spring:
 
 app:
   gogoanime:
-    url: https://gogoanime.sk
+    url: https://gogoanime.lu
   scheduler:
     enabled: true
     download:

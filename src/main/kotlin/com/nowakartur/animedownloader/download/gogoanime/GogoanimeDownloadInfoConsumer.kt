@@ -48,15 +48,16 @@ class GogoanimeDownloadInfoConsumer(
 
                     bestQualityDownloadPage.downloadPage.connectToDownloadPage(webDriver, bestQualityDownloadPage.url)
 
-                    logger.info("Downloading the episode.")
+                    val title = subscribedAnimeEntity.title
+                    logger.info("Downloading the episode of: [$title].")
 
                     bestQualityDownloadPage.downloadPage.downloadEpisode(webDriver)
 
-                    SeleniumUtil.waitForFileDownload(webDriver, subscribedAnimeEntity.title)
+                    SeleniumUtil.waitForFileDownload(webDriver, title)
 
                     subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
 
-                    logger.info("The [${subscribedAnimeEntity.title}] episode has been successfully downloaded.")
+                    logger.info("The [$title] episode has been successfully downloaded.")
 
                     isDownloading = false
 

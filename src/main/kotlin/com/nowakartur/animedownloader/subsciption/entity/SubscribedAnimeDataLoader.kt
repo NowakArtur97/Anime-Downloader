@@ -1,5 +1,6 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.HIGH
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -24,8 +25,8 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Cap Kakumei Bottleman DX", HIGH),
 
 //            MONDAY
-//            SubscribedAnimeEntity("Kyoukai Senki Part 2"),
-//            SubscribedAnimeEntity("Healer Girl", HIGH),
+            SubscribedAnimeEntity("Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e", HIGH),
+            SubscribedAnimeEntity("Tensei Kenja no Isekai Life"),
 
 //            TUESDAY
 //            SubscribedAnimeEntity("Yuusha, Yamemasu", MEDIUM),
