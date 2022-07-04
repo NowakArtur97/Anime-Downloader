@@ -10,12 +10,9 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 
     @EventListener(ApplicationReadyEvent::class)
     fun loadDataOnStartup() {
-        if (subscribedAnimeRepository.count() > 0) {
-            return
-        }
-
         val anime = listOf(
 //            SubscribedAnimeEntity("Musashino"),
+//            SubscribedAnimeEntity("Cap Kakumei Bottleman"),
 //            SubscribedAnimeEntity("Super Dragon Ball Heroes"),
 //            SubscribedAnimeEntity("Chiikawa"),
 //            SubscribedAnimeEntity("Jantama Pong"),
@@ -65,10 +62,10 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Otome Game Sekai wa Mob ni Kibishii Sekai desu", HIGH),
 //            SubscribedAnimeEntity("Baraou no Souretsu"),
 //            SubscribedAnimeEntity("Black★★Rock Shooter: Dawn Fall"),
-            SubscribedAnimeEntity("Renmei Kuugun"),
-            SubscribedAnimeEntity("Yurei Deco"),
+//            SubscribedAnimeEntity("Renmei Kuugun"),
+//            SubscribedAnimeEntity("Yurei Deco"),
             SubscribedAnimeEntity("Prima Doll"),
-        )
+        ).filterNot { subscribedAnimeRepository.existsByTitle(it.title) }
         subscribedAnimeRepository.saveAll(anime)
     }
 }

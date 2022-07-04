@@ -6,12 +6,13 @@ import java.util.*
 
 interface SubscribedAnimeRepository : JpaRepository<SubscribedAnimeEntity, UUID> {
 
+    fun existsByTitle(title: String): Boolean
+
     fun findByStatusIsOrderByPriorityDesc(status: SubscribedAnimeStatus): List<SubscribedAnimeEntity>
 
     fun findByStatusIsAndLastModifiedDateBefore(
         status: SubscribedAnimeStatus,
         lastModifiedDate: LocalDateTime
     ): List<SubscribedAnimeEntity>
-
 }
 
