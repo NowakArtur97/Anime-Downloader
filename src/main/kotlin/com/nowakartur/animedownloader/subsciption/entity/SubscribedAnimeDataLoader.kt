@@ -1,6 +1,7 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.HIGH
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.MEDIUM
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -22,26 +23,23 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Cap Kakumei Bottleman DX", HIGH),
 
 //            MONDAY
-            SubscribedAnimeEntity("Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e", HIGH),
-            SubscribedAnimeEntity("Tensei Kenja no Isekai Life"),
+//            SubscribedAnimeEntity("Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e", HIGH),
+//            SubscribedAnimeEntity("Tensei Kenja no Isekai Life"),
 
 //            TUESDAY
-//            SubscribedAnimeEntity("Yuusha, Yamemasu", MEDIUM),
-//            SubscribedAnimeEntity("Tomodachi Game", HIGH),
+            SubscribedAnimeEntity("Overlord IV", HIGH),
+            SubscribedAnimeEntity("Kinsou no Vermeil"),
+            SubscribedAnimeEntity("Tokyo Mew Mew New"),
 
 //            WEDNESDAY
-//            SubscribedAnimeEntity("Birdie Wing: Golf Girls' Story"),
-//            SubscribedAnimeEntity("Shijou Saikyou no Daimaou, Murabito A ni Tensei suru"),
-//            SubscribedAnimeEntity("RPG Fudousan"),
-//            SubscribedAnimeEntity("Komi-san wa, Comyushou", HIGH),
+            SubscribedAnimeEntity("Mamahaha no Tsurego ga Motokano datta"),
+            SubscribedAnimeEntity("Isekai Ojisan", MEDIUM),
+            SubscribedAnimeEntity("Made in Abyss: Retsujitsu no Ougonkyou", HIGH),
+            SubscribedAnimeEntity("Warau Arsnotoria Sun!"),
+            SubscribedAnimeEntity("Isekai Meikyuu de Harem wo"),
 
 //            THURSDAY
-//            SubscribedAnimeEntity("Shachiku-san wa Youjo Yuurei ni Iyasaretai"),
-//            SubscribedAnimeEntity("Paripi Koumei", HIGH),
-//            SubscribedAnimeEntity("Gaikotsu Kishi"),
-//            SubscribedAnimeEntity("Heroine Tarumono", MEDIUM),
 //            SubscribedAnimeEntity("Summertime Render", HIGH),
-//            SubscribedAnimeEntity("Mahoutsukai Reimeiki"),
 
 //            FRIDAY
 //            SubscribedAnimeEntity("Kanojo, Okarishimasu"),
@@ -58,10 +56,6 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Kawaii dake ja Nai Shikimori-san"),
 
 //            SUNDAY
-//            SubscribedAnimeEntity("Kono Healer, Mendokusai", MEDIUM),
-//            SubscribedAnimeEntity("Otome Game Sekai wa Mob ni Kibishii Sekai desu", HIGH),
-//            SubscribedAnimeEntity("Baraou no Souretsu"),
-//            SubscribedAnimeEntity("Black★★Rock Shooter: Dawn Fall"),
 //            SubscribedAnimeEntity("Renmei Kuugun"),
 //            SubscribedAnimeEntity("Yurei Deco"),
             SubscribedAnimeEntity("Prima Doll"),

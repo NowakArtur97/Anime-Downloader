@@ -28,3 +28,5 @@ app:
   screenshot:
     path: \src\main\resources\screenshots\
     file-extension: jpg
+  consumer:
+    wait-time-seconds: 20

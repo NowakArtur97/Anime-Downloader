@@ -7,6 +7,7 @@ import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.openqa.selenium.remote.RemoteWebDriver
 import java.util.concurrent.BlockingQueue
+import java.util.concurrent.TimeUnit
 
 class GogoanimeDownloadInfoConsumer(
     subscribedAnimeService: SubscribedAnimeService,
@@ -14,27 +15,27 @@ class GogoanimeDownloadInfoConsumer(
 
     private val downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
+    private val consumerWaitTime: Long,
 ) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
     override fun run() {
 
         var downloadCounter = 0
 
-        while (downloadCounter < allNewAnimeToDownload.size) {
+        while (downloadCounter < allNewAnimeToDownload.size && allNewAnimeToDownload.isNotEmpty()) {
 
             var isDownloading = true
             var currentIndex = 0
             var webDriver: RemoteWebDriver? = null
 
-            val downloadInfo = downloadInfoQueue.take()
+            val downloadInfo = downloadInfoQueue.poll(consumerWaitTime, TimeUnit.SECONDS)
 
-            if (downloadInfo.isEmpty()) {
+            if (downloadInfo.isNullOrEmpty()) {
                 return
             }
 
             val bestQualityDownloadPage = downloadInfo[currentIndex]
-            val subscribedAnimeEntity =
-                allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
+            val subscribedAnimeEntity = allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
 
             while (isDownloading) {
 

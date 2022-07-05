@@ -17,6 +17,7 @@ class GogoanimeScraperService(
     @Value("\${app.gogoanime.url}") private val gogoanimeMainPageUrl: String,
     private val subscribedAnimeService: SubscribedAnimeService,
     private val screenshotUtil: ScreenshotUtil,
+    @Value("\${app.consumer.wait-time-seconds}") private val consumerWaitTime: Long,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -44,8 +45,9 @@ class GogoanimeScraperService(
             return
         }
 
-        val allNewAnimeToDownload: List<SubscribedAnimeEntity> =
+        val allNewAnimeToDownload: MutableList<SubscribedAnimeEntity> =
             subscribedAnime.filter { anime -> allNewAnimeToDownloadElements.any { it.text().contains(anime.title) } }
+                .toMutableList()
 
         logger.info("Anime found: ${allNewAnimeToDownload.map { it.title }}.")
 
@@ -60,10 +62,7 @@ class GogoanimeScraperService(
             gogoanimeMainPageUrl,
         )
         val gogoanimeDownloadInfoConsumer = GogoanimeDownloadInfoConsumer(
-            subscribedAnimeService,
-            screenshotUtil,
-            downloadInfoQueue,
-            allNewAnimeToDownload,
+            subscribedAnimeService, screenshotUtil, downloadInfoQueue, allNewAnimeToDownload, consumerWaitTime
         )
 
         gogoanimeDownloadInfoProducer.name = "producer-thread"
