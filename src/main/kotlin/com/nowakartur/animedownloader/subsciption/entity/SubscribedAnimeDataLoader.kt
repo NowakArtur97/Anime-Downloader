@@ -27,7 +27,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SubscribedAnimeEntity("Tensei Kenja no Isekai Life"),
 
 //            TUESDAY
-            SubscribedAnimeEntity("Overlord IV", HIGH),
+//            SubscribedAnimeEntity("Overlord IV", HIGH),
             SubscribedAnimeEntity("Kinsou no Vermeil"),
             SubscribedAnimeEntity("Tokyo Mew Mew New"),
 
@@ -39,11 +39,18 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
             SubscribedAnimeEntity("Isekai Meikyuu de Harem wo"),
 
 //            THURSDAY
-//            SubscribedAnimeEntity("Summertime Render", HIGH),
+            SubscribedAnimeEntity("Kumicho Musume to Sewagakari"),
+            SubscribedAnimeEntity("Summertime Render", HIGH),
+            SubscribedAnimeEntity("Soredemo Ayumu wa Yosetekuru"),
+            SubscribedAnimeEntity("Yofukashi no Uta", MEDIUM),
 
 //            FRIDAY
-//            SubscribedAnimeEntity("Kanojo, Okarishimasu"),
-//            SubscribedAnimeEntity("Kami Kuzu"),
+            SubscribedAnimeEntity("Bucchigire!"),
+            SubscribedAnimeEntity("Shadows House 2", MEDIUM),
+            SubscribedAnimeEntity("Prima Doll"),
+            SubscribedAnimeEntity("Hoshi no Samidare"),
+            SubscribedAnimeEntity("Kami Kuzu", MEDIUM),
+            SubscribedAnimeEntity("Kanojo, Okarishimasu"),
 
 //            SATURDAY
 //            SubscribedAnimeEntity("Love All Play"),
@@ -58,7 +65,6 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SUNDAY
 //            SubscribedAnimeEntity("Renmei Kuugun"),
 //            SubscribedAnimeEntity("Yurei Deco"),
-            SubscribedAnimeEntity("Prima Doll"),
         ).filterNot { subscribedAnimeRepository.existsByTitle(it.title) }
         subscribedAnimeRepository.saveAll(anime)
     }
