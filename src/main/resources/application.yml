@@ -14,13 +14,13 @@ spring:
 
 app:
   gogoanime:
-    url: https://gogoanime.lu
+    url: https://gogoanime.pe
   scheduler:
     enabled: true
     download:
       initial-delay-ms: 0
-      fixed-delay-ms: 10000
-    #      fixed-delay-ms: 60000
+#      fixed-delay-ms: 10000
+      fixed-delay-ms: 60000
     clean:
       number-of-days-after-to-clean: 3
       initial-delay-days: 0

@@ -16,12 +16,12 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object StreamSbPage : DownloadPage {
 
-    override val episodePageDownloadLinkText: String get() = "ssbstream"
+    override val episodePageDownloadLinkTexts: List<String> get() = listOf("ssbstream", "streamsss")
     override val episodePageDownloadLinkClass: String get() = "streamsb"
 
     override fun prepareDownloadLink(page: Document): String =
-        getDownloadLink(page, episodePageDownloadLinkClass)
-            .replace("/e/", "/d/")
+            getDownloadLink(page, episodePageDownloadLinkClass)
+                    .replace("/e/", "/d/")
 
     override fun findFileSize(url: String): Float {
         val page = Jsoup.connect(url).get()
@@ -32,12 +32,12 @@ object StreamSbPage : DownloadPage {
             tableRows.last() // there is only one link for the original quality
         }!!
         return bestQualityRow
-            .getElementsByTag(TABLE_DATA_TAG)
-            .last()!!
-            .text()
-            .substringAfter(BEFORE_SIZE_TEXT)
-            .replace(AFTER_SIZE_TEXT, "")
-            .toFloat()
+                .getElementsByTag(TABLE_DATA_TAG)
+                .last()!!
+                .text()
+                .substringAfter(BEFORE_SIZE_TEXT)
+                .replace(AFTER_SIZE_TEXT, "")
+                .toFloat()
     }
 
     override fun downloadEpisode(webDriver: RemoteWebDriver) {
@@ -58,8 +58,8 @@ object StreamSbPage : DownloadPage {
             tableRows.last() // there is only one link for the original quality
         }
         val bestQualityLinkTableData = bestQualityLinkRow
-            .findElements(By.tagName(TABLE_DATA_TAG))
-            .first()
+                .findElements(By.tagName(TABLE_DATA_TAG))
+                .first()
         val bestQualityLink = bestQualityLinkTableData.findElement(By.tagName(ANCHOR_TAG))
         SeleniumUtil.clickUsingJavaScript(webDriver, bestQualityLink)
     }

@@ -17,7 +17,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object XStreamCdnPage : DownloadPage {
 
-    override val episodePageDownloadLinkText: String get() = "fembed-hd"
+    override val episodePageDownloadLinkTexts: List<String> get() = listOf("fembed-hd", "fembed9hd")
     override val episodePageDownloadLinkClass: String get() = "xstreamcdn"
 
     override fun prepareDownloadLink(page: Document): String =

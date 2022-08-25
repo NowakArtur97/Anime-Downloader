@@ -14,7 +14,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object Mp4UploadPage : DownloadPage {
 
-    override val episodePageDownloadLinkText: String get() = "mp4upload"
+    override val episodePageDownloadLinkTexts: List<String> get() = listOf("mp4upload")
     override val episodePageDownloadLinkClass: String get() = "mp4upload"
 
     override fun prepareDownloadLink(page: Document): String =
@@ -45,6 +45,6 @@ object Mp4UploadPage : DownloadPage {
     private fun clickDownloadButton(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.className(DOWNLOAD_BUTTON_CLASS))
         val downloadButton = webDriver.findElementByClassName(DOWNLOAD_BUTTON_CLASS)
-        downloadButton.click()
+        SeleniumUtil.clickUsingJavaScript(webDriver, downloadButton)
     }
 }

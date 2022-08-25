@@ -12,59 +12,56 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
     @EventListener(ApplicationReadyEvent::class)
     fun loadDataOnStartup() {
         val anime = listOf(
-//            SubscribedAnimeEntity("Musashino"),
-//            SubscribedAnimeEntity("Cap Kakumei Bottleman"),
-//            SubscribedAnimeEntity("Super Dragon Ball Heroes"),
-//            SubscribedAnimeEntity("Chiikawa"),
-//            SubscribedAnimeEntity("Jantama Pong"),
-//            SubscribedAnimeEntity("Kaginado Season 2"),
-//            SubscribedAnimeEntity("Cyborg Kuro", MEDIUM),
-//            SubscribedAnimeEntity("Chobits: Chibits", HIGH),
-//            SubscribedAnimeEntity("Cap Kakumei Bottleman DX", HIGH),
-
 //            MONDAY
-//            SubscribedAnimeEntity("Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e", HIGH),
-//            SubscribedAnimeEntity("Tensei Kenja no Isekai Life"),
+                SubscribedAnimeEntity("Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e", HIGH),
+                SubscribedAnimeEntity("Tensei Kenja no Isekai Life", MEDIUM),
+                SubscribedAnimeEntity("Orient: Awajishima Gekitou-hen"),
 
 //            TUESDAY
-//            SubscribedAnimeEntity("Overlord IV", HIGH),
-            SubscribedAnimeEntity("Kinsou no Vermeil"),
-            SubscribedAnimeEntity("Tokyo Mew Mew New"),
+                SubscribedAnimeEntity("Overlord IV", HIGH),
+                SubscribedAnimeEntity("Kinsou no Vermeil", MEDIUM),
+                SubscribedAnimeEntity("Tokyo Mew Mew New"),
+                SubscribedAnimeEntity("Shine Post", HIGH),
 
 //            WEDNESDAY
-            SubscribedAnimeEntity("Mamahaha no Tsurego ga Motokano datta"),
-            SubscribedAnimeEntity("Isekai Ojisan", MEDIUM),
-            SubscribedAnimeEntity("Made in Abyss: Retsujitsu no Ougonkyou", HIGH),
-            SubscribedAnimeEntity("Warau Arsnotoria Sun!"),
-            SubscribedAnimeEntity("Isekai Meikyuu de Harem wo"),
+                SubscribedAnimeEntity("Warau Arsnotoria Sun!"),
+                SubscribedAnimeEntity("Made in Abyss: Retsujitsu no Ougonkyou", HIGH),
+                SubscribedAnimeEntity("Mamahaha no Tsurego ga Motokano datta"),
+                SubscribedAnimeEntity("Isekai Meikyuu de Harem wo (Uncensored)", MEDIUM),
+                SubscribedAnimeEntity("Isekai Ojisan", HIGH),
 
 //            THURSDAY
-            SubscribedAnimeEntity("Kumicho Musume to Sewagakari"),
-            SubscribedAnimeEntity("Summertime Render", HIGH),
-            SubscribedAnimeEntity("Soredemo Ayumu wa Yosetekuru"),
-            SubscribedAnimeEntity("Yofukashi no Uta", MEDIUM),
+                SubscribedAnimeEntity("Hataraku Maou-sama!!", MEDIUM),
+                SubscribedAnimeEntity("Kumichou Musume to Sewagakari"),
+                SubscribedAnimeEntity("Summertime Render", HIGH),
+                SubscribedAnimeEntity("Yofukashi no Uta", HIGH),
 
 //            FRIDAY
-            SubscribedAnimeEntity("Bucchigire!"),
-            SubscribedAnimeEntity("Shadows House 2", MEDIUM),
-            SubscribedAnimeEntity("Prima Doll"),
-            SubscribedAnimeEntity("Hoshi no Samidare"),
-            SubscribedAnimeEntity("Kami Kuzu", MEDIUM),
-            SubscribedAnimeEntity("Kanojo, Okarishimasu"),
+                SubscribedAnimeEntity("Bucchigire!"),
+                SubscribedAnimeEntity("Soredemo Ayumu wa Yosetekuru", MEDIUM),
+                SubscribedAnimeEntity("Prima Doll"),
+                SubscribedAnimeEntity("Shadows House 2", HIGH),
+                SubscribedAnimeEntity("Kami Kuzu", HIGH),
+                SubscribedAnimeEntity("Hoshi no Samidare", MEDIUM),
+                SubscribedAnimeEntity("Kanojo, Okarishimasu"),
 
 //            SATURDAY
-//            SubscribedAnimeEntity("Love All Play"),
-//            SubscribedAnimeEntity("Ao Ashi", MEDIUM),
-//            SubscribedAnimeEntity("Teppen!"),
-//            SubscribedAnimeEntity("Shoot! Goal to the Future"),
-//            SubscribedAnimeEntity("Engage Kiss"),
-//            SubscribedAnimeEntity("Lycoris Recoil"),
-//            SubscribedAnimeEntity("Kakkou no Iinazuke"),
-//            SubscribedAnimeEntity("Kawaii dake ja Nai Shikimori-san"),
+                SubscribedAnimeEntity("Love All Play"),
+                SubscribedAnimeEntity("Ao Ashi", HIGH),
+                SubscribedAnimeEntity("Teppen!", MEDIUM),
+                SubscribedAnimeEntity("Kuro no Shoukansh"),
+                SubscribedAnimeEntity("Shoot! Goal to the Future"),
+                SubscribedAnimeEntity("Lycoris Recoil", HIGH),
+                SubscribedAnimeEntity("Engage Kiss", MEDIUM),
+                SubscribedAnimeEntity("Extreme Hearts", MEDIUM),
+                SubscribedAnimeEntity("Kakkou no Iinazuke"),
+                SubscribedAnimeEntity("Saikin Yatotta Maid ga Ayashii"),
 
 //            SUNDAY
-//            SubscribedAnimeEntity("Renmei Kuugun"),
-//            SubscribedAnimeEntity("Yurei Deco"),
+                SubscribedAnimeEntity("Renmei Kuugun", MEDIUM),
+                SubscribedAnimeEntity("Isekai Yakkyoku", HIGH),
+                SubscribedAnimeEntity("RWBY: Hyousetsu Teikoku", MEDIUM),
+                SubscribedAnimeEntity("Yurei Deco"),
         ).filterNot { subscribedAnimeRepository.existsByTitle(it.title) }
         subscribedAnimeRepository.saveAll(anime)
     }

@@ -31,7 +31,7 @@ object SeleniumUtil {
             it.addArguments("lang=en-GB") // change language to English
         }
         return ChromeDriver(options).also {
-            it.manage().window().position = HIDDEN_POSITION
+//            it.manage().window().position = HIDDEN_POSITION
         }
     }
 
