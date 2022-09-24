@@ -28,16 +28,16 @@ dependencies {
 
     // Web Scraping dependencies
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
-    implementation("org.jsoup:jsoup:1.15.1")
+    implementation("org.jsoup:jsoup:1.15.3")
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    implementation("org.seleniumhq.selenium:selenium-java:4.3.0")
+    implementation("org.seleniumhq.selenium:selenium-java:4.4.0")
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
-    implementation("io.github.bonigarcia:webdrivermanager:5.2.1")
+    implementation("io.github.bonigarcia:webdrivermanager:5.3.0")
 
 
     // Database dependencies
     // https://mvnrepository.com/artifact/com.h2database/h2
-    runtimeOnly("com.h2database:h2:2.1.212")
+    implementation("com.h2database:h2:2.1.214")
 
     // Testing dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")

@@ -1,4 +1,4 @@
-# KanjisDungeon
+# Anime Downloader
 
 ## Table of Contents
 
@@ -31,10 +31,10 @@ The application works as follows:
 - Java - 17
 - Kotlin
 - Spring (Boot, Data JPA) - 2.6.7
-- jsoup - 1.15.1
-- Selenium - 4.3.0
-- Web Driver Manager - 5.2.1
-- H2 - 2.1.212
+- jsoup - 1.15.3
+- Selenium - 4.4.0
+- Web Driver Manager - 5.3.0
+- H2 - 2.1.214
 - jUnit5 - 5.8.2
 - Yandex QATools AShot WebDriver Utility - 1.5.4
 

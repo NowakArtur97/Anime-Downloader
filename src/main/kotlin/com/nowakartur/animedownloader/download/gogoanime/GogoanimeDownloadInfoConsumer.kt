@@ -34,6 +34,7 @@ class GogoanimeDownloadInfoConsumer(
                 return
             }
 
+            // TODO: move down inside while loop and check changing download servers after exception
             val bestQualityDownloadPage = downloadInfo[currentIndex]
             val subscribedAnimeEntity = allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
 
