@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
 
 private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
-private const val WAIT_FOR_DOWNLOAD_CHECK = 5_000L
+private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
 
 object SeleniumUtil {
 
@@ -31,7 +31,7 @@ object SeleniumUtil {
             it.addArguments("lang=en-GB") // change language to English
         }
         return ChromeDriver(options).also {
-//            it.manage().window().position = HIDDEN_POSITION
+            it.manage().window().position = HIDDEN_POSITION
         }
     }
 

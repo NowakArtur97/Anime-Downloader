@@ -4,8 +4,8 @@ import com.nowakartur.animedownloader.constant.HtmlConstants.ANCHOR_TAG
 
 object StreamSbStyles {
 
-    const val BEFORE_SIZE_TEXT = ", "
-    const val AFTER_SIZE_TEXT = " MB"
+    const val BEFORE_SIZE_TEXT = "("
+    const val AFTER_SIZE_TEXT = " MB)"
 
     const val DOWNLOAD_BUTTON_CLASS = "g-recaptcha"
 

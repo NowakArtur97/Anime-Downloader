@@ -48,6 +48,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            SATURDAY
             SubscribedAnimeEntity("Love All Play"),
             SubscribedAnimeEntity("Ao Ashi", HIGH),
+            SubscribedAnimeEntity("Akuyaku Reijou nanode Last Boss wo Kattemimashita", MEDIUM),
             SubscribedAnimeEntity("Teppen!", MEDIUM),
             SubscribedAnimeEntity("Kuro no Shoukansh"),
             SubscribedAnimeEntity("Shoot! Goal to the Future"),

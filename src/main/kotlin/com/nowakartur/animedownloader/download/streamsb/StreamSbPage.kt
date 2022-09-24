@@ -33,7 +33,7 @@ object StreamSbPage : DownloadPage {
         }!!
         return bestQualityRow
                 .getElementsByTag(TABLE_DATA_TAG)
-                .last()!!
+                .first()!!
                 .text()
                 .substringAfter(BEFORE_SIZE_TEXT)
                 .replace(AFTER_SIZE_TEXT, "")
