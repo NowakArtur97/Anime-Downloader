@@ -17,12 +17,11 @@ object GogoanimeMainPage {
         val titles = subscribedAnime.map { it.title }
         return page
             .getElementsByClass(MAIN_PAGE_ANIME_NAME_CLASS)
-            .filter { node -> titles.any { node.text().contains(it, true) } }
+            .filter { node -> titles.any { node.text().contains(it, ignoreCase = true) } }
     }
 
     fun findLinkToEpisodeByTitle(allSubscribedAnimeNodes: List<Element>, title: String): String =
-        allSubscribedAnimeNodes
-            .find { it.text().contains(title) }
+        allSubscribedAnimeNodes.find { it.text().contains(title, ignoreCase = true) }
             ?.children()
             ?.first()
             ?.attr(HREF_ATTRIBUTE)!!

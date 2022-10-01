@@ -46,8 +46,11 @@ class GogoanimeScraperService(
         }
 
         val allNewAnimeToDownload: MutableList<SubscribedAnimeEntity> =
-            subscribedAnime.filter { anime -> allNewAnimeToDownloadElements.any { it.text().contains(anime.title) } }
-                .toMutableList()
+            subscribedAnime.filter { anime ->
+                allNewAnimeToDownloadElements.any {
+                    it.text().contains(anime.title, ignoreCase = true)
+                }
+            }.toMutableList()
 
         logger.info("Anime found: ${allNewAnimeToDownload.map { it.title }}.")
 
