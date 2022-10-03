@@ -45,7 +45,7 @@ The application works as follows:
 - Saving the status of an anime
 - Downloading episodes taking into account the download priority
 - Saving anime titles in the database at the start of the application
-- Retry, change of download server and taking screenshots in case of download failure
+- Retrying, changing download servers and taking screenshots in case of download failures
 - Using producer and consumer pattern
 
 ## Status
