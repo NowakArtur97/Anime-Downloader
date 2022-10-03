@@ -7,7 +7,7 @@ import com.nowakartur.animedownloader.download.xstreamcdn.XStreamCdnPage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-const val GOGOANIME_MAIN_PAGE_URL = "https://gogoanime.lu/"
+const val GOGOANIME_MAIN_PAGE_URL = "https://gogoanime.dk/"
 
 class GogoanimeEpisodePageTest {
 
@@ -17,8 +17,8 @@ class GogoanimeEpisodePageTest {
         val episodePage = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, linkToAnimePage)
         val expectedLinks = listOf(
             "https://www.mp4upload.com/zdu7xouesiia.html",
-            "https://ssbstream.net/d/s2rrkvcv9nhl",
-            "https://fembed-hd.com/f/ez40ni-62220den",
+            "https://streamsss.net/d/s2rrkvcv9nhl",
+            "https://fembed9hd.com/f/ez40ni-62220den",
         )
         val actualLinks = GogoanimeEpisodePage.findAllSupportedDownloadLinks(episodePage)
 

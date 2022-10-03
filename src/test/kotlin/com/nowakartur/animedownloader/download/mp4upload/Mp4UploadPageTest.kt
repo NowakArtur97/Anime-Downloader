@@ -9,17 +9,17 @@ class Mp4UploadPageTest : PageTest() {
 
     @Test
     fun `when check file size from Mp4Upload should return correct value`() {
-        val mp4UploadUrl = "https://www.mp4upload.com/syoofo92jare.html"
-        val expectedFileSize = 347.6f
+        val mp4UploadUrl = "https://www.mp4upload.com/cr26r5qptylf"
+        val expectedFileSize = 245.1f
 
         processFileSizeTest(Mp4UploadPage, mp4UploadUrl, expectedFileSize)
     }
 
     @Test
     fun `when prepare download link should return correct value`() {
-        val expectedMp4UploadUrl = "https://www.mp4upload.com/syoofo92jare.html"
+        val expectedMp4UploadUrl = "https://www.mp4upload.com/cr26r5qptylf.html"
 
-        val page = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, "/yurei-deco-episode-1")
+        val page = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, "/ao-ashi-episode-24")
 
         processDownloadLinkTest(Mp4UploadPage, page, expectedMp4UploadUrl)
     }

@@ -17,7 +17,7 @@ class XStreamCdnPageTest : PageTest() {
 
     @Test
     fun `when prepare download link should return correct value`() {
-        val expectedXStreamCdnUrl = "https://fembed-hd.com/f/wwnd5cny2mx4n3-"
+        val expectedXStreamCdnUrl = "https://fembed9hd.com/f/wwnd5cny2mx4n3-"
 
         val page = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, "/yurei-deco-episode-1")
 

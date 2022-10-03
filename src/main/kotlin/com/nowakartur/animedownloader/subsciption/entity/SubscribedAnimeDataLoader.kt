@@ -16,10 +16,15 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
             SubscribedAnimeEntity("Shinmai Renkinjutsushi no Tenpo Keiei"),
 
 //            TUESDAY
-            SubscribedAnimeEntity("Shine Post", HIGH),
+            SubscribedAnimeEntity("Shinobi no Ittoki"),
+            SubscribedAnimeEntity("Shine Post", MEDIUM),
 
 //            WEDNESDAY
+            SubscribedAnimeEntity("Kage no Jitsuryokusha ni Naritakute!", HIGH),
+            SubscribedAnimeEntity("Futoku no Guild"),
             SubscribedAnimeEntity("Tensei Shitara Ken Deshita", MEDIUM),
+            SubscribedAnimeEntity("Do It Yourself!!"),
+            SubscribedAnimeEntity("Mob Psycho 100 III", HIGH),
 
 //            THURSDAY
 
