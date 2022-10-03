@@ -20,7 +20,8 @@ The application works as follows:
 - if they are, the producer's thread finds download links from supported download servers
 - then sorts them from best to worst quality and passes the data to the consumer's thread
 - the consumer changes the status to `IN_PROGRESS` and starts the download
-- in case of failure, changes the download server, if there is one
+- in case of failure, it tries again, and if there are too many failures, it changes the download server, if there is
+  one
 - after successful download, change status to `DOWNLOADED`
 - the second Scheduler cyclically changes the anime status from `DOWNLOADED` to `TO_DOWNLOAD`, so that when a new
   episode appears, it will be downloaded
@@ -45,7 +46,7 @@ The application works as follows:
 - Saving the status of an anime
 - Downloading episodes taking into account the download priority
 - Saving anime titles in the database at the start of the application
-- Taking screenshots in case of download failure
+- Retry, change of download server and taking screenshots in case of download failure
 - Using producer and consumer pattern
 
 ## Status
