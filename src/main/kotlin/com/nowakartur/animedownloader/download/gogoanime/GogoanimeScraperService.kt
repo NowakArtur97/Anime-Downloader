@@ -18,6 +18,7 @@ class GogoanimeScraperService(
     private val subscribedAnimeService: SubscribedAnimeService,
     private val screenshotUtil: ScreenshotUtil,
     @Value("\${app.consumer.wait-time-seconds}") private val consumerWaitTime: Long,
+    @Value("\${app.consumer.download-service-retry-times}") private val downloadServiceRetryTimes: Int,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -29,7 +30,7 @@ class GogoanimeScraperService(
         val subscribedAnime = subscribedAnimeService.findAllAnimeForDownload()
 
         if (subscribedAnime.isEmpty()) {
-            logger.info("No anime is subscribed.")
+            logger.info("Nothing new to download or no anime is subscribed.")
             return
         }
 
@@ -41,16 +42,15 @@ class GogoanimeScraperService(
             GogoanimeMainPage.findAllSubscribedAnime(subscribedAnime, mainPage)
 
         if (allNewAnimeToDownloadElements.isEmpty()) {
-            logger.info("Nothing new to download.")
+            logger.info("Nothing new to download from gogoanime page.")
             return
         }
 
-        val allNewAnimeToDownload: MutableList<SubscribedAnimeEntity> =
-            subscribedAnime.filter { anime ->
-                allNewAnimeToDownloadElements.any {
-                    it.text().contains(anime.title, ignoreCase = true)
-                }
-            }.toMutableList()
+        val allNewAnimeToDownload: MutableList<SubscribedAnimeEntity> = subscribedAnime.filter { anime ->
+            allNewAnimeToDownloadElements.any {
+                it.text().contains(anime.title, ignoreCase = true)
+            }
+        }.toMutableList()
 
         logger.info("Anime found: ${allNewAnimeToDownload.map { it.title }}.")
 
@@ -65,7 +65,12 @@ class GogoanimeScraperService(
             gogoanimeMainPageUrl,
         )
         val gogoanimeDownloadInfoConsumer = GogoanimeDownloadInfoConsumer(
-            subscribedAnimeService, screenshotUtil, downloadInfoQueue, allNewAnimeToDownload, consumerWaitTime
+            subscribedAnimeService,
+            screenshotUtil,
+            downloadInfoQueue,
+            allNewAnimeToDownload,
+            consumerWaitTime,
+            downloadServiceRetryTimes
         )
 
         gogoanimeDownloadInfoProducer.name = "producer-thread"

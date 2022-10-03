@@ -16,6 +16,7 @@ class GogoanimeDownloadInfoConsumer(
     private val downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
     private val consumerWaitTime: Long,
+    private val downloadServiceRetryTimes: Int,
 ) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
     override fun run() {
@@ -25,7 +26,7 @@ class GogoanimeDownloadInfoConsumer(
         while (downloadCounter < allNewAnimeToDownload.size && allNewAnimeToDownload.isNotEmpty()) {
 
             var isDownloading = true
-            var currentIndex = 0
+            var currentDownloadServiceIndex = 0
             var webDriver: RemoteWebDriver? = null
 
             val downloadInfo = downloadInfoQueue.poll(consumerWaitTime, TimeUnit.SECONDS)
@@ -34,46 +35,56 @@ class GogoanimeDownloadInfoConsumer(
                 return
             }
 
-            // TODO: move down inside while loop and check changing download servers after exception
-            val bestQualityDownloadPage = downloadInfo[currentIndex]
-            val subscribedAnimeEntity = allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
-
             while (isDownloading) {
 
-                try {
+                val bestQualityDownloadPage = downloadInfo[currentDownloadServiceIndex]
+                val subscribedAnimeEntity = allNewAnimeToDownload.first { it.title == downloadInfo.first().title }
+                var currentRetryIndex = 0
 
-                    subscribedAnimeService.startDownloadingAnime(subscribedAnimeEntity)
+                while (currentRetryIndex < downloadServiceRetryTimes) {
 
-                    webDriver = SeleniumUtil.startWebDriver()
+                    try {
 
-                    logger.info("Link to the episode: [${bestQualityDownloadPage.url}].")
+                        subscribedAnimeService.startDownloadingAnime(subscribedAnimeEntity)
 
-                    bestQualityDownloadPage.downloadPage.connectToDownloadPage(webDriver, bestQualityDownloadPage.url)
+                        webDriver = SeleniumUtil.startWebDriver()
 
-                    val title = subscribedAnimeEntity.title
-                    logger.info("Downloading the episode of: [$title].")
+                        logger.info("Link to the episode: [${bestQualityDownloadPage.url}].")
 
-                    bestQualityDownloadPage.downloadPage.downloadEpisode(webDriver)
+                        bestQualityDownloadPage.downloadPage.connectToDownloadPage(
+                            webDriver,
+                            bestQualityDownloadPage.url
+                        )
 
-                    SeleniumUtil.waitForFileDownload(webDriver, title)
+                        val title = subscribedAnimeEntity.title
+                        logger.info("Downloading the episode of: [$title].")
 
-                    subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
+                        bestQualityDownloadPage.downloadPage.downloadEpisode(webDriver)
 
-                    logger.info("The [$title] episode has been successfully downloaded.")
+                        SeleniumUtil.waitForFileDownload(webDriver, title)
 
-                    isDownloading = false
+                        subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
 
-                    downloadCounter++
+                        logger.info("The [$title] episode has been successfully downloaded.")
 
-                } catch (e: Exception) {
-                    cleanUpAfterException(e, subscribedAnimeEntity, webDriver)
+                        isDownloading = false
 
-                    currentIndex++
-                    isDownloading = currentIndex < downloadInfo.size
+                        currentRetryIndex = downloadServiceRetryTimes
 
-                } finally {
-                    webDriver?.quit()
+                        downloadCounter++
+
+                    } catch (e: Exception) {
+                        cleanUpAfterException(e, subscribedAnimeEntity, webDriver)
+
+                        currentRetryIndex++
+                        isDownloading = currentDownloadServiceIndex < downloadInfo.size
+
+                    } finally {
+                        webDriver?.quit()
+                    }
                 }
+
+                currentDownloadServiceIndex++
             }
         }
     }

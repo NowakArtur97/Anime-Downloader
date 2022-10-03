@@ -19,7 +19,7 @@ app:
     enabled: true
     download:
       initial-delay-ms: 0
-#      fixed-delay-ms: 10000
+      #      fixed-delay-ms: 10000
       fixed-delay-ms: 60000
     clean:
       number-of-days-after-to-clean: 3
@@ -30,3 +30,4 @@ app:
     file-extension: jpg
   consumer:
     wait-time-seconds: 20
+    download-service-retry-times: 3
