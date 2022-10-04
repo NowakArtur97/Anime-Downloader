@@ -16,12 +16,19 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object StreamSbPage : DownloadPage {
 
-    override val episodePageDownloadLinkTexts: List<String> get() = listOf("ssbstream", "streamsss")
     override val episodePageDownloadLinkClass: String get() = "streamsb"
+    override val episodePageDownloadLinkTexts: List<String>
+        get() = listOf(
+            episodePageDownloadLinkClass, "ssbstream", "streamsss"
+        )
 
-    override fun prepareDownloadLink(page: Document): String =
-            getDownloadLink(page, episodePageDownloadLinkClass)
-                    .replace("/e/", "/d/")
+    override fun prepareDownloadLink(page: Document): String {
+        var downloadLink = getDownloadLink(page, episodePageDownloadLinkClass).replace("/e/", "/d/")
+        episodePageDownloadLinkTexts.forEach {
+            downloadLink = downloadLink.replace(it, episodePageDownloadLinkClass)
+        }
+        return downloadLink
+    }
 
     override fun findFileSize(url: String): Float {
         val page = Jsoup.connect(url).get()
@@ -31,13 +38,8 @@ object StreamSbPage : DownloadPage {
         } else {
             tableRows.last() // there is only one link for the original quality
         }!!
-        return bestQualityRow
-                .getElementsByTag(TABLE_DATA_TAG)
-                .first()!!
-                .text()
-                .substringAfter(BEFORE_SIZE_TEXT)
-                .replace(AFTER_SIZE_TEXT, "")
-                .toFloat()
+        return bestQualityRow.getElementsByTag(TABLE_DATA_TAG).first()!!.text().substringAfter(BEFORE_SIZE_TEXT)
+            .replace(AFTER_SIZE_TEXT, "").toFloat()
     }
 
     override fun downloadEpisode(webDriver: RemoteWebDriver) {
@@ -57,9 +59,7 @@ object StreamSbPage : DownloadPage {
         } else {
             tableRows.last() // there is only one link for the original quality
         }
-        val bestQualityLinkTableData = bestQualityLinkRow
-                .findElements(By.tagName(TABLE_DATA_TAG))
-                .first()
+        val bestQualityLinkTableData = bestQualityLinkRow.findElements(By.tagName(TABLE_DATA_TAG)).first()
         val bestQualityLink = bestQualityLinkTableData.findElement(By.tagName(ANCHOR_TAG))
         SeleniumUtil.clickUsingJavaScript(webDriver, bestQualityLink)
     }

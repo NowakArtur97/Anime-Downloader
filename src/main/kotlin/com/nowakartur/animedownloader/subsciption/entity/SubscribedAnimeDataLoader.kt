@@ -29,6 +29,7 @@ class SubscribedAnimeDataLoader(private val subscribedAnimeRepository: Subscribe
 //            THURSDAY
 
 //            FRIDAY
+//            SubscribedAnimeEntity("Uchi no Shishou wa Shippo ga Nai"),
 //            SubscribedAnimeEntity("Hoshi no Samidare"),
 
 //            SATURDAY
