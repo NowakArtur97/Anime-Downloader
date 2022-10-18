@@ -17,7 +17,7 @@ class GogoanimeEpisodePageTest {
         val episodePage = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, linkToAnimePage)
         val expectedLinks = listOf(
             "https://www.mp4upload.com/zdu7xouesiia.html",
-            "https://streamsb.net/d/s2rrkvcv9nhl",
+            "https://streamsss.net/d/s2rrkvcv9nhl",
             "https://fembed9hd.com/f/ez40ni-62220den",
         )
         val actualLinks = GogoanimeEpisodePage.findAllSupportedDownloadLinks(episodePage)

@@ -25,7 +25,7 @@ class StreamSbPageTest : PageTest() {
 
     @Test
     fun `when prepare download link should return correct value`() {
-        val expectedStreamSbUrl = "https://streamsb.net/d/9e6sw6cx06sb"
+        val expectedStreamSbUrl = "https://streamsss.net/d/9e6sw6cx06sb"
 
         val page = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, "/yurei-deco-episode-1")
 

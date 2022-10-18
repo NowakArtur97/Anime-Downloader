@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
 import java.util.concurrent.TimeUnit
 
-const val TIME_TO_WAIT_FOR_ASSERTION = 15L
+const val TIME_TO_WAIT_FOR_ASSERTION = 25L
 
 @SpringBootTest
 @TestPropertySource(properties = ["app.scheduler.enabled=false"])
