@@ -22,6 +22,7 @@ class GogoanimeDownloadInfoConsumer(
     override fun run() {
 
         var downloadCounter = 0
+        var hasFailed = false
 
         while (downloadCounter < allNewAnimeToDownload.size && allNewAnimeToDownload.isNotEmpty()) {
 
@@ -29,7 +30,8 @@ class GogoanimeDownloadInfoConsumer(
             var currentDownloadServiceIndex = 0
             var webDriver: RemoteWebDriver? = null
 
-            val downloadInfo = downloadInfoQueue.poll(consumerWaitTime, TimeUnit.SECONDS)
+            val downloadInfo = chooseElementIncludingSkipped(hasFailed, downloadCounter)
+            hasFailed = false
 
             if (downloadInfo.isNullOrEmpty()) {
                 return
@@ -77,7 +79,8 @@ class GogoanimeDownloadInfoConsumer(
                         cleanUpAfterException(e, subscribedAnimeEntity, webDriver)
 
                         currentRetryIndex++
-                        isDownloading = currentDownloadServiceIndex < downloadInfo.size
+                        hasFailed = currentRetryIndex >= downloadServiceRetryTimes
+                        isDownloading = currentDownloadServiceIndex < downloadInfo.size - 1
 
                     } finally {
                         webDriver?.quit()
@@ -87,5 +90,21 @@ class GogoanimeDownloadInfoConsumer(
                 currentDownloadServiceIndex++
             }
         }
+    }
+
+    private fun chooseElementIncludingSkipped(
+        hasFailed: Boolean,
+        downloadCounter: Int
+    ) = if (hasFailed) {
+        if (downloadInfoQueue.size <= 1) {
+            downloadInfoQueue.poll(consumerWaitTime, TimeUnit.SECONDS)
+        } else {
+            val indexToSkipFailedElement = downloadCounter + 1
+            val downloadInfos = downloadInfoQueue.toList()[indexToSkipFailedElement]
+            downloadInfoQueue.remove(downloadInfos)
+            downloadInfos
+        }
+    } else {
+        downloadInfoQueue.poll(consumerWaitTime, TimeUnit.SECONDS)
     }
 }
