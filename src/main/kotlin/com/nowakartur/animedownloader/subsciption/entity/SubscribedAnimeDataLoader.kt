@@ -13,9 +13,20 @@ class SubscribedAnimeDataLoader(
 
     @EventListener(ApplicationReadyEvent::class)
     fun loadDataOnStartup() {
-        val anime = csvDataLoader.loadData()
-            .filterNot { subscribedAnimeRepository.existsByTitle(it.title) }
+        val animeListFromCsv = saveNewTitles()
+        removeOldTitles(animeListFromCsv)
+    }
 
-        subscribedAnimeRepository.saveAll(anime)
+    private fun saveNewTitles(): List<SubscribedAnimeEntity> {
+        val animeListFromCsv = csvDataLoader.loadData()
+        val notInDb = animeListFromCsv.filterNot { subscribedAnimeRepository.existsByTitle(it.title) }
+        subscribedAnimeRepository.saveAll(notInDb)
+        return animeListFromCsv
+    }
+
+    private fun removeOldTitles(animeListFromCsv: List<SubscribedAnimeEntity>) {
+        subscribedAnimeRepository.findAll()
+            .filter { animeListFromCsv.none { animeFromCsv -> it.title == animeFromCsv.title } }
+            .forEach { subscribedAnimeRepository.delete(it) }
     }
 }
