@@ -8,6 +8,8 @@ interface SubscribedAnimeRepository : JpaRepository<SubscribedAnimeEntity, UUID>
 
     fun existsByTitle(title: String): Boolean
 
+    fun findAllByStatus(status: SubscribedAnimeStatus): List<SubscribedAnimeEntity>
+
     fun findByStatusIsOrderByPriorityDesc(status: SubscribedAnimeStatus): List<SubscribedAnimeEntity>
 
     fun findByStatusIsAndLastModifiedDateBefore(

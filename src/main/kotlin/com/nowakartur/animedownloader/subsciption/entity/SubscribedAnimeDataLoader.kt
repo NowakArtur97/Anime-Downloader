@@ -15,6 +15,7 @@ class SubscribedAnimeDataLoader(
     fun loadDataOnStartup() {
         val animeListFromCsv = saveNewTitles()
         removeOldTitles(animeListFromCsv)
+        correctStatusOfAllTitlesInProgress()
     }
 
     private fun saveNewTitles(): List<SubscribedAnimeEntity> {
@@ -28,5 +29,15 @@ class SubscribedAnimeDataLoader(
         subscribedAnimeRepository.findAll()
             .filter { animeListFromCsv.none { animeFromCsv -> it.title == animeFromCsv.title } }
             .forEach { subscribedAnimeRepository.delete(it) }
+    }
+
+    private fun correctStatusOfAllTitlesInProgress() {
+        val allInProgress = subscribedAnimeRepository.findAllByStatus(
+            SubscribedAnimeStatus.IN_PROGRESS
+        ).map {
+            it.changeStatusToToDownload()
+            it
+        }
+        subscribedAnimeRepository.saveAll(allInProgress)
     }
 }
