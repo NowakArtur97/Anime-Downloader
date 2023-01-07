@@ -31,3 +31,5 @@ app:
   consumer:
     wait-time-seconds: 20
     download-service-retry-times: 3
+  csv:
+    file-name: anime.csv
