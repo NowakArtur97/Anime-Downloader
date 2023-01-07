@@ -15,16 +15,30 @@ class SubscribedAnimeDataLoader(
 
     @EventListener(ApplicationReadyEvent::class)
     fun loadDataOnStartup() {
-        val animeListFromCsv = saveNewTitles()
-        removeOldTitles(animeListFromCsv)
         correctStatusOfAllTitlesInProgress()
+        val animeListFromCsv = csvDataLoader.loadData()
+        updatePriorities(animeListFromCsv)
+        saveNewTitles(animeListFromCsv)
+        removeOldTitles(animeListFromCsv)
     }
 
-    private fun saveNewTitles(): List<SubscribedAnimeEntity> {
-        val animeListFromCsv = csvDataLoader.loadData()
+    private fun updatePriorities(animeListFromCsv: List<SubscribedAnimeEntity>) {
+        val toUpdatePriorities = animeListFromCsv
+            .mapNotNull { subscribedAnimeRepository.findByTitle(it.title) }
+            .filter { entity ->
+                val titleFromCsv = animeListFromCsv.find { it.title == entity.title }
+                entity.priority != titleFromCsv!!.priority
+            }
+            .map { entity ->
+                val titleFromCsv = animeListFromCsv.find { it.title == entity.title }
+                entity.also { entity.priority = titleFromCsv!!.priority }
+            }
+        subscribedAnimeRepository.saveAll(toUpdatePriorities)
+    }
+
+    private fun saveNewTitles(animeListFromCsv: List<SubscribedAnimeEntity>) {
         val notInDb = animeListFromCsv.filterNot { subscribedAnimeRepository.existsByTitle(it.title) }
         subscribedAnimeRepository.saveAll(notInDb)
-        return animeListFromCsv
     }
 
     private fun removeOldTitles(animeListFromCsv: List<SubscribedAnimeEntity>) {
@@ -33,7 +47,6 @@ class SubscribedAnimeDataLoader(
         subscribedAnimeRepository.deleteAll(oldTitles)
     }
 
-    private fun correctStatusOfAllTitlesInProgress() {
+    private fun correctStatusOfAllTitlesInProgress() =
         subscribedAnimeRepository.updateAllStatusToStatus(IN_PROGRESS, TO_DOWNLOAD)
-    }
 }

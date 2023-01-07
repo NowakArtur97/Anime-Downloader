@@ -17,7 +17,7 @@ data class SubscribedAnimeEntity(
     val title: String,
 
     @Column(name = "priority", nullable = false)
-    private val priority: SubscribedAnimePriority = LOW,
+    var priority: SubscribedAnimePriority = LOW,
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
