@@ -21,7 +21,7 @@ data class SubscribedAnimeEntity(
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private var status: SubscribedAnimeStatus = TO_DOWNLOAD,
+    var status: SubscribedAnimeStatus = TO_DOWNLOAD,
 
     @Transient
     var priorityValue: Int = priority.value,
