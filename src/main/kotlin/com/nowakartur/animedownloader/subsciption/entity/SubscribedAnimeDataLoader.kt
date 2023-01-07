@@ -1,6 +1,8 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
 import com.nowakartur.animedownloader.csv.CsvDataLoader
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.IN_PROGRESS
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.TO_DOWNLOAD
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -26,18 +28,12 @@ class SubscribedAnimeDataLoader(
     }
 
     private fun removeOldTitles(animeListFromCsv: List<SubscribedAnimeEntity>) {
-        subscribedAnimeRepository.findAll()
+        val oldTitles = subscribedAnimeRepository.findAll()
             .filter { animeListFromCsv.none { animeFromCsv -> it.title == animeFromCsv.title } }
-            .forEach { subscribedAnimeRepository.delete(it) }
+        subscribedAnimeRepository.deleteAll(oldTitles)
     }
 
     private fun correctStatusOfAllTitlesInProgress() {
-        val allInProgress = subscribedAnimeRepository.findAllByStatus(
-            SubscribedAnimeStatus.IN_PROGRESS
-        ).map {
-            it.changeStatusToToDownload()
-            it
-        }
-        subscribedAnimeRepository.saveAll(allInProgress)
+        subscribedAnimeRepository.updateAllStatusToStatus(IN_PROGRESS, TO_DOWNLOAD)
     }
 }
