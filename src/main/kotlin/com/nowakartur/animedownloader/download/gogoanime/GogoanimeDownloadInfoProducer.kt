@@ -1,6 +1,7 @@
 package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.download.common.DownloadInfo
+import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
@@ -15,6 +16,7 @@ class GogoanimeDownloadInfoProducer(
     private val allNewAnimeToDownloadElements: List<Element>,
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
     private val gogoanimeMainPageUrl: String,
+    private val supportedServers: List<DownloadPage>
 ) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
     override fun run() {
@@ -31,11 +33,15 @@ class GogoanimeDownloadInfoProducer(
 
                 val episodePage = GogoanimeEpisodePage.connectToEpisodePage(gogoanimeMainPageUrl, linkToEpisodePage)
 
-                val alSupportedDownloadLinks = GogoanimeEpisodePage.findAllSupportedDownloadLinks(episodePage)
+                val alSupportedDownloadLinks =
+                    GogoanimeEpisodePage.findAllSupportedDownloadLinks(episodePage, supportedServers)
 
                 val downloadInfo =
-                    GogoanimeEpisodePage.mapToDownloadInfo(subscribedAnimeEntity.title, alSupportedDownloadLinks)
-                        .sortedByDescending { it.fileSize }
+                    GogoanimeEpisodePage.mapToDownloadInfo(
+                        subscribedAnimeEntity,
+                        alSupportedDownloadLinks,
+                        supportedServers
+                    ).sortedByDescending { it.fileSize }
 
                 if (downloadInfo.isNotEmpty()) {
                     downloadInfoQueue.add(downloadInfo)

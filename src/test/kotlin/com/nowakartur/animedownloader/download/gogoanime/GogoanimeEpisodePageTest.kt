@@ -4,6 +4,7 @@ import com.nowakartur.animedownloader.download.common.DownloadInfo
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadPage
 import com.nowakartur.animedownloader.download.streamsb.StreamSbPage
 import com.nowakartur.animedownloader.download.xstreamcdn.XStreamCdnPage
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -20,7 +21,11 @@ class GogoanimeEpisodePageTest {
             "https://streamsss.net/d/s2rrkvcv9nhl",
             "https://fembed9hd.com/f/ez40ni-62220den",
         )
-        val actualLinks = GogoanimeEpisodePage.findAllSupportedDownloadLinks(episodePage)
+        val expectedSupportedServers = listOf(Mp4UploadPage, StreamSbPage, XStreamCdnPage)
+        val actualLinks = GogoanimeEpisodePage.findAllSupportedDownloadLinks(
+            episodePage,
+            expectedSupportedServers
+        )
 
         assertEquals(expectedLinks, actualLinks)
     }
@@ -28,6 +33,7 @@ class GogoanimeEpisodePageTest {
     @Test
     fun `when get download info should return correct download info`() {
         val title = "Love All Play"
+        val anime = SubscribedAnimeEntity(title)
         val expectedLinks = listOf(
             "https://www.mp4upload.com/zdu7xouesiia.html",
             "https://ssbstream.net/d/s2rrkvcv9nhl",
@@ -38,7 +44,12 @@ class GogoanimeEpisodePageTest {
             DownloadInfo(title, StreamSbPage, 238.7f, "https://ssbstream.net/d/s2rrkvcv9nhl"),
             DownloadInfo(title, XStreamCdnPage, 238.69f, "https://fembed-hd.com/f/ez40ni-62220den"),
         )
-        val actualDownloadInfo = GogoanimeEpisodePage.mapToDownloadInfo(title, expectedLinks)
+        val expectedSupportedServers = listOf(Mp4UploadPage, StreamSbPage, XStreamCdnPage)
+        val actualDownloadInfo = GogoanimeEpisodePage.mapToDownloadInfo(
+            anime,
+            expectedLinks,
+            expectedSupportedServers
+        )
 
         assertEquals(expectedDownloadInfo, actualDownloadInfo)
     }

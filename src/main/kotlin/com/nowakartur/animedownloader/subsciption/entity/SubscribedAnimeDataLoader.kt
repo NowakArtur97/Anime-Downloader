@@ -39,7 +39,7 @@ class SubscribedAnimeDataLoader(
             }
         if (toUpdatePriorities.isNotEmpty()) {
             subscribedAnimeRepository.saveAll(toUpdatePriorities)
-            logger.info("Successfully updated title priorities: ${toUpdatePriorities.map { it.title }}.")
+            logger.info("Successfully updated title priorities for: ${toUpdatePriorities.map { it.title }}.")
         } else {
             logger.info("There are no titles to update priorities.")
         }

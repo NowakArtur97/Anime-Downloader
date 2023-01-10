@@ -13,6 +13,9 @@ spring:
       path: /h2
 
 app:
+  supported-servers: Mp4UploadPage, StreamSbPage
+  #  supported-servers: Mp4UploadPage, StreamSbPage, XStreamCdnPage
+  #   sometimes there are problems downloading from XStreamCdn
   gogoanime:
     url: https://gogoanime.pe
   scheduler:
