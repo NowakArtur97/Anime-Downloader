@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service
 import org.springframework.util.ResourceUtils
 
 @Service
-class CsvDataLoader(@Value("\${app.csv.file-name}") private val fileName: String) {
+class CsvDataLoader(
+    @Value("\${app.csv.file-name}") private val fileName: String,
+    @Value("\${app.default-min-file-size}") private val defaultMinFileSize: String
+) {
 
     fun loadData(): List<SubscribedAnimeEntity> {
         val animeListCsv = ResourceUtils.getFile("classpath:${fileName}")
@@ -20,11 +23,12 @@ class CsvDataLoader(@Value("\${app.csv.file-name}") private val fileName: String
     }
 
     private fun mapToEntity(it: String): SubscribedAnimeEntity {
-        val (title, priority) = it.split(";", limit = 2)
+        val (title, priority, minFileSize) = it.split(";", limit = 3)
         return SubscribedAnimeEntity(
             title,
             if (priority.isNotBlank()) SubscribedAnimePriority.valueOf(priority)
-            else SubscribedAnimePriority.LOW
+            else SubscribedAnimePriority.LOW,
+            minFileSize = (minFileSize.ifBlank { defaultMinFileSize }).toFloat(),
         )
     }
 }

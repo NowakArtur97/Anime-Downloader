@@ -21,7 +21,7 @@ app:
   scheduler:
     enabled: true
     download:
-      initial-delay-ms: 0
+      initial-delay-ms: 60000
       #      fixed-delay-ms: 10000
       fixed-delay-ms: 60000
     clean:
@@ -36,3 +36,4 @@ app:
     download-service-retry-times: 3
   csv:
     file-name: anime.csv
+  default-min-file-size: 150.0

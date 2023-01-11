@@ -30,7 +30,17 @@ class SubscribedAnimeDataLoaderTest(
 
         subscribedAnimeDataLoader.prepareDataOnStartup()
 
-        assertTrue(subscribedAnimeRepository.findAll().all { it.status == SubscribedAnimeStatus.TO_DOWNLOAD })
+        assertTrue(subscribedAnimeRepository.findAll().none { it.status == SubscribedAnimeStatus.IN_PROGRESS })
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    fun `when there is no change compared to csv file should not update any value`() {
+        val originalTitles = subscribedAnimeRepository.findAll()
+
+        subscribedAnimeDataLoader.prepareDataOnStartup()
+
+        assertEquals(originalTitles, subscribedAnimeRepository.findAll())
     }
 
     @Test
@@ -48,12 +58,15 @@ class SubscribedAnimeDataLoaderTest(
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    fun `when there is no change in priorities compared to csv file should not update any title`() {
-        val originalTitles = subscribedAnimeRepository.findAll()
+    fun `when there is changed min file size compared to csv file should update value`() {
+        val exampleTitle = subscribedAnimeRepository.findAll().first()
+        val originalMinFileSize = exampleTitle.minFileSize
+        exampleTitle.minFileSize = 678.0f
+        subscribedAnimeRepository.save(exampleTitle)
 
         subscribedAnimeDataLoader.prepareDataOnStartup()
 
-        assertEquals(originalTitles, subscribedAnimeRepository.findAll())
+        assertEquals(originalMinFileSize, subscribedAnimeRepository.findAll().first().minFileSize)
     }
 
     @Test

@@ -5,8 +5,11 @@ import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.slf4j.LoggerFactory
 
 object GogoanimeEpisodePage {
+
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     fun connectToEpisodePage(gogoanimeMainPageUrl: String, episodeUrl: String): Document = Jsoup
         .connect("$gogoanimeMainPageUrl$episodeUrl")
@@ -32,7 +35,17 @@ object GogoanimeEpisodePage {
             }
             if (downloadServer != null) {
                 val fileSize = downloadServer.findFileSize(link)
-                DownloadInfo(subscribedAnime.title, downloadServer, fileSize, link)
+                if (fileSize >= subscribedAnime.minFileSize) {
+                    DownloadInfo(subscribedAnime.title, downloadServer, fileSize, link)
+                } else {
+                    val serverName = downloadServer.toString().split(".")[4]
+                    logger.info(
+                        "The episode of: [${subscribedAnime.title}] is skipped for [$serverName], " +
+                                "because the file is too small. " +
+                                "File size: [$fileSize]. Required file size: [${subscribedAnime.minFileSize}]."
+                    )
+                    null
+                }
             } else null
         }
 }

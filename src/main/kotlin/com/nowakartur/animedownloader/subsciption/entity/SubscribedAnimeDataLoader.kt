@@ -20,28 +20,28 @@ class SubscribedAnimeDataLoader(
     fun prepareDataOnStartup() {
         correctStatusOfAllTitlesInProgress()
         val animeListFromCsv = csvDataLoader.loadData()
-        updatePriorities(animeListFromCsv)
+        updateAfterChange(animeListFromCsv)
         saveNewTitles(animeListFromCsv)
         removeOldTitles(animeListFromCsv)
         logger.info("Data loading completed.")
     }
 
-    private fun updatePriorities(animeListFromCsv: List<SubscribedAnimeEntity>) {
-        val toUpdatePriorities = animeListFromCsv
+    private fun updateAfterChange(animeListFromCsv: List<SubscribedAnimeEntity>) {
+        val toUpdate = animeListFromCsv
             .mapNotNull { subscribedAnimeRepository.findByTitle(it.title) }
             .filter { entity ->
-                val titleFromCsv = animeListFromCsv.find { it.title == entity.title }
-                entity.priority != titleFromCsv!!.priority
+                val titleFromCsv = animeListFromCsv.find { it.title == entity.title }!!
+                entity.hasChanged(titleFromCsv)
             }
             .map { entity ->
-                val titleFromCsv = animeListFromCsv.find { it.title == entity.title }
-                entity.also { entity.priority = titleFromCsv!!.priority }
+                val titleFromCsv = animeListFromCsv.find { it.title == entity.title }!!
+                entity.update(titleFromCsv)
             }
-        if (toUpdatePriorities.isNotEmpty()) {
-            subscribedAnimeRepository.saveAll(toUpdatePriorities)
-            logger.info("Successfully updated title priorities for: ${toUpdatePriorities.map { it.title }}.")
+        if (toUpdate.isNotEmpty()) {
+            subscribedAnimeRepository.saveAll(toUpdate)
+            logger.info("Successfully updated: ${toUpdate.map { it.title }}.")
         } else {
-            logger.info("There are no titles to update priorities.")
+            logger.info("There are no titles to update.")
         }
     }
 

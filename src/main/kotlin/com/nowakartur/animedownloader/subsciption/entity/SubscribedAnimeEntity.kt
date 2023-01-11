@@ -23,6 +23,9 @@ data class SubscribedAnimeEntity(
     @Enumerated(EnumType.STRING)
     var status: SubscribedAnimeStatus = TO_DOWNLOAD,
 
+    @Column(name = "min_file_size", nullable = false)
+    var minFileSize: Float = 150.0f,
+
     @Transient
     var priorityValue: Int = priority.value,
 ) {
@@ -69,5 +72,14 @@ data class SubscribedAnimeEntity(
 
     fun changeStatusToDownloaded() {
         status = DOWNLOADED
+    }
+
+    fun hasChanged(other: SubscribedAnimeEntity): Boolean =
+        (priority != other.priority || minFileSize != other.minFileSize)
+
+    fun update(other: SubscribedAnimeEntity): SubscribedAnimeEntity {
+        priority = other.priority
+        minFileSize = other.minFileSize
+        return this
     }
 }
