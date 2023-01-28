@@ -21,7 +21,7 @@ app:
   scheduler:
     enabled: true
     download:
-      initial-delay-ms: 60000
+      initial-delay-ms: 0
       #      fixed-delay-ms: 10000
       fixed-delay-ms: 60000
     clean:
