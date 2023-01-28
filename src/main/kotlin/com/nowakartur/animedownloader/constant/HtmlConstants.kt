@@ -6,11 +6,9 @@ object HtmlConstants {
 
     const val ANCHOR_TAG = "a"
 
-    const val TABLE_ROW_TAG = "tr"
-
-    const val TABLE_DATA_TAG = "td"
-
     const val H2_TAG = "h2"
+
+    const val SPAN_TAG = "span"
 
     const val BUTTON_TAG = "button"
 

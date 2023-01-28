@@ -15,13 +15,13 @@ spring:
 app:
   supported-servers: Mp4UploadPage, StreamSbPage
   #  supported-servers: Mp4UploadPage, StreamSbPage, XStreamCdnPage
-  #   sometimes there are problems downloading from XStreamCdn
+  #   sometimes there are problems when downloading from XStreamCdn
   gogoanime:
     url: https://gogoanime.pe
   scheduler:
     enabled: true
     download:
-      initial-delay-ms: 0
+      initial-delay-ms: 60000
       #      fixed-delay-ms: 10000
       fixed-delay-ms: 60000
     clean:

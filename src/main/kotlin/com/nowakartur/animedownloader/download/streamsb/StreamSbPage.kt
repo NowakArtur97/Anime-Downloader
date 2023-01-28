@@ -1,13 +1,12 @@
 package com.nowakartur.animedownloader.download.streamsb
 
-import com.nowakartur.animedownloader.constant.HtmlConstants.ANCHOR_TAG
-import com.nowakartur.animedownloader.constant.HtmlConstants.TABLE_DATA_TAG
-import com.nowakartur.animedownloader.constant.HtmlConstants.TABLE_ROW_TAG
+import com.nowakartur.animedownloader.constant.HtmlConstants.SPAN_TAG
 import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.AFTER_SIZE_TEXT
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.BEFORE_SIZE_TEXT
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.DOWNLOAD_BUTTON_CLASS
 import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.DOWNLOAD_LINK_CSS_SELECTOR
+import com.nowakartur.animedownloader.download.streamsb.StreamSbStyles.FILE_SIZES_CSS_SELECTOR
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -27,14 +26,16 @@ object StreamSbPage : DownloadPage {
 
     override fun findFileSize(url: String): Float {
         val page = Jsoup.connect(url).get()
-        val tableRows = page.getElementsByTag(TABLE_ROW_TAG)
-        val bestQualityRow = if (tableRows.size > 2) {
-            tableRows[tableRows.size - 2] // there are at least two options for the low and original quality
+        val qualityOptionDivs = page.select(FILE_SIZES_CSS_SELECTOR)
+        val bestQualityOptionDiv = if (qualityOptionDivs.size > 2) {
+            qualityOptionDivs[qualityOptionDivs.size - 2] // there are at least two options for the low and original quality
         } else {
-            tableRows.last() // there is only one link for the original quality
+            qualityOptionDivs.first() // there is only one link for the original quality
         }!!
-        return bestQualityRow.getElementsByTag(TABLE_DATA_TAG).first()!!.text().substringAfter(BEFORE_SIZE_TEXT)
-            .replace(AFTER_SIZE_TEXT, "").toFloat()
+        return bestQualityOptionDiv.getElementsByTag(SPAN_TAG).first()!!.text()
+            .substringAfter(BEFORE_SIZE_TEXT)
+            .replace(AFTER_SIZE_TEXT, "")
+            .toFloat()
     }
 
     override fun downloadEpisode(webDriver: RemoteWebDriver) {
@@ -47,16 +48,14 @@ object StreamSbPage : DownloadPage {
     }
 
     private fun chooseBestQuality(webDriver: RemoteWebDriver) {
-        SeleniumUtil.waitFor(webDriver, By.tagName(TABLE_ROW_TAG))
-        val tableRows = webDriver.findElementsByTagName(TABLE_ROW_TAG)
-        val bestQualityLinkRow = if (tableRows.size > 2) {
-            tableRows[tableRows.size - 2] // there are at least two options for the low and original quality
+        SeleniumUtil.waitFor(webDriver, By.cssSelector(FILE_SIZES_CSS_SELECTOR))
+        val qualityOptionDivs = webDriver.findElementsByCssSelector(FILE_SIZES_CSS_SELECTOR)
+        val bestQualityOptionDiv = if (qualityOptionDivs.size > 2) {
+            qualityOptionDivs[qualityOptionDivs.size - 2] // there are at least two options for the low and original quality
         } else {
-            tableRows.last() // there is only one link for the original quality
+            qualityOptionDivs.first() // there is only one link for the original quality
         }
-        val bestQualityLinkTableData = bestQualityLinkRow.findElements(By.tagName(TABLE_DATA_TAG)).first()
-        val bestQualityLink = bestQualityLinkTableData.findElement(By.tagName(ANCHOR_TAG))
-        SeleniumUtil.clickUsingJavaScript(webDriver, bestQualityLink)
+        SeleniumUtil.clickUsingJavaScript(webDriver, bestQualityOptionDiv)
     }
 
     private fun clickFirstDownloadButton(webDriver: RemoteWebDriver) {
