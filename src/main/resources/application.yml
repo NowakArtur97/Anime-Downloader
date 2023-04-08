@@ -33,7 +33,7 @@ app:
     file-extension: jpg
   consumer:
     wait-time-seconds: 20
-    download-service-retry-times: 3
+    download-service-retry-times: 2
   csv:
     file-name: anime.csv
   default-min-file-size: 150.0

@@ -9,7 +9,7 @@ class StreamSbPageTest : PageTest() {
 
     @Test
     fun `when check file size with three quality options from StreamSb should return correct value`() {
-        val streamSbUrl = "https://sbplay2.xyz/d/j094za1pv1wg"
+        val streamSbUrl = "https://sbone.pro/d/j094za1pv1wg"
         val expectedFileSize = 250.9f
 
         processFileSizeTest(StreamSbPage, streamSbUrl, expectedFileSize)
@@ -17,7 +17,7 @@ class StreamSbPageTest : PageTest() {
 
     @Test
     fun `when check file size with two quality options from StreamSb should return correct value`() {
-        val streamSbUrl = "https://sbplay2.xyz/d/n9oomq4pecsi"
+        val streamSbUrl = "https://sbone.pro/d/n9oomq4pecsi"
         val expectedFileSize = 113.5f
 
         processFileSizeTest(StreamSbPage, streamSbUrl, expectedFileSize)
@@ -25,7 +25,7 @@ class StreamSbPageTest : PageTest() {
 
     @Test
     fun `when prepare download link should return correct value`() {
-        val expectedStreamSbUrl = "https://streamsss.net/d/9e6sw6cx06sb"
+        val expectedStreamSbUrl = "https://sbone.pro/d/9e6sw6cx06sb"
 
         val page = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, "/yurei-deco-episode-1")
 

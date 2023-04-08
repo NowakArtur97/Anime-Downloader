@@ -13,7 +13,7 @@ class StreamSbPageSeleniumTest : SeleniumTest() {
 
     @Test
     fun `when download file with two quality options from StreamSb should start downloading file`() {
-        val episodeUrl = "https://sbplay2.xyz/d/n9oomq4pecsi"
+        val episodeUrl = "https://sbone.pro/d/n9oomq4pecsi"
         processTest(StreamSbPage, episodeUrl)
     }
 }

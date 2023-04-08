@@ -18,11 +18,12 @@ object StreamSbPage : DownloadPage {
     override val episodePageDownloadLinkClass: String get() = "streamsb"
     override val episodePageDownloadLinkTexts: List<String>
         get() = listOf(
-            episodePageDownloadLinkClass, "ssbstream", "streamsss"
+            episodePageDownloadLinkClass, "ssbstream", "streamsss", "sbone"
         )
 
     override fun prepareDownloadLink(page: Document): String =
-        getDownloadLink(page, episodePageDownloadLinkClass).replace("/e/", "/d/")
+        getDownloadLink(page, episodePageDownloadLinkClass)
+            .replace("/e/", "/d/")
 
     override fun findFileSize(url: String): Float {
         val page = Jsoup.connect(url).get()
