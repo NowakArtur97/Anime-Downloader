@@ -17,7 +17,7 @@ app:
   #  supported-servers: Mp4UploadPage, StreamSbPage, XStreamCdnPage
   #   sometimes there are problems when downloading from XStreamCdn
   gogoanime:
-    url: https://gogoanime.pe
+    url: https://gogoanime.cl
   scheduler:
     enabled: true
     download:
