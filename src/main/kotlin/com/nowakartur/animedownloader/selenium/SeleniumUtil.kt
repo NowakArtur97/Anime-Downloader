@@ -13,8 +13,10 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
+import java.util.concurrent.TimeUnit
 
-private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
+private const val WAIT_TIMEOUT_FOR_ELEMENT = 35L
+private const val WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
 private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
 
 object SeleniumUtil {
@@ -45,6 +47,10 @@ object SeleniumUtil {
         wait.until(ExpectedConditions.visibilityOf(element))
     }
 
+    private fun waitFor(webDriver: WebDriver, seconds: Long) {
+        webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS)
+    }
+
     fun clickUsingJavaScript(webDriver: RemoteWebDriver, element: WebElement) {
         val jsExecutor = webDriver as JavascriptExecutor
         jsExecutor.executeScript(CLICK_SCRIPT, element)
@@ -56,6 +62,7 @@ object SeleniumUtil {
     }
 
     fun waitForFileDownload(driver: WebDriver, title: String) {
+        waitFor(driver, WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB)
         switchToDownloadTab(driver)
         val jsExecutor = driver as JavascriptExecutor
         var percentage = 0L
