@@ -29,7 +29,7 @@ The application works as follows:
 - in case of failure, it tries a specified number of times, and if there are too many failures, it changes the download server, if there is one
 - after successful download, change status to `DOWNLOADED`
 - the second scheduler cyclically changes the anime status from `DOWNLOADED` to `TO_DOWNLOAD`, so that when a new episode appears, it will be downloaded
-- in case of failure of the consumer, a screenshot is taken
+- in case of failure a screenshot is taken and the `FAILED` status is set for some time, which means that the attempt to download the anime is skipped, and the next scheduler takes care of resetting this status
 
 ## Built With
 
