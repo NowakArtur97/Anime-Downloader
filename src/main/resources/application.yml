@@ -24,10 +24,13 @@ app:
       initial-delay-ms: 60000
       #      fixed-delay-ms: 10000
       fixed-delay-ms: 60000
-    clean:
-      number-of-days-after-to-clean: 3
+    reset:
+      number-of-days-after-to-reset: 3
       initial-delay-days: 0
       fixed-delay-days: 1
+    failed:
+      initial-delay-minutes: 0
+      fixed-delay-minutes: 10
   screenshot:
     path: \src\main\resources\screenshots\
     file-extension: jpg

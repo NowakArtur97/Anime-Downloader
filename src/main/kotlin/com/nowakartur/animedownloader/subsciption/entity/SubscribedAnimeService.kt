@@ -1,5 +1,7 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -8,10 +10,12 @@ class SubscribedAnimeService(
     private val subscribedAnimeRepository: SubscribedAnimeRepository,
 ) {
 
+    private val logger: Logger = LoggerFactory.getLogger(javaClass)
+
     fun findAllAnimeForDownload(): List<SubscribedAnimeEntity> =
         subscribedAnimeRepository.findByStatusIsOrderByPriorityDesc(SubscribedAnimeStatus.TO_DOWNLOAD)
 
-    fun waitForDownload(subscribedAnimeEntity: SubscribedAnimeEntity) {
+    fun waitForDownloadingAnime(subscribedAnimeEntity: SubscribedAnimeEntity) {
         subscribedAnimeEntity.changeStatusToToDownload()
         subscribedAnimeRepository.save(subscribedAnimeEntity)
     }
@@ -26,14 +30,28 @@ class SubscribedAnimeService(
         subscribedAnimeRepository.save(subscribedAnimeEntity)
     }
 
-    fun changeAnimeStatuses(numberOfDaysAfterToClean: Long) {
+    fun setAsFailedAnimeDownload(subscribedAnimeEntity: SubscribedAnimeEntity) {
+        subscribedAnimeEntity.changeStatusToFailed()
+        subscribedAnimeRepository.save(subscribedAnimeEntity)
+    }
+
+    fun resetAnimeStatuses(numberOfDaysAfterToClean: Long) {
         val updatedAnimeSubscriptions = subscribedAnimeRepository.findByStatusIsAndLastModifiedDateBefore(
             SubscribedAnimeStatus.DOWNLOADED,
             LocalDateTime.now().minusDays(numberOfDaysAfterToClean),
         )
-        updatedAnimeSubscriptions.forEach {
-            it.changeStatusToToDownload()
-        }
+        changeToDownloadStatusesAndSave(updatedAnimeSubscriptions)
+        logger.info("Titles with reset TO_DOWNLOAD status: ${updatedAnimeSubscriptions.map { it.title }}.")
+    }
+
+    fun removeFailedAnimeStatuses() {
+        val updatedAnimeSubscriptions = subscribedAnimeRepository.findByStatusIs(SubscribedAnimeStatus.FAILED)
+        changeToDownloadStatusesAndSave(updatedAnimeSubscriptions)
+        logger.info("Titles with removed FAILED status: ${updatedAnimeSubscriptions.map { it.title }}.")
+    }
+
+    private fun changeToDownloadStatusesAndSave(updatedAnimeSubscriptions: List<SubscribedAnimeEntity>) {
+        updatedAnimeSubscriptions.forEach { it.changeStatusToToDownload() }
         subscribedAnimeRepository.saveAll(updatedAnimeSubscriptions)
     }
 }

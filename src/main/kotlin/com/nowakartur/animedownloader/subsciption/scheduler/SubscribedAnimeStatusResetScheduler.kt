@@ -4,18 +4,17 @@ import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.springframework.scheduling.annotation.Scheduled
 import java.util.concurrent.TimeUnit
 
-class SubscribedAnimeStatusCleanerScheduler(
+class SubscribedAnimeStatusResetScheduler(
     private val subscribedAnimeService: SubscribedAnimeService,
     private val numberOfDaysAfterToClean: Long
 ) {
 
     @Scheduled(
-        initialDelayString = "\${app.scheduler.clean.initial-delay-days}",
-        fixedDelayString = "\${app.scheduler.clean.fixed-delay-days}",
+        initialDelayString = "\${app.scheduler.reset.initial-delay-days}",
+        fixedDelayString = "\${app.scheduler.reset.fixed-delay-days}",
         timeUnit = TimeUnit.DAYS
     )
-    fun changeStatus() {
-
-        subscribedAnimeService.changeAnimeStatuses(numberOfDaysAfterToClean)
+    fun resetStatuses() {
+        subscribedAnimeService.resetAnimeStatuses(numberOfDaysAfterToClean)
     }
 }

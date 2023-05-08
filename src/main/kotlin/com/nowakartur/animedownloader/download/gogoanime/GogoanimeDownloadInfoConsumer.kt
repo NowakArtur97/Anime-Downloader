@@ -88,6 +88,11 @@ class GogoanimeDownloadInfoConsumer(
                 }
 
                 currentDownloadServiceIndex++
+
+                val hasFailedDownloadOnAllServers = !isDownloading && hasFailed
+                if (hasFailedDownloadOnAllServers) {
+                    subscribedAnimeService.setAsFailedAnimeDownload(subscribedAnimeEntity)
+                }
             }
         }
     }

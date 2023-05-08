@@ -13,7 +13,6 @@ class SubscribedAnimeDownloadScheduler(
         fixedDelayString = "\${app.scheduler.download.fixed-delay-ms}",
     )
     fun downloadAnime() {
-
         gogoanimeScraperService.downloadAnime()
     }
 }

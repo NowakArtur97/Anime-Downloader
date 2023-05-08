@@ -21,7 +21,6 @@ abstract class GogoanimeDownloadInfoThread(
         webDriver: RemoteWebDriver?
     ) {
         cleanUpAfterException(e, subscribedAnimeEntity)
-
         screenshotUtil.takeScreenshot(webDriver, subscribedAnimeEntity.title)
     }
 
@@ -29,11 +28,16 @@ abstract class GogoanimeDownloadInfoThread(
         e: Exception,
         subscribedAnimeEntity: SubscribedAnimeEntity
     ) {
+        logException(subscribedAnimeEntity, e)
+        subscribedAnimeService.waitForDownloadingAnime(subscribedAnimeEntity)
+    }
+
+    private fun logException(
+        subscribedAnimeEntity: SubscribedAnimeEntity,
+        e: Exception
+    ) {
         logger.error("Unexpected exception occurred when downloading episode of [${subscribedAnimeEntity.title}].")
         logger.error(e.message)
-        val stackTrace = ExceptionUtils.getStackTrace(e)
-        logger.error(stackTrace)
-
-        subscribedAnimeService.waitForDownload(subscribedAnimeEntity)
+        logger.error(ExceptionUtils.getStackTrace(e))
     }
 }

@@ -21,9 +21,14 @@ class SubscriptionSchedulerConfig {
     ): SubscribedAnimeDownloadScheduler = SubscribedAnimeDownloadScheduler(gogoanimeScraperService)
 
     @Bean
-    fun statusCleanerScheduler(
+    fun statusResetScheduler(
         subscribedAnimeService: SubscribedAnimeService,
-        @Value("\${app.scheduler.clean.number-of-days-after-to-clean}") numberOfDaysAfterToClean: Long
-    ): SubscribedAnimeStatusCleanerScheduler =
-        SubscribedAnimeStatusCleanerScheduler(subscribedAnimeService, numberOfDaysAfterToClean)
+        @Value("\${app.scheduler.reset.number-of-days-after-to-reset}") numberOfDaysAfterToClean: Long
+    ): SubscribedAnimeStatusResetScheduler =
+        SubscribedAnimeStatusResetScheduler(subscribedAnimeService, numberOfDaysAfterToClean)
+
+    @Bean
+    fun failedStatusRemoveScheduler(
+        subscribedAnimeService: SubscribedAnimeService,
+    ): FailedAnimeCleanerScheduler = FailedAnimeCleanerScheduler(subscribedAnimeService)
 }

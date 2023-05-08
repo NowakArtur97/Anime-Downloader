@@ -74,6 +74,10 @@ data class SubscribedAnimeEntity(
         status = DOWNLOADED
     }
 
+    fun changeStatusToFailed() {
+        status = FAILED
+    }
+
     fun hasChanged(other: SubscribedAnimeEntity): Boolean =
         (priority != other.priority || minFileSize != other.minFileSize)
 

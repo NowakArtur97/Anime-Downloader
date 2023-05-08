@@ -1,5 +1,5 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
 enum class SubscribedAnimeStatus {
-    TO_DOWNLOAD, IN_PROGRESS, DOWNLOADED
+    TO_DOWNLOAD, IN_PROGRESS, DOWNLOADED, FAILED
 }

@@ -15,6 +15,8 @@ interface SubscribedAnimeRepository : JpaRepository<SubscribedAnimeEntity, UUID>
 
     fun findByStatusIsOrderByPriorityDesc(status: SubscribedAnimeStatus): List<SubscribedAnimeEntity>
 
+    fun findByStatusIs(status: SubscribedAnimeStatus): List<SubscribedAnimeEntity>
+
     fun findByStatusIsAndLastModifiedDateBefore(
         status: SubscribedAnimeStatus,
         lastModifiedDate: LocalDateTime
