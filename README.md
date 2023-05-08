@@ -14,16 +14,21 @@ not require Javascript) and Selenium (to retrieve data that require Javascript) 
 
 The application works as follows:
 
-- Scheduler periodically downloads anime titles from database with status other than `DOWNLOADED`
+- when the application starts, the following actions are performed:
+-- anime with title, minimum file size (default is 150MB) and priority are downloaded from `anime.csv` file
+-- new titles are added
+-- existing titles updated (priority and minimum file size)
+-- anime from the database not found in the file are removed
+-- and titles with `IN_PROGRESS` status are changed to `TO_DOWNLOAD`
+- scheduler periodically downloads anime titles from database with status `IN_PROGRESS`
 - sorts them by download priority (`HIGH`, `MEDIUM`, `LOW`)
 - check if the website has new episodes of the selected titles
 - if they are, the producer's thread finds download links from supported download servers
 - then sorts them from best to worst quality and passes the data to the consumer's thread
 - the consumer changes the status to `IN_PROGRESS` and starts the download
-- in case of failure, it tries again, and if there are too many failures, it changes the download server, if there is one
+- in case of failure, it tries a specified number of times, and if there are too many failures, it changes the download server, if there is one
 - after successful download, change status to `DOWNLOADED`
-- the second Scheduler cyclically changes the anime status from `DOWNLOADED` to `TO_DOWNLOAD`, so that when a new
-  episode appears, it will be downloaded
+- the second scheduler cyclically changes the anime status from `DOWNLOADED` to `TO_DOWNLOAD`, so that when a new episode appears, it will be downloaded
 - in case of failure of the consumer, a screenshot is taken
 
 ## Built With
