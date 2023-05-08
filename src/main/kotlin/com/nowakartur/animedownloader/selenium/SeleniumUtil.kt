@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
 import java.util.concurrent.TimeUnit
 
-private const val WAIT_TIMEOUT_FOR_ELEMENT = 35L
+private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
 private const val WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
 private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
 
@@ -37,13 +37,13 @@ object SeleniumUtil {
         }
     }
 
-    fun waitFor(webDriver: RemoteWebDriver, by: By) {
-        val wait = WebDriverWait(webDriver, WAIT_TIMEOUT_FOR_ELEMENT)
+    fun waitFor(webDriver: RemoteWebDriver, by: By, timeOutInSeconds: Long = WAIT_TIMEOUT_FOR_ELEMENT) {
+        val wait = WebDriverWait(webDriver, timeOutInSeconds)
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
     }
 
-    fun waitFor(webDriver: RemoteWebDriver, element: WebElement) {
-        val wait = WebDriverWait(webDriver, WAIT_TIMEOUT_FOR_ELEMENT)
+    fun waitFor(webDriver: RemoteWebDriver, element: WebElement, timeOutInSeconds: Long = WAIT_TIMEOUT_FOR_ELEMENT) {
+        val wait = WebDriverWait(webDriver, timeOutInSeconds)
         wait.until(ExpectedConditions.visibilityOf(element))
     }
 

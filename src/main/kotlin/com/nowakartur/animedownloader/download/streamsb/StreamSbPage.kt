@@ -18,7 +18,7 @@ object StreamSbPage : DownloadPage {
     override val episodePageDownloadLinkClass: String get() = "streamsb"
     override val episodePageDownloadLinkTexts: List<String>
         get() = listOf(
-            episodePageDownloadLinkClass, "ssbstream", "streamsss", "sbone"
+            episodePageDownloadLinkClass, "ssbstream", "streamsss", "sbone", "sbani"
         )
 
     override fun prepareDownloadLink(page: Document): String =
