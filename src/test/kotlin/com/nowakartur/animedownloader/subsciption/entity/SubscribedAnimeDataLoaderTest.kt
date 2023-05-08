@@ -17,7 +17,7 @@ class SubscribedAnimeDataLoaderTest(
 ) {
 
     @AfterEach
-    fun initializeWebDriver() {
+    fun cleanDatabase() {
         subscribedAnimeRepository.deleteAll()
     }
 
