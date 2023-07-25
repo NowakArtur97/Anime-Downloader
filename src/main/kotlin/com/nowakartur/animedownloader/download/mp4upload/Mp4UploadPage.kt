@@ -1,10 +1,9 @@
 package com.nowakartur.animedownloader.download.mp4upload
 
+import com.nowakartur.animedownloader.constant.HtmlConstants.VIDEO_TAG
 import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.AFTER_SIZE_TEXT
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.BEFORE_SIZE_TEXT
-import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.DOWNLOAD_BUTTON_CLASS
-import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.DOWNLOAD_PAGE_SUBMIT_BUTTON_ID
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadStyles.FILE_SIZE_CLASS
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import org.jsoup.Jsoup
@@ -17,14 +16,10 @@ object Mp4UploadPage : DownloadPage {
     override val episodePageDownloadLinkTexts: List<String> get() = listOf("mp4upload")
     override val episodePageDownloadLinkClass: String get() = "mp4upload"
 
-    private const val WAIT_TIME_FOR_BUTTON: Long = 35
-
-    override fun prepareDownloadLink(page: Document): String =
-        getDownloadLink(page, episodePageDownloadLinkClass)
-            .replace("embed-", "")
+    override fun prepareDownloadLink(page: Document): String = getDownloadLink(page, episodePageDownloadLinkClass)
 
     override fun findFileSize(url: String): Float = Jsoup
-        .connect(url)
+        .connect(url.replace("embed-", ""))
         .get()
         .getElementsByClass(FILE_SIZE_CLASS).first()!!
         .children()[2]
@@ -34,19 +29,11 @@ object Mp4UploadPage : DownloadPage {
         .toFloat()
 
     override fun downloadEpisode(webDriver: RemoteWebDriver) {
-        clickGoToDownloadPageButton(webDriver)
-        clickDownloadButton(webDriver)
+        downloadFromVideo(webDriver)
     }
 
-    private fun clickGoToDownloadPageButton(webDriver: RemoteWebDriver) {
-        SeleniumUtil.waitFor(webDriver, By.id(DOWNLOAD_PAGE_SUBMIT_BUTTON_ID))
-        val downloadPageRedirectButton = webDriver.findElementById(DOWNLOAD_PAGE_SUBMIT_BUTTON_ID)
-        SeleniumUtil.clickUsingJavaScript(webDriver, downloadPageRedirectButton)
-    }
-
-    private fun clickDownloadButton(webDriver: RemoteWebDriver) {
-        SeleniumUtil.waitFor(webDriver, By.className(DOWNLOAD_BUTTON_CLASS), WAIT_TIME_FOR_BUTTON)
-        val downloadButton = webDriver.findElementByClassName(DOWNLOAD_BUTTON_CLASS)
-        SeleniumUtil.clickUsingJavaScript(webDriver, downloadButton)
+    private fun downloadFromVideo(webDriver: RemoteWebDriver) {
+        SeleniumUtil.waitFor(webDriver, By.tagName(VIDEO_TAG))
+        SeleniumUtil.downloadVideoUsingJavaScript(webDriver)
     }
 }

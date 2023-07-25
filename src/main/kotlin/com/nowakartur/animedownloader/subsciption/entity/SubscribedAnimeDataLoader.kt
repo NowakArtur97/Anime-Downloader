@@ -40,8 +40,6 @@ class SubscribedAnimeDataLoader(
         if (toUpdate.isNotEmpty()) {
             subscribedAnimeRepository.saveAll(toUpdate)
             logger.info("Successfully updated: ${toUpdate.map { it.title }}.")
-        } else {
-            logger.info("There are no titles to update.")
         }
     }
 
@@ -50,8 +48,6 @@ class SubscribedAnimeDataLoader(
         if (notInDb.isNotEmpty()) {
             subscribedAnimeRepository.saveAll(notInDb)
             logger.info("Successfully added new titles: ${notInDb.map { it.title }}.")
-        } else {
-            logger.info("There are no new titles to save.")
         }
     }
 
@@ -61,8 +57,6 @@ class SubscribedAnimeDataLoader(
         if (oldTitles.isNotEmpty()) {
             subscribedAnimeRepository.deleteAll(oldTitles)
             logger.info("Successfully removed old titles: ${oldTitles.map { it.title }}.")
-        } else {
-            logger.info("There are no old titles to remove.")
         }
     }
 

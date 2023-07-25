@@ -54,6 +54,6 @@ object XStreamCdnPage : DownloadPage {
         val bestQualityVideoUrl = bestQualityDownloadLink.getAttribute(HREF_ATTRIBUTE)
         webDriver.get(bestQualityVideoUrl)
         SeleniumUtil.waitFor(webDriver, By.tagName(VIDEO_TAG))
-        SeleniumUtil.downloadVideoUsingJavaScript(webDriver)
+        SeleniumUtil.downloadVideoFromSourceUsingJavaScript(webDriver)
     }
 }

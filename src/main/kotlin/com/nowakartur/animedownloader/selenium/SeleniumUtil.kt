@@ -63,6 +63,11 @@ object SeleniumUtil {
         jsExecutor.executeScript(DOWNLOAD_VIDEO_SCRIPT.trimMargin())
     }
 
+    fun downloadVideoFromSourceUsingJavaScript(webDriver: RemoteWebDriver) {
+        val jsExecutor = webDriver as JavascriptExecutor
+        jsExecutor.executeScript(DOWNLOAD_VIDEO_FROM_SOURCE_SCRIPT.trimMargin())
+    }
+
     fun waitForFileDownload(driver: WebDriver, title: String) {
         waitFor(driver, WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB)
         switchToDownloadTab(driver)

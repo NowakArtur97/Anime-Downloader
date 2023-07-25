@@ -4,7 +4,15 @@ object JsScripts {
 
     const val CLICK_SCRIPT = "arguments[0].click();"
 
-    const val DOWNLOAD_VIDEO_SCRIPT = """const link = document.querySelector("source").src;
+    const val DOWNLOAD_VIDEO_SCRIPT = """const link = document.querySelector("video").src;
+            |const a = document.createElement("a"); 
+            |a.href = link;
+            | let randomTitle = (Math.random() + 1).toString(36).substring(7);
+            |a.download = randomTitle + ".mp4";
+            |document.body.appendChild(a);
+            |a.click();"""
+
+    const val DOWNLOAD_VIDEO_FROM_SOURCE_SCRIPT = """const link = document.querySelector("source").src;
             |const a = document.createElement("a"); 
             |a.href = link;
             | let randomTitle = (Math.random() + 1).toString(36).substring(7);
