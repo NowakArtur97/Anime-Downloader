@@ -40,14 +40,18 @@ class SubscribedAnimeService(
             SubscribedAnimeStatus.DOWNLOADED,
             LocalDateTime.now().minusDays(numberOfDaysAfterToClean),
         )
-        changeToDownloadStatusesAndSave(updatedAnimeSubscriptions)
-        logger.info("Titles with reset TO_DOWNLOAD status: ${updatedAnimeSubscriptions.map { it.title }}.")
+        if (updatedAnimeSubscriptions.isNotEmpty()) {
+            changeToDownloadStatusesAndSave(updatedAnimeSubscriptions)
+            logger.info("Titles with reseted status to TO_DOWNLOAD: ${updatedAnimeSubscriptions.map { it.title }}.")
+        }
     }
 
     fun removeFailedAnimeStatuses() {
         val updatedAnimeSubscriptions = subscribedAnimeRepository.findByStatusIs(SubscribedAnimeStatus.FAILED)
-        changeToDownloadStatusesAndSave(updatedAnimeSubscriptions)
-        logger.info("Titles with removed FAILED status: ${updatedAnimeSubscriptions.map { it.title }}.")
+        if (updatedAnimeSubscriptions.isNotEmpty()) {
+            changeToDownloadStatusesAndSave(updatedAnimeSubscriptions)
+            logger.info("Titles with removed FAILED status: ${updatedAnimeSubscriptions.map { it.title }}.")
+        }
     }
 
     private fun changeToDownloadStatusesAndSave(updatedAnimeSubscriptions: List<SubscribedAnimeEntity>) {

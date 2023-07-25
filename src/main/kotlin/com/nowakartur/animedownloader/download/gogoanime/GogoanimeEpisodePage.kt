@@ -3,12 +3,15 @@ package com.nowakartur.animedownloader.download.gogoanime
 import com.nowakartur.animedownloader.download.common.DownloadInfo
 import com.nowakartur.animedownloader.download.common.DownloadPage
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
+import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.slf4j.LoggerFactory
+import java.net.SocketTimeoutException
 
 object GogoanimeEpisodePage {
 
+    private const val DEFAULT_FILE_SIZE = 0.0f
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun connectToEpisodePage(gogoanimeMainPageUrl: String, episodeUrl: String): Document = Jsoup
@@ -34,7 +37,7 @@ object GogoanimeEpisodePage {
                 it.episodePageDownloadLinkTexts.any { linkText -> link.contains(linkText) }
             }
             if (downloadServer != null) {
-                val fileSize = downloadServer.findFileSize(link)
+                val fileSize = getFileSize(downloadServer, link)
                 if (fileSize >= subscribedAnime.minFileSize) {
                     DownloadInfo(subscribedAnime.title, downloadServer, fileSize, link)
                 } else {
@@ -48,4 +51,16 @@ object GogoanimeEpisodePage {
                 }
             } else null
         }
+
+    private fun getFileSize(
+        downloadServer: DownloadPage,
+        link: String
+    ) = try {
+        downloadServer.findFileSize(link)
+    } catch (e: Exception) {
+        when (e) {
+            is SocketTimeoutException, is HttpStatusException -> DEFAULT_FILE_SIZE
+            else -> throw e
+        }
+    }
 }
