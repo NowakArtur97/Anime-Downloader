@@ -2,6 +2,7 @@ package com.nowakartur.animedownloader.selenium
 
 import com.nowakartur.animedownloader.selenium.JsScripts.CLICK_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
+import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_VIDEO_FROM_SOURCE_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_VIDEO_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.HAS_DOWNLOAD_STOPPED_DOWNLOAD_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.RESUME_DOWNLOAD_SCRIPT
@@ -22,6 +23,7 @@ private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
 object SeleniumUtil {
 
     private const val CHROME_DOWNLOADS = "chrome://downloads"
+    private const val MAX_NUMBER_OF_EXCEPTIONS = 3
     private val HIDDEN_POSITION = Point(-1800, 0)
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -66,6 +68,7 @@ object SeleniumUtil {
         switchToDownloadTab(driver)
         val jsExecutor = driver as JavascriptExecutor
         var percentage = 0L
+        var exceptionsCounter = 0
         while (percentage < 100L) {
             try {
                 if (hasDownloadStopped(jsExecutor)) {
@@ -76,8 +79,12 @@ object SeleniumUtil {
                     logger.info("Download progress of: [$title] - $percentage%.")
                 }
             } catch (e: Exception) {
+                exceptionsCounter++
                 logger.info("Unexpected exception occurred when checking download progress of: [$title].")
                 logger.info(e.message)
+                if (exceptionsCounter >= MAX_NUMBER_OF_EXCEPTIONS) {
+                    throw e
+                }
             }
             Thread.sleep(WAIT_FOR_DOWNLOAD_CHECK)
         }
