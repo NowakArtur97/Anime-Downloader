@@ -6,14 +6,8 @@ import org.junit.jupiter.api.Test
 class StreamSbPageSeleniumTest : SeleniumTest() {
 
     @Test
-    fun `when download file with three quality options from StreamSb should start downloading file`() {
-        val episodeUrl = "https://ssbstream.net/d/9e6sw6cx06sb"
-        processTest(StreamSbPage, episodeUrl)
-    }
-
-    @Test
-    fun `when download file with two quality options from StreamSb should start downloading file`() {
-        val episodeUrl = "https://sbone.pro/d/n9oomq4pecsi"
+    fun `when download file from StreamSb should start downloading file`() {
+        val episodeUrl = "https://awish.pro/f/bfwsast5z8lw_o"
         processTest(StreamSbPage, episodeUrl)
     }
 }

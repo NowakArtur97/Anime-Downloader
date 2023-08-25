@@ -8,24 +8,17 @@ import org.junit.jupiter.api.Test
 class StreamSbPageTest : PageTest() {
 
     @Test
-    fun `when check file size with three quality options from StreamSb should return correct value`() {
-        val streamSbUrl = "https://sbone.pro/d/j094za1pv1wg"
-        val expectedFileSize = 250.9f
+    fun `when check file size from StreamSb should return correct value`() {
+        val streamSbUrl = "https://awish.pro/f/bfwsast5z8lw_o"
+        val expectedFileSize = 186.8f
 
         processFileSizeTest(StreamSbPage, streamSbUrl, expectedFileSize)
     }
 
-    @Test
-    fun `when check file size with two quality options from StreamSb should return correct value`() {
-        val streamSbUrl = "https://sbone.pro/d/n9oomq4pecsi"
-        val expectedFileSize = 113.5f
-
-        processFileSizeTest(StreamSbPage, streamSbUrl, expectedFileSize)
-    }
 
     @Test
     fun `when prepare download link should return correct value`() {
-        val expectedStreamSbUrl = "https://sbone.pro/d/9e6sw6cx06sb"
+        val expectedStreamSbUrl = "https://awish.pro/f/dfda5bz7grd8_o"
 
         val page = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, "/yurei-deco-episode-1")
 
