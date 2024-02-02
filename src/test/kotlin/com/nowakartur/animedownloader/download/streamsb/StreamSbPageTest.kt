@@ -2,7 +2,7 @@ package com.nowakartur.animedownloader.download.streamsb
 
 import com.nowakartur.animedownloader.download.gogoanime.GOGOANIME_MAIN_PAGE_URL
 import com.nowakartur.animedownloader.download.gogoanime.GogoanimeEpisodePage
-import com.nowakartur.animedownloader.testUtil.PageTest
+import com.nowakartur.animedownloader.testutil.PageTest
 import org.junit.jupiter.api.Test
 
 class StreamSbPageTest : PageTest() {
@@ -18,7 +18,7 @@ class StreamSbPageTest : PageTest() {
 
     @Test
     fun `when prepare download link should return correct value`() {
-        val expectedStreamSbUrl = "https://awish.pro/f/dfda5bz7grd8_o"
+        val expectedStreamSbUrl = "https://awish.pro/f/dfda5bz7grd8_x"
 
         val page = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, "/yurei-deco-episode-1")
 
