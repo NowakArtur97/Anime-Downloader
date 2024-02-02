@@ -15,7 +15,7 @@ object GogoanimeEpisodePage {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun connectToEpisodePage(gogoanimeMainPageUrl: String, episodeUrl: String): Document = Jsoup
-        .connect("$gogoanimeMainPageUrl$episodeUrl")
+        .connect("$gogoanimeMainPageUrl$episodeUrl".replace("/home.html", ""))
         .get()
 
     fun findAllSupportedDownloadLinks(
@@ -59,7 +59,7 @@ object GogoanimeEpisodePage {
         downloadServer.findFileSize(link)
     } catch (e: Exception) {
         when (e) {
-            is SocketTimeoutException, is HttpStatusException -> DEFAULT_FILE_SIZE
+            is SocketTimeoutException, is HttpStatusException, is NullPointerException -> DEFAULT_FILE_SIZE
             else -> throw e
         }
     }
