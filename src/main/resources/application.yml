@@ -13,11 +13,11 @@ spring:
       path: /h2
 
 app:
-  supported-servers: Mp4UploadPage, StreamSbPage
-  #  supported-servers: Mp4UploadPage, StreamSbPage, XStreamCdnPage
-  #   sometimes there are problems when downloading from XStreamCdn
+  #  supported-servers: Mp4UploadPage, StreamSbPage
+  supported-servers: Mp4UploadPage, StreamSbPage, DoodstreamPage
+  #   sometimes there are problems when downloading from Doodstream
   gogoanime:
-    url: https://gogoanimehd.to
+    url: https://anitaku.to/home.html
   scheduler:
     enabled: true
     download:

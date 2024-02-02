@@ -6,9 +6,5 @@ object HtmlConstants {
 
     const val ANCHOR_TAG = "a"
 
-    const val H2_TAG = "h2"
-
-    const val BUTTON_TAG = "button"
-
     const val VIDEO_TAG = "video"
 }

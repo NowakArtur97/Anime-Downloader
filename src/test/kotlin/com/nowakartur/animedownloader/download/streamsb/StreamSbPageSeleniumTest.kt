@@ -1,6 +1,6 @@
 package com.nowakartur.animedownloader.download.streamsb
 
-import com.nowakartur.animedownloader.testutil.SeleniumTest
+import com.nowakartur.animedownloader.testUtil.SeleniumTest
 import org.junit.jupiter.api.Test
 
 class StreamSbPageSeleniumTest : SeleniumTest() {

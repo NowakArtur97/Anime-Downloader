@@ -1,4 +1,4 @@
-package com.nowakartur.animedownloader.testutil
+package com.nowakartur.animedownloader.testUtil
 
 import com.nowakartur.animedownloader.download.common.DownloadPage
 import org.jsoup.nodes.Document

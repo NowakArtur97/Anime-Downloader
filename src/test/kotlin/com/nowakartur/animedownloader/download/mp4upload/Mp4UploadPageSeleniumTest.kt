@@ -1,6 +1,6 @@
 package com.nowakartur.animedownloader.download.mp4upload
 
-import com.nowakartur.animedownloader.testutil.SeleniumTest
+import com.nowakartur.animedownloader.testUtil.SeleniumTest
 import org.junit.jupiter.api.Test
 
 class Mp4UploadPageSeleniumTest : SeleniumTest() {

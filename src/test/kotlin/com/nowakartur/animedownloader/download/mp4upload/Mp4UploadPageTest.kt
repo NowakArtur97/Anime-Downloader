@@ -2,7 +2,7 @@ package com.nowakartur.animedownloader.download.mp4upload
 
 import com.nowakartur.animedownloader.download.gogoanime.GOGOANIME_MAIN_PAGE_URL
 import com.nowakartur.animedownloader.download.gogoanime.GogoanimeEpisodePage
-import com.nowakartur.animedownloader.testutil.PageTest
+import com.nowakartur.animedownloader.testUtil.PageTest
 import org.junit.jupiter.api.Test
 
 class Mp4UploadPageTest : PageTest() {

@@ -1,51 +1,63 @@
-title;priority;minFileSize
+title;priority (default - LOW);minFileSize (default - 150.0)
 
-Synduality: Noir;MEDIUM;
-Lv1 Maou to One Room Yuusha;HIGH;
-Masamune-kun no Revenge R;;
-Mononogatari 2nd Season;HIGH;
-Ayakashi Triangle;;
-Okashi na Tensei;MEDIUM;
-Yumemiru Danshi wa Genjitsushugisha;;
+Eternal Boys Next Stage;;140
+Kawagoe Boys Sing;;110
 
-Helck;HIGH;
-Suki na Ko ga Megane wo Wasureta;MEDIUM;
+HIGH CARD Season 2;;
+DOG SIGNAL;MEDIUM;
+Tsuki ga Michibiku Isekai Douchuu 2;MEDIUM;
+Himesama "Goumon" no Jikan desu;MEDIUM;
+SYNDUALITY: Noir Part 2;;
+Oroka na Tenshi wa Akuma to Odoru;HIGH;
+Dosanko Gal wa Namara Menkoi;MEDIUM;
 
-Watashi no Shiawase na Kekkon;MEDIUM;
-Jidou Hanbaiki ni Umarekawatta Ore wa Meikyuu wo Samayou;;
-Shiro Seijo to Kuro Bokushi;MEDIUM;
-Undead Girl Murder Farce;HIGH;
-Niehime to Kemono no Ou;;
+Akuyaku Reijou Level 99: Watashi wa Ura-Boss desu ga Maou dewa Arimasen;HIGH;
 
-Hataraku Maou-sama!;;
-Kyoukai Senki: Kyokkou no Souki;;
-Spy Kyoushitsu 2nd Season;;
-Jujutsu Kaisen 2;HIGH;
-Higeki no Genkyou to Naru Saikyou Gedou Last Boss Joou wa Tami no Tame ni Tsukushimasu;MEDIUM;
-Rurouni Kenshin: Meiji Kenkaku Romantan (2023);MEDIUM;
-Seija Musou: Salaryman, Isekai de Ikinokoru Tame ni Ayumu Michi;MEDIUM;
+Jaku-Chara Tomozaki-kun 2nd Stage;MEDIUM;
+Gekai Elise;MEDIUM;
+Ishura;;
+30-sai made Doutei da to Mahou Tsukai ni Nareru Rashii;MEDIUM;145
+Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e 3rd Season;;145
+Mahou Shoujo ni Akogarete;HIGH;
+Sengoku Youko;MEDIUM;
+Metallic Rouge;;
 
-Sugar Apple Fairy Tale Part 2;;
-Nanatsu no Maken ga Shihai Suru;HIGH;
-Kanojo, Okarishimasu 3;;
-AI no Idenshi;;
-Dekiru Neko wa Kyou mo Yuuutsu;MEDIUM;
+Dungeon Meshi;HIGH;
+Gekkan Mousou Kagaku;;
+Yuuki Bakuhatsu Bang Bravern;;
+Mato Seihei no Slave;MEDIUM;
+Meitou "Isekai no Yu" Kaitakuki: Around 40 Onsen Mania no Tensei Saki wa, Nonbiri Onsen Tengoku deshita;;35
+Sokushi Cheat ga Saikyou sugite, Isekai no Yatsura ga Marude Aite ni Naranai n desu ga;MEDIUM;
+Urusei Yatsura (2022) 2nd Season;MEDIUM;
+Majo to Yajuu;MEDIUM;
 
-Level 1 dakedo Unique Skill de Saikyou desu;;
-Liar Liar;;
-Temple;HIGH;
-Ryza no Atelier: Tokoyami no Joou to Himitsu no Kakurega;MEDIUM;
-Ayaka;MEDIUM;
-Horimiya: Piece;MEDIUM;
-Uchi no Kaisha no Chiisai Senpai no Hanashi;;
-Jitsu wa Ore, Saikyou Deshita?;MEDIUM;
+Sasaki to Pii-chan;;
+Saijaku Tamer wa Gomi Hiroi no Tabi wo Hajimemashita;;
+Snack Basue;MEDIUM;
+Momochi-san Chi no Ayakashi Ouji;;
+Nozomanu Fushi no Boukensha;;
+Chiyu Mahou no Machigatta Tsukaikata;MEDIUM;
+Sousou no Frieren;HIGH;
+Pon no Michi;MEDIUM;
+Undead Unluck;HIGH;
 
-Ao no Orchestra;HIGH;
-Zom 100: Zombie ni Naru Made ni Shitai 100 no Koto;HIGH;
-Shinigami Bocchan to Kuro Maid 2nd Season;MEDIUM;
-Eiyuu Kyoushitsu;;
-Mushoku Tensei II: Isekai Ittara Honki Dasu;MEDIUM;
-Genjitsu no Yohane: Sunshine in the Mirror;;
-Dark Gathering;HIGH;
+Megumi no Daigo: Kyuukoku no Orange;MEDIUM;
+Bucchigiri?!;;
+Kekkon Yubiwa Monogatari;HIGH;
+Mashle 2nd Season;HIGH;
+Yubisaki to Renren;MEDIUM;
+Ao no Exorcist: Shimane Illuminati-hen;;
+Ragna Crimson;MEDIUM;
+Ore dake Level Up na Ken;HIGH;
+Boku no Kokoro no Yabai Yatsu Season 2;MEDIUM;140
+Saikyou Tank no Meikyuu Kouryaku: Tairyoku 9999 no Rare Skill-mochi Tank, Yuusha Party wo Tsuihou Sareru;;
+Kusuriya no Hitorigoto;HIGH;
+Buta no Liver wa Kanetsu Shiro;;
 
-Tonikaku Kawaii: Joshikou-hen;;
+Shangri-La Frontier: Kusoge Hunter, Kamige ni Idoman to su;HIGH;
+Hikari no Ou 2nd Season;;
+Meiji Gekken: 1874;;
+Isekai de Mofumofu Nadenade suru Tame ni Ganbattemasu;HIGH;
+Loop 7-kaime no Akuyaku Reijou wa, Moto Tekikoku de Jiyuu Kimama na Hanayome Seikatsu wo Mankitsu Suru;HIGH;
+Shin no Nakama ja Nai to Yuusha no Party wo Oidasareta node, Henkyou de Slow Life suru Koto ni shimashita 2nd;;
+Kyuujitsu no Warumono-san;MEDIUM;

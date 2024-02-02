@@ -1,9 +1,9 @@
 package com.nowakartur.animedownloader.download.gogoanime
 
 import com.nowakartur.animedownloader.download.common.DownloadInfo
+import com.nowakartur.animedownloader.download.doodstream.DoodstreamPage
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadPage
 import com.nowakartur.animedownloader.download.streamsb.StreamSbPage
-import com.nowakartur.animedownloader.download.xstreamcdn.XStreamCdnPage
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
@@ -29,16 +29,12 @@ class GogoanimeScraperService(
 
     fun downloadAnime() {
 
-        logger.info("Searching for all subscribed anime for download.")
-
         val subscribedAnime = subscribedAnimeService.findAllAnimeForDownload()
 
         if (subscribedAnime.isEmpty()) {
             logger.info("Nothing new to download or no anime is subscribed.")
             return
         }
-
-        logger.info("Connecting to gogoanime page.")
 
         val mainPage: Document = GogoanimeMainPage.connectToMainPage(gogoanimeMainPageUrl)
 
@@ -58,7 +54,7 @@ class GogoanimeScraperService(
 
         logger.info("Anime found: ${allNewAnimeToDownload.map { it.title }}.")
 
-        val allSupportedServers = listOf(Mp4UploadPage, StreamSbPage, XStreamCdnPage)
+        val allSupportedServers = listOf(Mp4UploadPage, StreamSbPage, DoodstreamPage)
         val supportedServers = supportedServersNames
             .map { name -> allSupportedServers.find { it.toString().contains(name) }!! }
 
