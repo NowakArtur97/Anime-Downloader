@@ -15,12 +15,12 @@ class GogoanimeEpisodePageTest {
 
     @Test
     fun `when find links for download should return correct links`() {
-        val linkToAnimePage = "love-all-play-episode-7"
+        val linkToAnimePage = "/love-all-play-episode-8"
         val episodePage = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, linkToAnimePage)
         val expectedLinks = listOf(
-            "https://www.mp4upload.com/zdu7xouesiia.html",
-            "https://sbone.pro/d/s2rrkvcv9nhl",
-            "https://fembed9hd.com/f/ez40ni-62220den",
+            "https://www.mp4upload.com/embed-82fuff8awpfa.html",
+            "https://awish.pro/f/j02oxoaiwxsy_x",
+            "https://dood.wf/e/t10qgg29wpij",
         )
         val expectedSupportedServers = listOf(Mp4UploadPage, StreamSbPage, DoodstreamPage)
         val actualLinks = GogoanimeEpisodePage.findAllSupportedDownloadLinks(
@@ -33,17 +33,17 @@ class GogoanimeEpisodePageTest {
 
     @Test
     fun `when get download info should return correct download info`() {
-        val title = "Love All Play"
+        val title = "Sokushi Cheat ga Saikyou sugite, Isekai no Yatsura ga Marude Aite ni Naranai n desu ga."
         val anime = SubscribedAnimeEntity(title)
         val expectedLinks = listOf(
-            "https://www.mp4upload.com/zdu7xouesiia.html",
-            "https://ssbstream.net/d/s2rrkvcv9nhl",
-            "https://fembed-hd.com/f/ez40ni-62220den",
+            "https://www.mp4upload.com/ig5hgyfg9wqw.html",
+            "https://awish.pro/f/x32o6bkjndap_x",
+            "https://dood.wf/e/4c3ihky9458j",
         )
         val expectedDownloadInfo = listOf(
-            DownloadInfo(title, Mp4UploadPage, 238.7f, "https://www.mp4upload.com/zdu7xouesiia.html"),
-            DownloadInfo(title, StreamSbPage, 238.7f, "https://ssbstream.net/d/s2rrkvcv9nhl"),
-            DownloadInfo(title, DoodstreamPage, 238.69f, "https://fembed-hd.com/f/ez40ni-62220den"),
+            DownloadInfo(title, Mp4UploadPage, 438.1f, "https://www.mp4upload.com/ig5hgyfg9wqw.html"),
+            DownloadInfo(title, StreamSbPage, 438.1f, "https://awish.pro/f/x32o6bkjndap_x"),
+            DownloadInfo(title, DoodstreamPage, 438.1f, "https://dood.wf/e/4c3ihky9458j"),
         )
         val expectedSupportedServers = listOf(Mp4UploadPage, StreamSbPage, DoodstreamPage)
 
@@ -58,16 +58,15 @@ class GogoanimeEpisodePageTest {
 
     @Test
     fun `when get download info but file is too small should skip server`() {
-        val title = "Love All Play"
-        val anime = SubscribedAnimeEntity(title, minFileSize = 238.7f)
+        val title = "Sokushi Cheat ga Saikyou sugite, Isekai no Yatsura ga Marude Aite ni Naranai n desu ga."
+        val anime = SubscribedAnimeEntity(title, minFileSize = 280.0f)
         val expectedLinks = listOf(
-            "https://www.mp4upload.com/zdu7xouesiia.html",
-            "https://ssbstream.net/d/s2rrkvcv9nhl",
-            "https://fembed-hd.com/f/ez40ni-62220den",
+            "https://www.mp4upload.com/qpw4tz4v7jy7.html",
+            "https://awish.pro/f/4phhx9y31q0u_x",
+            "https://dood.wf/d/ip0jfc8q092h",
         )
         val expectedDownloadInfo = listOf(
-            DownloadInfo(title, Mp4UploadPage, 238.7f, "https://www.mp4upload.com/zdu7xouesiia.html"),
-            DownloadInfo(title, StreamSbPage, 238.7f, "https://ssbstream.net/d/s2rrkvcv9nhl"),
+            DownloadInfo(title, Mp4UploadPage, 281.2f, "https://www.mp4upload.com/qpw4tz4v7jy7.html"),
         )
         val expectedSupportedServers = listOf(Mp4UploadPage, StreamSbPage, DoodstreamPage)
 
