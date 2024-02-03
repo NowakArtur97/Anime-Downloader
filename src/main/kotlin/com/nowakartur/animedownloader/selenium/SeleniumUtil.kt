@@ -7,6 +7,7 @@ import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_VIDEO_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.HAS_DOWNLOAD_STOPPED_DOWNLOAD_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.RESUME_DOWNLOAD_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
+import org.apache.commons.lang3.StringUtils
 import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
@@ -28,13 +29,18 @@ object SeleniumUtil {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun startWebDriver(): RemoteWebDriver {
+    fun startWebDriver(downloadDirectory: String = ""): RemoteWebDriver {
         WebDriverManager.chromedriver().setup()
-        val options = ChromeOptions().also {
+        val chromeOptions = ChromeOptions().also {
             it.setExperimentalOption("excludeSwitches", listOf("disable-popup-blocking")) // disable all popups
             it.addArguments("lang=en-GB") // change language to English
         }
-        return ChromeDriver(options).also {
+        if (StringUtils.isNotBlank(downloadDirectory)) {
+            val chromePrefs = HashMap<String, String>()
+            chromePrefs["download.default_directory"] = downloadDirectory
+            chromeOptions.setExperimentalOption("prefs", chromePrefs);
+        }
+        return ChromeDriver(chromeOptions).also {
             it.manage().window().position = HIDDEN_POSITION
         }
     }

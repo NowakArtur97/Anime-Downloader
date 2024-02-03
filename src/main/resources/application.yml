@@ -40,3 +40,4 @@ app:
   csv:
     file-name: anime.csv
   default-min-file-size: 150.0
+  download-directory: D:\Anime\anime odcinki

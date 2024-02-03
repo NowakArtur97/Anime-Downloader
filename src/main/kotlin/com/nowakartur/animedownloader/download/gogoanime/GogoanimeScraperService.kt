@@ -23,6 +23,7 @@ class GogoanimeScraperService(
     @Value("\${app.consumer.wait-time-seconds}") private val consumerWaitTime: Long,
     @Value("\${app.consumer.download-service-retry-times}") private val downloadServiceRetryTimes: Int,
     @Value("\${app.supported-servers}") private val supportedServersNames: List<String>,
+    @Value("\${app.download-directory}") private val downloadDirectory: String,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -75,7 +76,8 @@ class GogoanimeScraperService(
             downloadInfoQueue,
             allNewAnimeToDownload,
             consumerWaitTime,
-            downloadServiceRetryTimes
+            downloadServiceRetryTimes,
+            downloadDirectory,
         )
 
         gogoanimeDownloadInfoProducer.name = "producer-thread"

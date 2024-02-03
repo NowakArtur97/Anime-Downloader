@@ -17,6 +17,7 @@ class GogoanimeDownloadInfoConsumer(
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
     private val consumerWaitTime: Long,
     private val downloadServiceRetryTimes: Int,
+    private val downloadDirectory: String,
 ) : GogoanimeDownloadInfoThread(subscribedAnimeService, screenshotUtil) {
 
     override fun run() {
@@ -49,7 +50,7 @@ class GogoanimeDownloadInfoConsumer(
 
                         subscribedAnimeService.startDownloadingAnime(subscribedAnimeEntity)
 
-                        webDriver = SeleniumUtil.startWebDriver()
+                        webDriver = SeleniumUtil.startWebDriver(downloadDirectory)
 
                         logger.info("Link to the episode: [${bestQualityDownloadPage.url}].")
 
