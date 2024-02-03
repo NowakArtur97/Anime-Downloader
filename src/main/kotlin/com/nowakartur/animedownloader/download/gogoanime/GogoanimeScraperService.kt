@@ -5,6 +5,7 @@ import com.nowakartur.animedownloader.download.doodstream.DoodstreamPage
 import com.nowakartur.animedownloader.download.mp4upload.Mp4UploadPage
 import com.nowakartur.animedownloader.download.streamsb.StreamSbPage
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
+import com.nowakartur.animedownloader.subsciption.FileRenamingService
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.jsoup.nodes.Document
@@ -19,6 +20,7 @@ import java.util.concurrent.BlockingQueue
 class GogoanimeScraperService(
     @Value("\${app.gogoanime.url}") private val gogoanimeMainPageUrl: String,
     private val subscribedAnimeService: SubscribedAnimeService,
+    private val fileRenamingService: FileRenamingService,
     private val screenshotUtil: ScreenshotUtil,
     @Value("\${app.consumer.wait-time-seconds}") private val consumerWaitTime: Long,
     @Value("\${app.consumer.download-service-retry-times}") private val downloadServiceRetryTimes: Int,
@@ -73,6 +75,7 @@ class GogoanimeScraperService(
         val gogoanimeDownloadInfoConsumer = GogoanimeDownloadInfoConsumer(
             subscribedAnimeService,
             screenshotUtil,
+            fileRenamingService,
             downloadInfoQueue,
             allNewAnimeToDownload,
             consumerWaitTime,

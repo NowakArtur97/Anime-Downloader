@@ -3,6 +3,7 @@ package com.nowakartur.animedownloader.download.gogoanime
 import com.nowakartur.animedownloader.download.common.DownloadInfo
 import com.nowakartur.animedownloader.selenium.ScreenshotUtil
 import com.nowakartur.animedownloader.selenium.SeleniumUtil
+import com.nowakartur.animedownloader.subsciption.FileRenamingService
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit
 class GogoanimeDownloadInfoConsumer(
     subscribedAnimeService: SubscribedAnimeService,
     screenshotUtil: ScreenshotUtil,
+    private val fileRenamingService: FileRenamingService,
 
     private val downloadInfoQueue: BlockingQueue<List<DownloadInfo>>,
     private val allNewAnimeToDownload: List<SubscribedAnimeEntity>,
@@ -69,6 +71,8 @@ class GogoanimeDownloadInfoConsumer(
                         subscribedAnimeService.finishDownloadingAnime(subscribedAnimeEntity)
 
                         logger.info("The [$title] episode has been successfully downloaded.")
+
+                        fileRenamingService.renameNewestFileTo(subscribedAnimeEntity.title)
 
                         isDownloading = false
 
