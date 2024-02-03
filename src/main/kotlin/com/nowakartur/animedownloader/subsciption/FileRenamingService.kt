@@ -28,11 +28,11 @@ class FileRenamingService(
         val newestFile: Optional<Path> = findNewestFile(directory)
 
         if (newestFile.isPresent) {
-            val fileNameWithoutIllegalCharacters = newFileName.replace("[^a-zA-Z0-9\\.\\-]", "_");
+            val fileNameWithoutIllegalCharacters = removeIllegalCharacters(newFileName)
             val newFullFileName = "${directory.absolutePathString()}\\$fileNameWithoutIllegalCharacters.mp4"
             val renamedFile = File(newFullFileName)
-            val pathString = newestFile.get().absolutePathString()
-            val fileToRename = File(pathString)
+            val renamedFilePath = newestFile.get().absolutePathString()
+            val fileToRename = File(renamedFilePath)
             val wasRenamed = fileToRename.renameTo(renamedFile)
             if (wasRenamed) {
                 logger.info("File was successfully renamed to: [$newFullFileName]")
@@ -40,6 +40,19 @@ class FileRenamingService(
         }
     }
 
-    private fun findNewestFile(dir: Path) = Files.list(dir).filter { f -> !Files.isDirectory(f) }
-        .max(Comparator.comparingLong { f -> f.toFile().lastModified() })
+    private fun findNewestFile(dir: Path) =
+        Files.list(dir)
+            .filter { f -> !Files.isDirectory(f) }
+            .max(Comparator.comparingLong { f -> f.toFile().lastModified() })
+
+    private fun removeIllegalCharacters(newFileName: String): String = newFileName
+        .replace("\\", "")
+        .replace("/", "")
+        .replace(":", "")
+        .replace("\"", "")
+        .replace("?", "")
+        .replace("*", "")
+        .replace("|", "")
+        .replace("<", "")
+        .replace(">", "")
 }
