@@ -32,6 +32,17 @@ class GogoanimeEpisodePageTest {
     }
 
     @Test
+    fun `when find episode number should return correct number`() {
+        val linkToAnimePage = "/love-all-play-episode-8"
+        val episodePage = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, linkToAnimePage)
+        val expectedEpisodeNumber = "8"
+
+        val actualEpisodeNumber = GogoanimeEpisodePage.findEpisodeNumber(episodePage)
+
+        assertEquals(expectedEpisodeNumber, actualEpisodeNumber)
+    }
+
+    @Test
     fun `when get download info should return correct download info`() {
         val title = "Sokushi Cheat ga Saikyou sugite, Isekai no Yatsura ga Marude Aite ni Naranai n desu ga."
         val anime = SubscribedAnimeEntity(title)
@@ -41,16 +52,17 @@ class GogoanimeEpisodePageTest {
             "https://dood.wf/e/4c3ihky9458j",
         )
         val expectedDownloadInfo = listOf(
-            DownloadInfo(title, Mp4UploadPage, 438.1f, "https://www.mp4upload.com/ig5hgyfg9wqw.html"),
-            DownloadInfo(title, StreamSbPage, 438.1f, "https://awish.pro/f/x32o6bkjndap_x"),
-            DownloadInfo(title, DoodstreamPage, 438.1f, "https://dood.wf/e/4c3ihky9458j"),
+            DownloadInfo(title, Mp4UploadPage, 438.1f, "https://www.mp4upload.com/ig5hgyfg9wqw.html", "5"),
+            DownloadInfo(title, StreamSbPage, 438.1f, "https://awish.pro/f/x32o6bkjndap_x", "5"),
+            DownloadInfo(title, DoodstreamPage, 433.1f, "https://dood.wf/e/4c3ihky9458j", "5"),
         )
         val expectedSupportedServers = listOf(Mp4UploadPage, StreamSbPage, DoodstreamPage)
 
         val actualDownloadInfo = GogoanimeEpisodePage.mapToDownloadInfo(
             anime,
             expectedLinks,
-            expectedSupportedServers
+            expectedSupportedServers,
+            "5"
         )
 
         assertEquals(expectedDownloadInfo, actualDownloadInfo)
@@ -66,14 +78,15 @@ class GogoanimeEpisodePageTest {
             "https://dood.wf/d/ip0jfc8q092h",
         )
         val expectedDownloadInfo = listOf(
-            DownloadInfo(title, Mp4UploadPage, 281.2f, "https://www.mp4upload.com/qpw4tz4v7jy7.html"),
+            DownloadInfo(title, Mp4UploadPage, 281.2f, "https://www.mp4upload.com/qpw4tz4v7jy7.html", "4"),
         )
         val expectedSupportedServers = listOf(Mp4UploadPage, StreamSbPage, DoodstreamPage)
 
         val actualDownloadInfo = GogoanimeEpisodePage.mapToDownloadInfo(
             anime,
             expectedLinks,
-            expectedSupportedServers
+            expectedSupportedServers,
+            "4"
         )
 
         assertEquals(expectedDownloadInfo, actualDownloadInfo)
@@ -92,7 +105,8 @@ class GogoanimeEpisodePageTest {
         val actualDownloadInfo = GogoanimeEpisodePage.mapToDownloadInfo(
             anime,
             expectedLinks,
-            expectedSupportedServers
+            expectedSupportedServers,
+            "7"
         )
 
         assertTrue(actualDownloadInfo.isEmpty())
