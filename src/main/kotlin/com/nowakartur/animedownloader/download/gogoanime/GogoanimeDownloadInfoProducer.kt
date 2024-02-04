@@ -36,11 +36,14 @@ class GogoanimeDownloadInfoProducer(
                 val alSupportedDownloadLinks =
                     GogoanimeEpisodePage.findAllSupportedDownloadLinks(episodePage, supportedServers)
 
+                val episodeNumber = GogoanimeEpisodePage.findEpisodeNumber(episodePage)
+
                 val downloadInfo =
                     GogoanimeEpisodePage.mapToDownloadInfo(
                         subscribedAnimeEntity,
                         alSupportedDownloadLinks,
-                        supportedServers
+                        supportedServers,
+                        episodeNumber
                     ).sortedByDescending { it.fileSize }
 
                 if (downloadInfo.isNotEmpty()) {

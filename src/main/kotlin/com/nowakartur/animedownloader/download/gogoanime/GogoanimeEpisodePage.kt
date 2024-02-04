@@ -1,7 +1,11 @@
 package com.nowakartur.animedownloader.download.gogoanime
 
+import com.nowakartur.animedownloader.constant.HtmlConstants.H1_TAG
 import com.nowakartur.animedownloader.download.common.DownloadInfo
 import com.nowakartur.animedownloader.download.common.DownloadPage
+import com.nowakartur.animedownloader.download.gogoanime.GogoanimePageStyles.AFTER_EPISODE_NUMBER_TEXT
+import com.nowakartur.animedownloader.download.gogoanime.GogoanimePageStyles.BEFORE_EPISODE_NUMBER_TEXT
+import com.nowakartur.animedownloader.download.gogoanime.GogoanimePageStyles.EPISODE_NUMBER_TEXT_CLASS
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
@@ -27,10 +31,20 @@ object GogoanimeEpisodePage {
         return supportedDownloadServers.map { it.prepareDownloadLink(page) }
     }
 
+    fun findEpisodeNumber(
+        page: Document,
+    ): String = page.getElementsByClass(EPISODE_NUMBER_TEXT_CLASS)
+        .first()!!
+        .getElementsByTag(H1_TAG)
+        .text()
+        .substringAfter(BEFORE_EPISODE_NUMBER_TEXT)
+        .substringBefore(AFTER_EPISODE_NUMBER_TEXT)
+
     fun mapToDownloadInfo(
         subscribedAnime: SubscribedAnimeEntity,
         allSupportedDownloadLinks: List<String>,
-        supportedServers: List<DownloadPage>
+        supportedServers: List<DownloadPage>,
+        episodeNumber: String
     ): List<DownloadInfo> =
         allSupportedDownloadLinks.mapNotNull { link ->
             val downloadServer = supportedServers.find {
@@ -39,7 +53,7 @@ object GogoanimeEpisodePage {
             if (downloadServer != null) {
                 val fileSize = getFileSize(downloadServer, link)
                 if (fileSize >= subscribedAnime.minFileSize) {
-                    DownloadInfo(subscribedAnime.title, downloadServer, fileSize, link)
+                    DownloadInfo(subscribedAnime.title, downloadServer, fileSize, link, episodeNumber)
                 } else {
                     val serverName = downloadServer.toString().split(".")[4]
                     logger.info(

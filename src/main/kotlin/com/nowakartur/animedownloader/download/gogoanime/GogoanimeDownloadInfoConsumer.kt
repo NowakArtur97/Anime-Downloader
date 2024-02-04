@@ -72,7 +72,10 @@ class GogoanimeDownloadInfoConsumer(
 
                         logger.info("The [$title] episode has been successfully downloaded.")
 
-                        fileRenamingService.renameNewestFileTo(subscribedAnimeEntity.title)
+                        fileRenamingService.renameNewestEpisodeTo(
+                            subscribedAnimeEntity.title,
+                            bestQualityDownloadPage.episodeNumber
+                        )
 
                         isDownloading = false
 

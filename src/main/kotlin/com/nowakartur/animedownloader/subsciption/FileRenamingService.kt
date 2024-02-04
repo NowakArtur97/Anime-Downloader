@@ -19,7 +19,7 @@ class FileRenamingService(
 
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    fun renameNewestFileTo(newFileName: String) {
+    fun renameNewestEpisodeTo(title: String, episodeNumber: String) {
         val actualDownloadDirectory = if (StringUtils.isNotBlank(downloadDirectory)) downloadDirectory
         else System.getProperty("user.dir") + "\\Downloads"
 
@@ -28,8 +28,8 @@ class FileRenamingService(
         val newestFile: Optional<Path> = findNewestFile(directory)
 
         if (newestFile.isPresent) {
-            val fileNameWithoutIllegalCharacters = removeIllegalCharacters(newFileName)
-            val newFullFileName = "${directory.absolutePathString()}\\$fileNameWithoutIllegalCharacters.mp4"
+            val titleWithoutIllegalCharacters = removeIllegalCharacters(title)
+            val newFullFileName = "${directory.absolutePathString()}\\$titleWithoutIllegalCharacters $episodeNumber.mp4"
             val renamedFile = File(newFullFileName)
             val renamedFilePath = newestFile.get().absolutePathString()
             val fileToRename = File(renamedFilePath)
