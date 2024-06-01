@@ -1,9 +1,11 @@
 package com.nowakartur.animedownloader.selenium
 
+import com.nowakartur.animedownloader.exception.WrongFileException
 import com.nowakartur.animedownloader.selenium.JsScripts.CLICK_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_PROGRESS_VALUE_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_VIDEO_FROM_SOURCE_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.DOWNLOAD_VIDEO_SCRIPT
+import com.nowakartur.animedownloader.selenium.JsScripts.FILE_SIZE_VALUE_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.HAS_DOWNLOAD_STOPPED_DOWNLOAD_SCRIPT
 import com.nowakartur.animedownloader.selenium.JsScripts.RESUME_DOWNLOAD_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
@@ -17,13 +19,15 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
 import java.util.concurrent.TimeUnit
 
-private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
-private const val WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
-private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
-
 object SeleniumUtil {
 
+    private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
+    private const val WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
+    private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
     private const val CHROME_DOWNLOADS = "chrome://downloads"
+    private const val BEFORE_SIZE_TEXT = "MB of "
+    private const val AFTER_SIZE_TEXT = " MB,"
+    private const val MIN_FILE_SIZE_ON_DOWNLOAD_PAGE = 500.0
     private const val MAX_NUMBER_OF_EXCEPTIONS = 3
     private val HIDDEN_POSITION = Point(-1800, 0)
 
@@ -78,6 +82,7 @@ object SeleniumUtil {
         waitFor(driver, WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB)
         switchToDownloadTab(driver)
         val jsExecutor = driver as JavascriptExecutor
+        doubleCheckFileSize(jsExecutor)
         var percentage = 0L
         var exceptionsCounter = 0
         while (percentage < 100L) {
@@ -118,5 +123,17 @@ object SeleniumUtil {
 
     private fun resumeDownload(jsExecutor: JavascriptExecutor) {
         jsExecutor.executeScript(RESUME_DOWNLOAD_SCRIPT)
+    }
+
+    private fun doubleCheckFileSize(jsExecutor: JavascriptExecutor) {
+        val fileSizeOnDownloadPage = jsExecutor.executeScript(FILE_SIZE_VALUE_SCRIPT)
+                as String
+        val fileSize = fileSizeOnDownloadPage
+            .substringAfter(BEFORE_SIZE_TEXT)
+            .substringBefore(AFTER_SIZE_TEXT)
+            .toFloat()
+        if (fileSize < MIN_FILE_SIZE_ON_DOWNLOAD_PAGE) {
+            throw WrongFileException("The file size is too small on the download page. Size: [$fileSize]")
+        }
     }
 }

@@ -23,6 +23,9 @@ object JsScripts {
     const val DOWNLOAD_PROGRESS_VALUE_SCRIPT =
         "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#progress').value;"
 
+    const val FILE_SIZE_VALUE_SCRIPT =
+        "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#description').textContent;"
+
     const val HAS_DOWNLOAD_STOPPED_DOWNLOAD_SCRIPT =
         "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#tag').innerText.includes('Failed')"
 
