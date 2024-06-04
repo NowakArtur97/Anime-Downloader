@@ -25,8 +25,8 @@ object SeleniumUtil {
     private const val WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
     private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
     private const val CHROME_DOWNLOADS = "chrome://downloads"
-    private const val BEFORE_SIZE_TEXT = "MB of "
-    private const val AFTER_SIZE_TEXT = " MB,"
+    private const val BEFORE_SIZE_TEXT = "B of "
+    private const val AFTER_SIZE_TEXT = " MB"
     private const val MIN_FILE_SIZE_ON_DOWNLOAD_PAGE = 10.0
     private const val MAX_NUMBER_OF_EXCEPTIONS = 3
     private val HIDDEN_POSITION = Point(-1800, 0)
