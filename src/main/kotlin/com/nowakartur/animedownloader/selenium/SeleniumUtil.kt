@@ -23,6 +23,7 @@ object SeleniumUtil {
 
     private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
     private const val WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
+    private const val WAIT_TIMEOUT_BEFORE_CHECKING_FILE_ON_DOWNLOAD_PAGE = 5L
     private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
     private const val CHROME_DOWNLOADS = "chrome://downloads"
     private const val BEFORE_SIZE_TEXT = "B of "
@@ -81,6 +82,7 @@ object SeleniumUtil {
     fun waitForFileDownload(driver: WebDriver, title: String) {
         waitFor(driver, WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB)
         switchToDownloadTab(driver)
+		waitFor(driver, WAIT_TIMEOUT_BEFORE_CHECKING_FILE_ON_DOWNLOAD_PAGE)
         val jsExecutor = driver as JavascriptExecutor
         doubleCheckFileSize(jsExecutor)
         var percentage = 0L
