@@ -6,6 +6,7 @@ import com.nowakartur.animedownloader.selenium.SeleniumUtil
 import com.nowakartur.animedownloader.subsciption.FileRenamingService
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus
 import org.openqa.selenium.remote.RemoteWebDriver
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit
@@ -97,7 +98,8 @@ class GogoanimeDownloadInfoConsumer(
 
                 currentDownloadServiceIndex++
 
-                val hasFailedDownloadOnAllServers = !isDownloading && hasFailed
+                val hasFailedDownloadOnAllServers =
+                    !isDownloading && hasFailed && subscribedAnimeEntity.status != SubscribedAnimeStatus.DOWNLOADED
                 if (hasFailedDownloadOnAllServers) {
                     subscribedAnimeService.setAsFailedAnimeDownload(subscribedAnimeEntity)
                 }
