@@ -17,7 +17,7 @@ app:
   supported-servers: Mp4UploadPage, StreamSbPage, DoodstreamPage
   #   sometimes there are problems when downloading from Doodstream
   gogoanime:
-    url: https://anitaku.to/home.html
+    url: https://anitaku.pe/home.html
   scheduler:
     enabled: true
     download:
