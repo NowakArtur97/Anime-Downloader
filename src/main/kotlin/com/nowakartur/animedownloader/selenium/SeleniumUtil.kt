@@ -17,18 +17,17 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.LoggerFactory
-import java.util.concurrent.TimeUnit
 
 object SeleniumUtil {
 
     private const val WAIT_TIMEOUT_FOR_ELEMENT = 15L
-    private const val WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
-    private const val WAIT_TIMEOUT_BEFORE_CHECKING_FILE_ON_DOWNLOAD_PAGE = 5L
+    private const val WAIT_TIME_BEFORE_SWITCHING_TO_DOWNLOAD_TAB = 5L
+    private const val WAIT_TIME_BEFORE_CHECKING_FILE_ON_DOWNLOAD_PAGE = 5L
     private const val WAIT_FOR_DOWNLOAD_CHECK = 12_000L
     private const val CHROME_DOWNLOADS = "chrome://downloads"
     private const val BEFORE_SIZE_TEXT = "B of "
     private const val AFTER_SIZE_TEXT = " MB"
-    private const val MIN_FILE_SIZE_ON_DOWNLOAD_PAGE = 10.0
+    private const val MIN_FILE_SIZE_ON_DOWNLOAD_PAGE = 15.0
     private const val MAX_NUMBER_OF_EXCEPTIONS = 3
     private val HIDDEN_POSITION = Point(-1800, 0)
 
@@ -43,7 +42,7 @@ object SeleniumUtil {
         if (StringUtils.isNotBlank(downloadDirectory)) {
             val chromePrefs = HashMap<String, String>()
             chromePrefs["download.default_directory"] = downloadDirectory
-            chromeOptions.setExperimentalOption("prefs", chromePrefs);
+            chromeOptions.setExperimentalOption("prefs", chromePrefs)
         }
         return ChromeDriver(chromeOptions).also {
             it.manage().window().position = HIDDEN_POSITION
@@ -55,13 +54,8 @@ object SeleniumUtil {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
     }
 
-    fun waitFor(webDriver: RemoteWebDriver, element: WebElement, timeOutInSeconds: Long = WAIT_TIMEOUT_FOR_ELEMENT) {
-        val wait = WebDriverWait(webDriver, timeOutInSeconds)
-        wait.until(ExpectedConditions.visibilityOf(element))
-    }
-
-    private fun waitFor(webDriver: WebDriver, seconds: Long) {
-        webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS)
+    fun waitFor(seconds: Long) {
+        Thread.sleep(seconds * 1_000)
     }
 
     fun clickUsingJavaScript(webDriver: RemoteWebDriver, element: WebElement) {
@@ -80,9 +74,9 @@ object SeleniumUtil {
     }
 
     fun waitForFileDownload(driver: WebDriver, title: String) {
-        waitFor(driver, WAIT_TIMEOUT_BEFORE_SWITCHING_TO_DOWNLOAD_TAB)
+        waitFor(WAIT_TIME_BEFORE_SWITCHING_TO_DOWNLOAD_TAB)
         switchToDownloadTab(driver)
-		waitFor(driver, WAIT_TIMEOUT_BEFORE_CHECKING_FILE_ON_DOWNLOAD_PAGE)
+        waitFor(WAIT_TIME_BEFORE_CHECKING_FILE_ON_DOWNLOAD_PAGE)
         val jsExecutor = driver as JavascriptExecutor
         doubleCheckFileSize(jsExecutor)
         var percentage = 0L
@@ -130,6 +124,9 @@ object SeleniumUtil {
     private fun doubleCheckFileSize(jsExecutor: JavascriptExecutor) {
         val fileSizeOnDownloadPage = jsExecutor.executeScript(FILE_SIZE_VALUE_SCRIPT)
                 as String
+        if (!fileSizeOnDownloadPage.contains(AFTER_SIZE_TEXT)) {
+            throw WrongFileException("The file size is too small on the download page.")
+        }
         val fileSize = fileSizeOnDownloadPage
             .substringAfter(BEFORE_SIZE_TEXT)
             .substringBefore(AFTER_SIZE_TEXT)

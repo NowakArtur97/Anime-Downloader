@@ -13,6 +13,8 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 object Mp4UploadPage : DownloadPage {
 
+    private const val WAIT_TIME_BEFORE_DOWNLOAD = 5L
+
     override val episodePageDownloadLinkTexts: List<String> get() = listOf("mp4upload")
     override val episodePageDownloadLinkClass: String get() = "mp4upload"
 
@@ -34,6 +36,7 @@ object Mp4UploadPage : DownloadPage {
 
     private fun downloadFromVideo(webDriver: RemoteWebDriver) {
         SeleniumUtil.waitFor(webDriver, By.tagName(VIDEO_TAG))
+        SeleniumUtil.waitFor(WAIT_TIME_BEFORE_DOWNLOAD)
         SeleniumUtil.downloadVideoUsingJavaScript(webDriver)
     }
 }
