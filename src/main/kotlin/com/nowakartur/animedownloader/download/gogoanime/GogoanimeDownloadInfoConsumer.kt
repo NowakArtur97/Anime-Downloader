@@ -75,7 +75,7 @@ class GogoanimeDownloadInfoConsumer(
 
                         fileRenamingService.renameNewestEpisodeTo(
                             subscribedAnimeEntity.title,
-                            bestQualityDownloadPage.episodeNumber
+                            bestQualityDownloadPage.episodeNumber.toInt()
                         )
 
                         isDownloading = false

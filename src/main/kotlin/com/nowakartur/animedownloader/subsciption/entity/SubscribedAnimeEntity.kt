@@ -1,13 +1,26 @@
 package com.nowakartur.animedownloader.subsciption.entity
 
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimePriority.LOW
-import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.*
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.DOWNLOADED
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.FAILED
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.IN_PROGRESS
+import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeStatus.TO_DOWNLOAD
 import org.hibernate.Hibernate
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.EntityListeners
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.PostLoad
+import javax.persistence.Table
+import javax.persistence.Transient
 
 @Entity
 @Table(name = "subscribed_anime")
@@ -25,6 +38,9 @@ data class SubscribedAnimeEntity(
 
     @Column(name = "min_file_size", nullable = false)
     var minFileSize: Float = 150.0f,
+
+    @Column(name = "episode_number", nullable = false)
+    var episodeNumber: Int = 0,
 
     @Transient
     var priorityValue: Int = priority.value,

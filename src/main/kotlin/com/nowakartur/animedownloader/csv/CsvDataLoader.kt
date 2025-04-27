@@ -23,12 +23,13 @@ class CsvDataLoader(
     }
 
     private fun mapToEntity(it: String): SubscribedAnimeEntity {
-        val (title, priority, minFileSize) = it.split(";", limit = 3)
+        val (title, priority, minFileSize, episodeNumber) = it.split(";", limit = 4)
         return SubscribedAnimeEntity(
             title,
             if (priority.isNotBlank()) SubscribedAnimePriority.valueOf(priority)
             else SubscribedAnimePriority.LOW,
             minFileSize = (minFileSize.ifBlank { defaultMinFileSize }).toFloat(),
+            episodeNumber = (if (episodeNumber.isNotBlank()) episodeNumber.toInt() else 0),
         )
     }
 }

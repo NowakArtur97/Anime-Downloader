@@ -30,6 +30,12 @@ class SubscribedAnimeService(
         subscribedAnimeRepository.save(subscribedAnimeEntity)
     }
 
+    fun finishDownloadingAnime(subscribedAnimeEntity: SubscribedAnimeEntity, episodeNumber: Int) {
+        subscribedAnimeEntity.episodeNumber = episodeNumber
+        subscribedAnimeEntity.changeStatusToDownloaded()
+        subscribedAnimeRepository.save(subscribedAnimeEntity)
+    }
+
     fun setAsFailedAnimeDownload(subscribedAnimeEntity: SubscribedAnimeEntity) {
         subscribedAnimeEntity.changeStatusToFailed()
         subscribedAnimeRepository.save(subscribedAnimeEntity)

@@ -1,5 +1,6 @@
 package com.nowakartur.animedownloader.subsciption.scheduler
 
+import com.nowakartur.animedownloader.animeheaven.AnimeHeavenDownloadService
 import com.nowakartur.animedownloader.download.gogoanime.GogoanimeScraperService
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeService
 import org.springframework.beans.factory.annotation.Value
@@ -17,8 +18,10 @@ class SubscriptionSchedulerConfig {
 
     @Bean
     fun subscriptionScheduler(
-        gogoanimeScraperService: GogoanimeScraperService
-    ): SubscribedAnimeDownloadScheduler = SubscribedAnimeDownloadScheduler(gogoanimeScraperService)
+        gogoanimeScraperService: GogoanimeScraperService,
+        animeHeavenDownloadService: AnimeHeavenDownloadService,
+    ): SubscribedAnimeDownloadScheduler =
+        SubscribedAnimeDownloadScheduler(gogoanimeScraperService, animeHeavenDownloadService)
 
     @Bean
     fun statusResetScheduler(

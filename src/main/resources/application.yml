@@ -18,14 +18,16 @@ app:
   #   sometimes there are problems when downloading from Doodstream
   gogoanime:
     url: https://anitaku.pe/home.html
+  animeheaven:
+    url: https://animeheaven.me/new.php
   scheduler:
     enabled: true
     download:
       initial-delay-ms: 15000
-      #      fixed-delay-ms: 10000
-      fixed-delay-ms: 60000
+      fixed-delay-ms: 10000
+    #      fixed-delay-ms: 1800000
     reset:
-      number-of-days-after-to-reset: 3
+      number-of-days-after-to-reset: 6
       initial-delay-days: 0
       fixed-delay-days: 1
     failed:

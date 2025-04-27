@@ -9,17 +9,18 @@ import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.*
+import java.util.Optional
 import kotlin.io.path.absolutePathString
 
 @Service
+// TODO: change to object
 class FileRenamingService(
     @Value("\${app.download-directory}") private val downloadDirectory: String,
 ) {
 
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    fun renameNewestEpisodeTo(title: String, episodeNumber: String) {
+    fun renameNewestEpisodeTo(title: String, episodeNumber: Int) {
         val actualDownloadDirectory = if (StringUtils.isNotBlank(downloadDirectory)) downloadDirectory
         else System.getProperty("user.dir") + "\\Downloads"
 
