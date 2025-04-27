@@ -34,9 +34,13 @@ class AnimeHeavenDownloadService(
 
         val allAnimeDownloadInfo = AnimeHeavenPage.getAllAnimeDownloadInfo(animeheavenPageUrl)
         val titles = subscribedAnime.map { it.title }
+        val desiredOrderOfDownload = titles.indexMap()
         val subscribedAnimeDownloadInfo = allAnimeDownloadInfo
             .filter { titles.contains(it.title) }
             .filter { subscribedAnime.find { anime -> anime.title == it.title }!!.episodeNumber < it.episodeNumber }
+            .sortedBy { desiredOrderOfDownload[it.title] }
+
+        logger.info("Anime found: ${subscribedAnimeDownloadInfo.map { it.title }}.")
 
         subscribedAnimeDownloadInfo.forEach {
             var isDownloading = true
@@ -89,5 +93,13 @@ class AnimeHeavenDownloadService(
                 subscribedAnimeService.setAsFailedAnimeDownload(subscribedAnimeEntity)
             }
         }
+    }
+
+    private fun <T> Iterable<T>.indexMap(): Map<T, Int> {
+        val map = mutableMapOf<T, Int>()
+        forEachIndexed { i, v ->
+            map[v] = i
+        }
+        return map
     }
 }
