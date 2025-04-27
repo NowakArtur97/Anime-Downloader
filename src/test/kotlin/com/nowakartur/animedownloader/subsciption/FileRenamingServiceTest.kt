@@ -16,7 +16,7 @@ class FileRenamingServiceTest {
     fun `when rename file should rename the newest file`() {
         val resourceDirectory = Paths.get("src", "test", "resources", "rename-file-test")
         val absolutePath = resourceDirectory.toFile().getAbsolutePath()
-        val episodeNumber = "2"
+        val episodeNumber = 2
         val expectedFileName = "test-file-to-rename-${UUID.randomUUID()}"
         File("$absolutePath\\$expectedFileName").also {
             it.createNewFile()
@@ -35,7 +35,7 @@ class FileRenamingServiceTest {
         val resourceDirectory = Paths.get("src", "test", "resources", "rename-file-test")
         val absolutePath = resourceDirectory.toFile().getAbsolutePath()
         val randomUUID = UUID.randomUUID()
-        val episodeNumber = "5"
+        val episodeNumber = 5
         val expectedFileName = "test-file-to-rename-$randomUUID $episodeNumber.mp4"
         val expectedFileNameWithIllegalCharacters = "test-file-to-rename\\/:\"?|<>*-$randomUUID"
         File("$absolutePath\\$expectedFileName").also {

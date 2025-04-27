@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.Scheduled
 
 
 class SubscribedAnimeDownloadScheduler(
-    private val gogoanimeScraperService: GogoanimeScraperService,
     private val animeHeavenDownloadService: AnimeHeavenDownloadService
 ) {
 
@@ -15,7 +14,6 @@ class SubscribedAnimeDownloadScheduler(
         fixedDelayString = "\${app.scheduler.download.fixed-delay-ms}",
     )
     fun downloadAnime() {
-//        gogoanimeScraperService.downloadAnime()
         animeHeavenDownloadService.downloadAnime()
     }
 }

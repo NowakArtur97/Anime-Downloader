@@ -7,6 +7,7 @@ import com.nowakartur.animedownloader.download.streamsb.StreamSbPage
 import com.nowakartur.animedownloader.subsciption.entity.SubscribedAnimeEntity
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 const val GOGOANIME_MAIN_PAGE_URL = "https://anitaku.to/home.html"
@@ -14,6 +15,7 @@ const val GOGOANIME_MAIN_PAGE_URL = "https://anitaku.to/home.html"
 class GogoanimeEpisodePageTest {
 
     @Test
+    @Disabled
     fun `when find links for download should return correct links`() {
         val linkToAnimePage = "/love-all-play-episode-8"
         val episodePage = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, linkToAnimePage)
@@ -32,6 +34,7 @@ class GogoanimeEpisodePageTest {
     }
 
     @Test
+    @Disabled
     fun `when find episode number should return correct number`() {
         val linkToAnimePage = "/love-all-play-episode-8"
         val episodePage = GogoanimeEpisodePage.connectToEpisodePage(GOGOANIME_MAIN_PAGE_URL, linkToAnimePage)
@@ -43,6 +46,7 @@ class GogoanimeEpisodePageTest {
     }
 
     @Test
+    @Disabled
     fun `when get download info should return correct download info`() {
         val title = "Sokushi Cheat ga Saikyou sugite, Isekai no Yatsura ga Marude Aite ni Naranai n desu ga."
         val anime = SubscribedAnimeEntity(title)
@@ -69,6 +73,7 @@ class GogoanimeEpisodePageTest {
     }
 
     @Test
+    @Disabled
     fun `when get download info but file is too small should skip server`() {
         val title = "Sokushi Cheat ga Saikyou sugite, Isekai no Yatsura ga Marude Aite ni Naranai n desu ga."
         val anime = SubscribedAnimeEntity(title, minFileSize = 280.0f)
@@ -93,6 +98,7 @@ class GogoanimeEpisodePageTest {
     }
 
     @Test
+    @Disabled
     fun `when get download info but file is too small should skip title for all servers`() {
         val anime = SubscribedAnimeEntity("Love All Play", minFileSize = 900.0f)
         val expectedLinks = listOf(
