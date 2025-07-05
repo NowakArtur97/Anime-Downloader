@@ -29,6 +29,8 @@ object AnimeHeavenPage {
                 .replace("ch", "")
                 .replace("un", "")
                 .replace("raw", "")
+                .replace(".5", "")
+                .replace("S01E0", "")
                 .toInt()
             val url = element.getElementsByTag(ANCHOR_TAG)
                 .last()!!
@@ -47,6 +49,7 @@ object AnimeHeavenPage {
     }
 
     fun downloadEpisode(webDriver: RemoteWebDriver) {
+        SeleniumUtil.switchToTab(webDriver, "animeheaven")
         SeleniumUtil.waitFor(webDriver, By.className(DOWNLOAD_BUTTON_CLASS))
         webDriver.findElements(By.className(DOWNLOAD_BUTTON_CLASS))
             .last()

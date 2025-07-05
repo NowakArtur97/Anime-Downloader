@@ -10,7 +10,11 @@ import com.nowakartur.animedownloader.selenium.JsScripts.HAS_DOWNLOAD_STOPPED_DO
 import com.nowakartur.animedownloader.selenium.JsScripts.RESUME_DOWNLOAD_SCRIPT
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.apache.commons.lang3.StringUtils
-import org.openqa.selenium.*
+import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
+import org.openqa.selenium.Point
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -78,7 +82,7 @@ object SeleniumUtil {
         switchToDownloadTab(driver)
         waitFor(WAIT_TIME_BEFORE_CHECKING_FILE_ON_DOWNLOAD_PAGE)
         val jsExecutor = driver as JavascriptExecutor
-        doubleCheckFileSize(jsExecutor)
+//        doubleCheckFileSize(jsExecutor)
         var percentage = 0L
         var exceptionsCounter = 0
         while (percentage < 100L) {
@@ -111,6 +115,15 @@ object SeleniumUtil {
         webDriver[CHROME_DOWNLOADS]
     }
 
+    fun switchToTab(webDriver: WebDriver, url: String) {
+        val tab = webDriver.windowHandles
+            .map {
+                webDriver.switchTo().window(it)
+                Pair(webDriver.currentUrl, it)
+            }.first { it.first.contains(url) }
+        webDriver.switchTo().window(tab.second)
+    }
+
     private fun getDownloadProgress(jsExecutor: JavascriptExecutor): Long =
         jsExecutor.executeScript(DOWNLOAD_PROGRESS_VALUE_SCRIPT) as Long
 
@@ -121,6 +134,7 @@ object SeleniumUtil {
         jsExecutor.executeScript(RESUME_DOWNLOAD_SCRIPT)
     }
 
+    // TODO: Remove
     private fun doubleCheckFileSize(jsExecutor: JavascriptExecutor) {
         val fileSizeOnDownloadPage = jsExecutor.executeScript(FILE_SIZE_VALUE_SCRIPT)
                 as String

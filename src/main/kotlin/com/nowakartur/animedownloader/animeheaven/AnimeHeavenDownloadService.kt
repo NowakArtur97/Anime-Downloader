@@ -27,11 +27,6 @@ class AnimeHeavenDownloadService(
 
         val subscribedAnime = subscribedAnimeService.findAllAnimeForDownload()
 
-        if (subscribedAnime.isEmpty()) {
-            logger.info("Nothing new to download or no anime is subscribed.")
-            return
-        }
-
         val allAnimeDownloadInfo = AnimeHeavenPage.getAllAnimeDownloadInfo(animeheavenPageUrl)
         val titles = subscribedAnime.map { it.title }
         val desiredOrderOfDownload = titles.indexMap()
@@ -39,6 +34,11 @@ class AnimeHeavenDownloadService(
             .filter { titles.contains(it.title) }
             .filter { subscribedAnime.find { anime -> anime.title == it.title }!!.episodeNumber < it.episodeNumber }
             .sortedBy { desiredOrderOfDownload[it.title] }
+
+        if (subscribedAnimeDownloadInfo.isEmpty()) {
+            logger.info("Nothing new to download or no anime is subscribed.")
+            return
+        }
 
         logger.info("Anime found: ${subscribedAnimeDownloadInfo.map { it.title }}.")
 
